@@ -66,6 +66,7 @@ class Part(models.Model):
     part_url = models.URLField()
     notes = models.TextField()
     cad_file = models.FileField()
+    # most of these fields need to be Null=True
 
 
 class Assembly(models.Model):
@@ -82,6 +83,7 @@ class Assembly(models.Model):
     extended_price = models.DecimalField(max_digits=None, decimal_places=2)
     notes = models.TextField()
     cad_file = models.FileField()
+    # many of these fields need to be Null=True
 
 
 class Project(models.Model):
