@@ -32,6 +32,16 @@ class ShippingTerms(models.Model):
     preferred_shipper = models.CharField(max_length=30)
 
 
+class Project(models.Model):
+    products = models.ManytoMany(Assemlby)
+    quantity = models.IntegerField()
+    customer = models.ForeignKey(Customer)
+    price = models.ForeignKey(Assembly)
+    shipping_address = models.TextField()
+    shipping_terms = models.ForeignKey(ShippingTerms)
+    expected_delivery = models.DateField()
+
+
 class Customer(models.Model):
     name = models.CharField(max_length=30)
     contact = models.CharField(max_length=25)
@@ -39,15 +49,6 @@ class Customer(models.Model):
     email = models.EmailField()
     website = models.URLField()
     projects = models.ManyToManyField(Project)
-
-
-class Supplier(models.Model):
-    name = models.CharField(max_length=30)
-    contact = models.CharField(max_length=25)
-    phone = models.IntegerField()
-    email = models.EmailField()
-    website = models.URLField()
-    items_supplied = models.ManyToManyField(Part)
 
 
 class Part(models.Model):
@@ -66,7 +67,8 @@ class Part(models.Model):
     part_url = models.URLField()
     notes = models.TextField()
     cad_file = models.FileField()
-    # most of these fields need to be Null=True
+    image = models.ImageField()
+    # many of these fields need to be Null=True
 
 
 class Assembly(models.Model):
@@ -86,11 +88,10 @@ class Assembly(models.Model):
     # many of these fields need to be Null=True
 
 
-class Project(models.Model):
-    products = models.ManytoMany(Assemlby)
-    quantity = models.IntegerField()
-    customer = models.ForeignKey(Customer)
-    price = models.ForeignKey(Assembly)
-    shipping_address = models.TextField()
-    shipping_terms = models.ForeignKey(ShippingTerms)
-    expected_delivery = models.DateField()
+class Supplier(models.Model):
+    name = models.CharField(max_length=30)
+    contact = models.CharField(max_length=25)
+    phone = models.IntegerField()
+    email = models.EmailField()
+    website = models.URLField()
+    items_supplied = models.ManyToManyField(Part)
