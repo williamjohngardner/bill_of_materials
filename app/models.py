@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class Category(models.Model):
     category = models.CharField(max_length=20)
 
@@ -17,41 +16,89 @@ class SubCategory(models.Model):
         return self.subcategory
 
 
-class FinishTable(models.Model):
-    finish = models.CharField(max_length=20)
-    description = models.TextField()
-    source = models.ForeignKey(Supplier)
-
-    def __str__(self):
-        return self.finish
-
-
-class PlatingTable(models.Model):
-    plating = models.CharField(max_length=20)
-    description = models.TextField()
-    source = models.ForeignKey(Supplier)
-
-    def __str__(self):
-        return self.plating
-
-
 class ShippingTerms(models.Model):
     shipping_type = models.CharField(max_length=20)
-    description = models.TextField()
-    preferred_shipper = models.CharField(max_length=30)
+    description = models.TextField(null=True, blank=True)
+    preferred_shipper = models.CharField(max_length=30, null=True, blank=True)
 
     def __str__(self):
         return self.shipping_type
 
 
-class Project(models.Model):
-    product = models.ManytoMany(Assemlby)
+class Part(models.Model):
+    part_name = models.CharField(max_length=50)
+    part_number = models.CharField(max_length=50)
+    description = models.CharField(max_length=50)
+    category = models.ForeignKey(Category)
+    sub_category = models.ForeignKey(SubCategory)
+    manufacturer = models.ForeignKey('app.Supplier', null=True, blank=True)
+    manufacturer_pn = models.CharField(max_length=50, null=True, blank=True)
+    dimensions = models.CharField(max_length=30)
+    finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
+    plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
+    uom = models.CharField(max_length=15)
+    cost_per_unit = models.DecimalField(max_digits=10, decimal_places=2)
+    part_url = models.URLField(null=True, blank=True)
+    notes = models.TextField(null=True, blank=True)
+    cad_file = models.FileField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
+    # many of these fields need to be Null=True
+
+    def __str__(self):
+        return self.part_name
+
+
+class SubAssembly(models.Model):
+    sub_assembly_name = models.CharField(max_length=50)
+    sub_assembly_number = models.CharField(max_length=50)
+    description = models.CharField(max_length=50)
+    category = models.ForeignKey(Category)
+    sub_category = models.ForeignKey(SubCategory)
+    manufacturer = models.ForeignKey('app.Supplier', null=True, blank=True)
+    manufacturer_pn = models.CharField(max_length=50, null=True, blank=True)
+    dimensions = models.CharField(max_length=30)
+    finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
+    plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
+    uom = models.CharField(max_length=15)
+    cost_per_unit = models.DecimalField(max_digits=10, decimal_places=2)
+    part_url = models.URLField(null=True, blank=True)
+    notes = models.TextField(null=True, blank=True)
+    cad_file = models.FileField(null=True, blank=True)
+    # many of these fields need to be Null=True
+
+    def __str__(self):
+        return self.sub_assembly_name
+
+
+class Assembly(models.Model):
+    assembly_name = models.CharField(max_length=50)
+    assembly_part_number = models.CharField(max_length=50)
+    description = models.CharField(max_length=50)
+    category = models.ForeignKey(Category)
+    sub_category = models.ForeignKey(SubCategory)
+    supplier = models.ForeignKey('app.Supplier', null=True, blank=True)
+    supplier_pn = models.CharField(max_length=50, null=True, blank=True)
+    list_of_parts = models.ManyToManyField(Part, null=True, blank=True)
+    list_of_assemblies = models.ForeignKey(SubAssembly, null=True, blank=True)
     quantity = models.IntegerField()
-    customer = models.ForeignKey(Customer)
-    price = models.ForeignKey(Assembly)
+    extended_price = models.DecimalField(max_digits=10, decimal_places=2)
+    notes = models.TextField()
+    cad_file = models.FileField()
+    # many of these fields need to be Null=True
+
+    def __str__(self):
+        return self.assembly_name
+
+
+class Project(models.Model):
+    project_number = models.AutoField(primary_key=True)
+    client = models.ForeignKey('app.Customer')
+    product = models.ManyToManyField(Assembly)
+    quantity = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     shipping_address = models.TextField()
-    shipping_terms = models.ForeignKey(ShippingTerms)
-    expected_delivery = models.DateField()
+    shipping_terms = models.ForeignKey(ShippingTerms, null=True, blank=True)
+    expected_delivery = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.product
@@ -63,53 +110,10 @@ class Customer(models.Model):
     phone = models.IntegerField()
     email = models.EmailField()
     website = models.URLField()
-    projects = models.ManyToManyField(Project)
+    orders = models.ManyToManyField(Project, null=True, blank=True)
 
     def __str__(self):
         return self.name
-
-
-class Part(models.Model):
-    part_name = models.CharField(max_length=30)
-    part_number = models.CharField(max_length=50)
-    description = models.CharField(max_length=30)
-    category = models.ForeignKey(Category)
-    sub_category = models.ForeignKey(SubCategory)
-    supplier = models.ForeignKey(Supplier)
-    supplier_pn = models.CharField(max_length=50)
-    dimensions = models.CharField(max_length=30)
-    finish = models.ForeignKey(FinishTable)
-    plating = models.ForeignKey(PlatingTable)
-    uom = models.CharField(max_length=15)
-    cost_per_unit = models.DecimalField(max_digits=None, decimal_places=2)
-    part_url = models.URLField()
-    notes = models.TextField()
-    cad_file = models.FileField()
-    image = models.ImageField()
-    # many of these fields need to be Null=True
-
-    def __str__(self):
-        return self.part_name
-
-
-class Assembly(models.Model):
-    assembly_name = models.CharField(max_length=30)
-    part_number = models.CharField(max_length=50)
-    description = models.CharField(max_length=30)
-    category = models.ForeignKey(Category)
-    sub_category = models.ForeignKey(SubCategory)
-    supplier = models.ForeignKey(Supplier)
-    supplier_pn = models.CharField(max_length=50)
-    list_of_parts = models.ManyToManyField()
-    list_of_assemblies = models.ManyToManyField()
-    quantity = models.IntegerField()
-    extended_price = models.DecimalField(max_digits=None, decimal_places=2)
-    notes = models.TextField()
-    cad_file = models.FileField()
-    # many of these fields need to be Null=True
-
-    def __str__(self):
-        return self.assembly_name
 
 
 class Supplier(models.Model):
@@ -118,7 +122,25 @@ class Supplier(models.Model):
     phone = models.IntegerField()
     email = models.EmailField()
     website = models.URLField()
-    items_supplied = models.ManyToManyField(Part)
+    items_supplied = models.ManyToManyField(Part, null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+
+class FinishTable(models.Model):
+    finish = models.CharField(max_length=20)
+    description = models.TextField()
+    source = models.ForeignKey(Supplier, null=True, blank=True)
+
+    def __str__(self):
+        return self.finish
+
+
+class PlatingTable(models.Model):
+    plating = models.CharField(max_length=20)
+    description = models.TextField()
+    source = models.ForeignKey(Supplier, null=True, blank=True)
+
+    def __str__(self):
+        return self.plating

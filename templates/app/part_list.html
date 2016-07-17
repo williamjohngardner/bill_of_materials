@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+  <table class="table table-striped table-bordered table-hover">
+    <tr>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>11</th>
+      <th>12</th>
+      <th>13</th>
+      <th>14</th>
+      <th>15</th>
+      <th>16</th>
+      <th>17</th>
+    </tr>
+    {% for object in object_list  %}
+      <tr>
+        <td>{{object.pk}}</td>
+        <td>{{object.part_name}}</td>
+        <td>{{object.part_number}}</td>
+        <td>{{object.description}}</td>
+        <td>{{object.category}}</td>
+        <td>{{object.sub_category}}</td>
+        <td>{{object.manufacturer}}</td>
+        <td>{{object.manufacturer_pn}}</td>
+        <td>{{object.dimensions}}</td>
+        <td>{{object.finish}}</td>
+        <td>{{object.plating}}</td>
+        <td>{{object.uom}}</td>
+        <td>{{object.cost_per_unit}}</td>
+        <td><a href="{% url 'index_view' %}">{{object.part_url}}</a></td>
+        <td>{{object.notes}}</td>
+        <td>{{object.cad_file}}</td>
+        <td>{{object.image}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
