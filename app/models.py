@@ -1,6 +1,7 @@
 from django.db import models
 
 
+
 class Category(models.Model):
     category = models.CharField(max_length=20)
 
@@ -19,11 +20,19 @@ class SubCategory(models.Model):
 class FinishTable(models.Model):
     finish = models.CharField(max_length=20)
     description = models.TextField()
+    source = models.ForeignKey(Supplier)
+
+    def __str__(self):
+        return self.finish
 
 
 class PlatingTable(models.Model):
     plating = models.CharField(max_length=20)
     description = models.TextField()
+    source = models.ForeignKey(Supplier)
+
+    def __str__(self):
+        return self.plating
 
 
 class ShippingTerms(models.Model):
@@ -31,15 +40,21 @@ class ShippingTerms(models.Model):
     description = models.TextField()
     preferred_shipper = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.shipping_type
+
 
 class Project(models.Model):
-    products = models.ManytoMany(Assemlby)
+    product = models.ManytoMany(Assemlby)
     quantity = models.IntegerField()
     customer = models.ForeignKey(Customer)
     price = models.ForeignKey(Assembly)
     shipping_address = models.TextField()
     shipping_terms = models.ForeignKey(ShippingTerms)
     expected_delivery = models.DateField()
+
+    def __str__(self):
+        return self.product
 
 
 class Customer(models.Model):
@@ -49,6 +64,9 @@ class Customer(models.Model):
     email = models.EmailField()
     website = models.URLField()
     projects = models.ManyToManyField(Project)
+
+    def __str__(self):
+        return self.name
 
 
 class Part(models.Model):
@@ -70,6 +88,9 @@ class Part(models.Model):
     image = models.ImageField()
     # many of these fields need to be Null=True
 
+    def __str__(self):
+        return self.part_name
+
 
 class Assembly(models.Model):
     assembly_name = models.CharField(max_length=30)
@@ -87,6 +108,9 @@ class Assembly(models.Model):
     cad_file = models.FileField()
     # many of these fields need to be Null=True
 
+    def __str__(self):
+        return self.assembly_name
+
 
 class Supplier(models.Model):
     name = models.CharField(max_length=30)
@@ -95,3 +119,6 @@ class Supplier(models.Model):
     email = models.EmailField()
     website = models.URLField()
     items_supplied = models.ManyToManyField(Part)
+
+    def __str__(self):
+        return self.name
