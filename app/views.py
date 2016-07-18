@@ -24,4 +24,5 @@ class PartListView(ListView):
 
 
 class PartDetailView(DetailView):
-    pass
+    model = Part
+    queryset = Part.objects.all()
