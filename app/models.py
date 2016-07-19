@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Category(models.Model):
-    category = models.CharField(max_length=20)
+    category = models.CharField(max_length=30)
 
     def __str__(self):
         return self.category
@@ -10,16 +10,16 @@ class Category(models.Model):
 
 class SubCategory(models.Model):
     category = models.ForeignKey(Category)
-    subcategory = models.CharField(max_length=20)
+    subcategory = models.CharField(max_length=30)
 
     def __str__(self):
         return self.subcategory
 
 
 class ShippingTerms(models.Model):
-    shipping_type = models.CharField(max_length=20)
+    shipping_type = models.CharField(max_length=50)
     description = models.TextField(null=True, blank=True)
-    preferred_shipper = models.CharField(max_length=30, null=True, blank=True)
+    preferred_shipper = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return self.shipping_type
@@ -33,11 +33,11 @@ class Part(models.Model):
     sub_category = models.ForeignKey(SubCategory)
     manufacturer = models.ForeignKey('app.Supplier', null=True, blank=True)
     manufacturer_pn = models.CharField(max_length=50, null=True, blank=True)
-    dimensions = models.CharField(max_length=30)
+    dimensions = models.CharField(max_length=50)
     finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
     plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
     uom = models.CharField(max_length=15)
-    cost_per_unit = models.DecimalField(max_digits=10, decimal_places=2)
+    unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     part_url = models.URLField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(null=True, blank=True)
@@ -51,20 +51,28 @@ class Part(models.Model):
 class SubAssembly(models.Model):
     sub_assembly_name = models.CharField(max_length=50)
     sub_assembly_number = models.CharField(max_length=50)
-    description = models.CharField(max_length=50)
-    category = models.ForeignKey(Category)
-    sub_category = models.ForeignKey(SubCategory)
-    manufacturer = models.ForeignKey('app.Supplier', null=True, blank=True)
-    manufacturer_pn = models.CharField(max_length=50, null=True, blank=True)
-    dimensions = models.CharField(max_length=30)
+    description = models.CharField(max_length=50, null=True, blank=True)
+    category = models.ForeignKey(Category, null=True, blank=True)
+    sub_category = models.ForeignKey(SubCategory, null=True, blank=True)
+    mfg_supplier = models.ForeignKey('app.Supplier', null=True, blank=True)
+    mfg_supplier_pn = models.CharField(max_length=50, null=True, blank=True)
     finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
     plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
-    uom = models.CharField(max_length=15)
-    cost_per_unit = models.DecimalField(max_digits=10, decimal_places=2)
-    part_url = models.URLField(null=True, blank=True)
+    part_list = models.ManyToManyField(Part)
+    part_quantity = models.IntegerField(null=True, blank=True)
+    subassembly_list = models.ManyToManyField('app.SubAssembly')
+    subassembly_quantity = models.IntegerField(null=True, blank=True)
+    subassembly_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(null=True, blank=True)
     # many of these fields need to be Null=True
+
+    def subassembly_cost(self):
+        parts_cost = self.part_list.aggregate(total=models.Sum('unit_cost'))['total']
+        subassembly_cost = self.subassembly_list.aggregate(total=models.Sum('unit_cost'))['total']
+        total_cost = parts_cost + subassembly_cost
+        return total_cost
+
 
     def __str__(self):
         return self.sub_assembly_name
@@ -73,17 +81,20 @@ class SubAssembly(models.Model):
 class Assembly(models.Model):
     assembly_name = models.CharField(max_length=50)
     assembly_part_number = models.CharField(max_length=50)
-    description = models.CharField(max_length=50)
-    category = models.ForeignKey(Category)
-    sub_category = models.ForeignKey(SubCategory)
+    description = models.CharField(max_length=50, null=True, blank=True)
+    category = models.ForeignKey(Category, null=True, blank=True)
+    sub_category = models.ForeignKey(SubCategory, null=True, blank=True)
     supplier = models.ForeignKey('app.Supplier', null=True, blank=True)
     supplier_pn = models.CharField(max_length=50, null=True, blank=True)
-    list_of_parts = models.ManyToManyField(Part, null=True, blank=True)
-    list_of_assemblies = models.ForeignKey(SubAssembly, null=True, blank=True)
-    quantity = models.IntegerField()
-    extended_price = models.DecimalField(max_digits=10, decimal_places=2)
-    notes = models.TextField()
-    cad_file = models.FileField()
+    finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
+    plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
+    part_list = models.ManyToManyField(Part)
+    part_quantity = models.IntegerField(null=True, blank=True)
+    subassembly_list = models.ManyToManyField(SubAssembly)
+    subassembly_quantity = models.IntegerField(null=True, blank=True)
+    assembly_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    notes = models.TextField(null=True, blank=True)
+    cad_file = models.FileField(null=True, blank=True)
     # many of these fields need to be Null=True
 
     def __str__(self):
@@ -93,10 +104,13 @@ class Assembly(models.Model):
 class Project(models.Model):
     project_number = models.AutoField(primary_key=True)
     client = models.ForeignKey('app.Customer')
-    product = models.ManyToManyField(Assembly)
-    quantity = models.IntegerField()
-    price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    shipping_address = models.TextField()
+    project_name = models.CharField(max_length=50)
+    products = models.ManyToManyField(Assembly)
+    quantity_per_product = models.IntegerField(null=True, blank=True)
+    price_per_product = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    extended_price_per_product = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    price_per_project = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    shipping_address = models.TextField(null=True, blank=True)
     shipping_terms = models.ForeignKey(ShippingTerms, null=True, blank=True)
     expected_delivery = models.DateField(null=True, blank=True)
 
@@ -105,32 +119,32 @@ class Project(models.Model):
 
 
 class Customer(models.Model):
-    name = models.CharField(max_length=30)
-    contact = models.CharField(max_length=25)
-    phone = models.IntegerField()
-    email = models.EmailField()
-    website = models.URLField()
-    orders = models.ManyToManyField(Project, null=True, blank=True)
+    name = models.CharField(max_length=50)
+    contact = models.CharField(max_length=25, null=True, blank=True)
+    phone = models.IntegerField(null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    website = models.URLField(null=True, blank=True)
+    orders = models.ManyToManyField(Project)
 
     def __str__(self):
         return self.name
 
 
 class Supplier(models.Model):
-    name = models.CharField(max_length=30)
-    contact = models.CharField(max_length=25)
-    phone = models.IntegerField()
-    email = models.EmailField()
-    website = models.URLField()
-    items_supplied = models.ManyToManyField(Part, null=True, blank=True)
+    name = models.CharField(max_length=50)
+    contact = models.CharField(max_length=25, null=True, blank=True)
+    phone = models.IntegerField(null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    website = models.URLField(null=True, blank=True)
+    items_supplied = models.ManyToManyField(Part)
 
     def __str__(self):
         return self.name
 
 
 class FinishTable(models.Model):
-    finish = models.CharField(max_length=20)
-    description = models.TextField()
+    finish = models.CharField(max_length=50)
+    description = models.TextField(null=True, blank=True)
     source = models.ForeignKey(Supplier, null=True, blank=True)
 
     def __str__(self):
@@ -138,8 +152,8 @@ class FinishTable(models.Model):
 
 
 class PlatingTable(models.Model):
-    plating = models.CharField(max_length=20)
-    description = models.TextField()
+    plating = models.CharField(max_length=50)
+    description = models.TextField(null=True, blank=True)
     source = models.ForeignKey(Supplier, null=True, blank=True)
 
     def __str__(self):

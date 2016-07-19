@@ -22,7 +22,7 @@ class PartAdmin(admin.ModelAdmin):
 admin.site.register(Part, PartAdmin)
 
 class SubAssemblyAdmin(admin.ModelAdmin):
-    list_display = ('sub_assembly_name', 'sub_assembly_number', 'category', 'sub_category', 'manufacturer')
+    list_display = ('sub_assembly_name', 'sub_assembly_number', 'category', 'sub_category', 'mfg_supplier')
 
 admin.site.register(SubAssembly, SubAssemblyAdmin)
 
@@ -52,6 +52,6 @@ class PlatingTableAdmin(admin.ModelAdmin):
 admin.site.register(PlatingTable, PlatingTableAdmin)
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('project_number', 'client', 'price', 'expected_delivery')
+    list_display = ('project_number', 'client', 'price_per_project', 'expected_delivery')
 
 admin.site.register(Project, ProjectAdmin)
