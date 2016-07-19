@@ -14,14 +14,16 @@
       <h5><small>Description:  </small><strong>{{object.description}}</strong></h5>
       <h5><small>Category:  </small><strong>{{object.category}}</strong></h5>
       <h5><small>Sub Category:  </small><strong>{{object.sub_category}}</strong></h5>
+      <h5><small>CAD File:  </small><strong>{{object.cad_file}}</strong></h5>
     </div>
 
     <div class="col-md-6 well">
       <h5><small>Manufacturer:  </small><strong>{{object.supplier}}</strong></h5>
       <h5><small>Manufacturer Part Number:  </small><strong>{{object.supplier_pn}}</strong></h5>
-      <h5><small>Quantity:  </small><strong>{{object.quantity}}</strong></h5>
-      <h5><small>Cost/Unit:  </small><strong>{{object.extended_price}}</strong></h5>
-      <h5><small>CAD File:  </small><strong>{{object.cad_file}}</strong></h5>
+      <h5><small>Finish:  </small><strong>{{object.finish}}</strong></h5>
+      <h5><small>Plating:  </small><strong>{{object.plating}}</strong></h5>
+      <h5><small>Cost:  </small><strong>Needs to come from Project Data</strong></h5>
+      <h5><small>Cost:  </small><strong>{{object.assembly_cost}}</strong></h5>
     </div>
     <div class="col-md-12 well">
     <h5>{{object.notes}}</h5>
@@ -40,14 +42,13 @@
           <th><small>Dimensions</small></th>
           <th><small>Finish</small></th>
           <th><small>Plating</small></th>
+          <th><small>Qty</small></th>
           <th><small>UoM</small></th>
           <th><small>Cost/Unit</small></th>
-          <th><small>Part URL</small></th>
-          <th><small>Notes</small></th>
-          <th><small>CAD File</small></th>
-          <th><small>Image</small></th>
+          <th><small>Extended Cost</small></th>
+
         </tr>
-        {% for item in object.list_of_parts.all  %}
+        {% for item in object.part_list.all  %}
           <tr>
           <td><small>{{item.pk}}</small></td>
           <td><small>{{item.part_name}}</small></td>
@@ -60,14 +61,31 @@
           <td><small>{{item.dimensions}}</small></td>
           <td><small>{{item.finish}}</small></td>
           <td><small>{{item.plating}}</small></td>
+          <td><small></small></td>
           <td><small>{{item.uom}}</small></td>
-          <td><small>{{item.cost_per_unit}}</small></td>
-          <td><small>{{item.part_url}}</small></td>
-          <td><small>{{item.notes}}</small></td>
-          <td><small>{{item.cad_file}}</small></td>
-          <td><small>{{item.image}}</small></td>
-          {# Assemblies: {{object.list_of_assemblies}}#}
+          <td><small>{{item.unit_cost}}</small></td>
+          <td><small></small></td>
+
           </tr>
+        {% endfor %}
+        {% for item in object.subassembly_list.all %}
+        <tr>
+          <td><small>{{item.pk}}</small></td>
+          <td><small>{{item.sub_assembly_name}}</small></td>
+          <td><small>{{item.sub_assembly_number}}</small></td>
+          <td><small>{{item.description}}</small></td>
+          <td><small>{{item.category}}</small></td>
+          <td><small>{{item.sub_category}}</small></td>
+          <td><small>{{item.mfg_supplier}}</small></td>
+          <td><small>{{item.mfg_supplier_pn}}</small></td>
+          <td><small></small></td>
+          <td><small>{{item.finish}}</small></td>
+          <td><small>{{item.plating}}</small></td>
+          <td><small>{{item.subassembly_quantity}}</small></td>
+          <td><small>Each</small></td>
+          <td><small>{{item.subassembly_cost}}</small></td>
+          <td><small></small></td>
+        </tr>
         {% endfor %}
       </table>
   {% endfor %}

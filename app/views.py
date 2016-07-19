@@ -12,7 +12,7 @@ class IndexView(TemplateView):
 
 class CreatePartView(CreateView):
     model = Part
-    fields = ['part_name', 'part_number', 'description', 'category', 'sub_category', 'manufacturer', 'manufacturer_pn', 'dimensions', 'finish', 'plating', 'uom', 'cost_per_unit', 'part_url', 'notes', 'cad_file', 'image']
+    fields = ['part_name', 'part_number', 'description', 'category', 'sub_category', 'manufacturer', 'manufacturer_pn', 'dimensions', 'finish', 'plating', 'uom', 'unit_cost', 'part_url', 'notes', 'cad_file', 'image']
     success_url = reverse_lazy("part_list_view")
 
 

@@ -42,7 +42,6 @@ class Part(models.Model):
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
-    # many of these fields need to be Null=True
 
     def __str__(self):
         return self.part_name
@@ -60,19 +59,11 @@ class SubAssembly(models.Model):
     plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
     part_list = models.ManyToManyField(Part)
     part_quantity = models.IntegerField(null=True, blank=True)
-    subassembly_list = models.ManyToManyField('app.SubAssembly')
+    subassembly_list = models.ManyToManyField('app.SubAssembly', null=True, blank=True)
     subassembly_quantity = models.IntegerField(null=True, blank=True)
     subassembly_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(null=True, blank=True)
-    # many of these fields need to be Null=True
-
-    def subassembly_cost(self):
-        parts_cost = self.part_list.aggregate(total=models.Sum('unit_cost'))['total']
-        subassembly_cost = self.subassembly_list.aggregate(total=models.Sum('unit_cost'))['total']
-        total_cost = parts_cost + subassembly_cost
-        return total_cost
-
 
     def __str__(self):
         return self.sub_assembly_name
@@ -88,14 +79,13 @@ class Assembly(models.Model):
     supplier_pn = models.CharField(max_length=50, null=True, blank=True)
     finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
     plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
-    part_list = models.ManyToManyField(Part)
+    part_list = models.ManyToManyField(Part, null=True, blank=True)
     part_quantity = models.IntegerField(null=True, blank=True)
-    subassembly_list = models.ManyToManyField(SubAssembly)
+    subassembly_list = models.ManyToManyField(SubAssembly, null=True, blank=True)
     subassembly_quantity = models.IntegerField(null=True, blank=True)
     assembly_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(null=True, blank=True)
-    # many of these fields need to be Null=True
 
     def __str__(self):
         return self.assembly_name
@@ -105,7 +95,7 @@ class Project(models.Model):
     project_number = models.AutoField(primary_key=True)
     client = models.ForeignKey('app.Customer')
     project_name = models.CharField(max_length=50)
-    products = models.ManyToManyField(Assembly)
+    products = models.ManyToManyField(Assembly, null=True, blank=True)
     quantity_per_product = models.IntegerField(null=True, blank=True)
     price_per_product = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     extended_price_per_product = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -124,7 +114,6 @@ class Customer(models.Model):
     phone = models.IntegerField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     website = models.URLField(null=True, blank=True)
-    orders = models.ManyToManyField(Project)
 
     def __str__(self):
         return self.name
@@ -136,7 +125,6 @@ class Supplier(models.Model):
     phone = models.IntegerField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     website = models.URLField(null=True, blank=True)
-    items_supplied = models.ManyToManyField(Part)
 
     def __str__(self):
         return self.name
