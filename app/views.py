@@ -28,8 +28,22 @@ class PartDetailView(DetailView):
     model = Part
     queryset = Part.objects.all()
 
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
+from extra_views.generic import GenericInlineFormSet
+class PartInline(InlineFormSet):
+    model = Quantity
+    fields = ['part', 'quantity']
 
-class CreateSubAssemblyView(CreateView):
+
+class CreateSubAssemblyView(CreateWithInlinesView):
+    model = SubAssembly
+    inlines = [PartInline]
+    fields = ['sub_assembly_name', 'sub_assembly_number', 'description', 'category', 'sub_category', 'mfg_supplier', 'mfg_supplier_pn', 'finish', 'plating', 'part_list', 'subassembly_list', 'subassembly_quantity', 'subassembly_cost', 'notes', 'cad_file']
+
+
+
+
+class CreateSubAssemblyViewx(CreateView):
     model = SubAssembly
     form = CreateSubAssembly
     fields = ['sub_assembly_name', 'sub_assembly_number', 'description', 'category', 'sub_category', 'mfg_supplier', 'mfg_supplier_pn', 'finish', 'plating', 'part_list', 'subassembly_list', 'subassembly_quantity', 'subassembly_cost', 'notes', 'cad_file']

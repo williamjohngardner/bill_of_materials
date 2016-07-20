@@ -1,5 +1,9 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block content %}
-  Testes.  Testes.  One... Two... Uhhh, Three???
+  <div id="main_wrapper">
+    <h3>Centralized Revision Control</h3>
+    <img id="mainimage" src="{% static 'app/images/gbparts.gif' %}" class="img-thumbnail" alt="Bill of Materials" />
+  </div>
 {% endblock %}

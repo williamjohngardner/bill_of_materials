@@ -1,5 +1,8 @@
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 from app.views import IndexView, CreatePartView, PartListView, PartDetailView, CreateSubAssemblyView, SubAssemblyListView, SubAssemblyDetailView
 from app.views import CreateAssemblyView, AssemblyListView, AssemblyDetailView, CreateCustomerView, CustomerListView, CreateSupplierView, SupplierListView
@@ -21,4 +24,4 @@ urlpatterns = [
     url(r'^customer_list/$', CustomerListView.as_view(), name="customer_list_view"),
     url(r'^create_supplier/$', CreateSupplierView.as_view(), name="create_supplier_view"),
     url(r'^supplier_list/$', SupplierListView.as_view(), name="supplier_list_view")
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
