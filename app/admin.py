@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from app.models import (Category, SubCategory, ShippingTerms, Part, Assembly,
-SubAssembly, Supplier, Customer, FinishTable, PlatingTable, Project)
+SubAssembly, Supplier, Customer, FinishTable, PlatingTable, Project, Quantity)
 
 
 admin.site.register(Category)
@@ -55,3 +55,8 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ('project_number', 'client', 'price_per_project', 'expected_delivery')
 
 admin.site.register(Project, ProjectAdmin)
+
+class QuantityAdmin(admin.ModelAdmin):
+    list_display = ('part', 'quantity', 'assembly')
+
+admin.site.register(Quantity, QuantityAdmin)

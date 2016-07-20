@@ -7,20 +7,18 @@
       <th>ID</th>
       <th>Part Name</th>
       <th>Part NO</th>
-      <th>DESC</th>
+      <th>Description</th>
       <th>Category</th>
       <th>Sub Category</th>
-      <th>MFG</th>
-      <th>MFG PN</th>
-      <th>DIM</th>
+      <th>Manufacturer</th>
+      <th>Mfg PN</th>
+      <th>Dimensions</th>
       <th>Finish</th>
       <th>Plating</th>
       <th>UOM</th>
       <th>Cost/Unit</th>
       <th>Part URL</th>
       <th>Notes</th>
-      <th>CAD</th>
-      <th>Image</th>
     </tr>
     {% for object in object_list  %}
       <tr>
@@ -35,12 +33,10 @@
         <td>{{object.dimensions}}</td>
         <td>{{object.finish}}</td>
         <td>{{object.plating}}</td>
+        <td>{{object.unit_cost}}</td>
         <td>{{object.uom}}</td>
-        <td>{{object.cost_per_unit}}</td>
-        <td><a href="{% url 'index_view' %}">{{object.part_url}}</a></td>
+        <td>{{object.part_url}}</td>
         <td>{{object.notes}}</td>
-        <td>{{object.cad_file}}</td>
-        <td>{{object.image}}</td>
       </tr>
     {% endfor %}
   </table>

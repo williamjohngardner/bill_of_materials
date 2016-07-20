@@ -47,6 +47,12 @@ class Part(models.Model):
         return self.part_name
 
 
+class Quantity(models.Model):
+    part = models.ForeignKey(Part)
+    quantity = models.IntegerField()
+    assembly = models.ForeignKey('app.SubAssembly')
+
+
 class SubAssembly(models.Model):
     sub_assembly_name = models.CharField(max_length=50)
     sub_assembly_number = models.CharField(max_length=50)
@@ -57,8 +63,8 @@ class SubAssembly(models.Model):
     mfg_supplier_pn = models.CharField(max_length=50, null=True, blank=True)
     finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
     plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
-    part_list = models.ManyToManyField(Part)
-    part_quantity = models.IntegerField(null=True, blank=True)
+    part_list = models.ManyToManyField(Part, through=Quantity)
+    #part_quantity = models.IntegerField(null=True, blank=True)
     subassembly_list = models.ManyToManyField('app.SubAssembly', null=True, blank=True)
     subassembly_quantity = models.IntegerField(null=True, blank=True)
     subassembly_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
