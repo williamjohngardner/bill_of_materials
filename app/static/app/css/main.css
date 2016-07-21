@@ -5,7 +5,11 @@
 }
 
 #main_wrapper{
-  background-color: gray;
+  background-color: white;
 }
 
 H3 { text-align: center }
+
+input[type='button'] {
+   text-align: left;
+}

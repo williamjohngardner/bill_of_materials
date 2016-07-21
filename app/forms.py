@@ -1,10 +1,9 @@
 from django import forms
 
-from app.models import Quantity
+from app.models import SubAssemblyQuantity
 
 class CreateSubAssembly(forms.Form):
 
-
     class Meta:
-        model = Quantity
+        model = SubAssemblyQuantity
         fields = ['part', 'quantity', 'assembly']

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+<nav>
+    <div class="col-md-2">
+      <a href="{% url 'create_customer_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Customer</small></a>
+      <a href="{% url 'customer_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Customer Listing</small></a>
+      <a href="{% url 'create_supplier_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Supplier</small></a>
+      <a href="{% url 'supplier_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Supplier Listing</small></a>
+      <a href="{% url 'create_part_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Part</small></a>
+      <a href="{% url 'part_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Part Listing</small></a>
+      <a href="{% url 'create_subassembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create SubAssmbly</small></a>
+      <a href="{% url 'subassembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>SubAssembly Listing</small></a>
+      <a href="{% url 'create_assembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Assembly</small></a>
+      <a href="{% url 'assembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Assembly Listing</small></a>
+    </div>
+</nav>
+  <div class="col-md-9">
+{% for object in object_list %}
+  <div class="row">
+    <div class="col-md-12 well">
+      <h2>SubAssembly Id: {{object.id}}  :  {{object.sub_assembly_name}}</h2>
+    </div>
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+          <th><small>Part Id</small></th>
+          <th><small>Part Name</small></th>
+          <th><small>Part Number</small></th>
+          <th><small>Description</small></th>
+          <th><small>Category</small></th>
+          <th><small>Sub Category</small></th>
+          <th><small>Manufacturer</small></th>
+          <th><small>Manufacturer PN</small></th>
+          <th><small>Dimensions</small></th>
+          <th><small>Finish</small></th>
+          <th><small>Plating</small></th>
+          <th><small>Qty</small></th>
+          <th><small>UoM</small></th>
+          <th><small>Cost/Unit</small></th>
+          <th><small>Extended Cost</small></th>
+
+        </tr>
+        {% for part in object.subassemblyquantity_set.all %}
+          <tr>
+          <td><small>{{part.part.pk}}</small></td>
+          <td><small>{{part.part.part_name}}</small></td>
+          <td><small>{{part.part.part_number}}</small></td>
+          <td><small>{{part.part.description}}</small></td>
+          <td><small>{{part.part.category}}</small></td>
+          <td><small>{{part.part.sub_category}}</small></td>
+          <td><small>{{part.part.manufacturer}}</small></td>
+          <td><small>{{part.part.manufacturer_pn}}</small></td>
+          <td><small>{{part.part.dimensions}}</small></td>
+          <td><small>{{part.part.finish}}</small></td>
+          <td><small>{{part.part.plating}}</small></td>
+          <td><small>{{part.quantity}}</small></td>
+          <td><small>{{part.part.uom}}</small></td>
+          <td><small>{{part.part.unit_cost}}</small></td>
+          <td><small></small></td>
+          </tr>
+          {% endfor %}
+      </table>
+    </div>
+  {% endfor %}
+</div>
+</div>
+{% endblock %}
