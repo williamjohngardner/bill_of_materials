@@ -46,7 +46,7 @@ class CreateSubAssemblyView(CreateWithInlinesView):
 
 class SubAssemblyListView(ListView):
     model = SubAssembly
-    template_name = "app/subassemblyquantity_list.html"
+    template_name = "app/subassembly_list.html"
 
     def get_queryset(self):
         return self.model.objects.all()
@@ -58,7 +58,11 @@ class SubAssemblyListView(ListView):
 
 
 class SubAssemblyDetailView(DetailView):
-    pass
+    model = SubAssembly
+
+    def get_queryset(self, **kwargs):
+        pk = self.kwargs.get('pk', None)
+        return SubAssembly.objects.filter(pk=pk)
 
 
 class CreateAssemblyView(CreateWithInlinesView):

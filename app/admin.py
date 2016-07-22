@@ -17,7 +17,7 @@ class ShippingTermsAdmin(admin.ModelAdmin):
 admin.site.register(ShippingTerms, ShippingTermsAdmin)
 
 class PartAdmin(admin.ModelAdmin):
-    list_display = ('part_name', 'part_number', 'category', 'sub_category', 'manufacturer')
+    list_display = ('id', 'pk', 'part_name', 'part_number', 'category', 'sub_category', 'manufacturer')
 
 admin.site.register(Part, PartAdmin)
 
