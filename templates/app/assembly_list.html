@@ -1,13 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
+<div class="row">
+  <nav>
+    <div class="col-md-2">
+      <a href="{% url 'create_customer_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Customer</small></a>
+      <a href="{% url 'customer_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Customer Listing</small></a>
+      <a href="{% url 'create_supplier_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Supplier</small></a>
+      <a href="{% url 'supplier_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Supplier Listing</small></a>
+      <a href="{% url 'create_part_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Part</small></a>
+      <a href="{% url 'part_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Part Listing</small></a>
+      <a href="{% url 'create_subassembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create SubAssmbly</small></a>
+      <a href="{% url 'subassembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>SubAssembly Listing</small></a>
+      <a href="{% url 'create_assembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Assembly</small></a>
+      <a href="{% url 'assembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Assembly Listing</small></a>
+    </div>
+  </nav>
+  <div class="col-md-9">
   {% for object in object_list  %}
   <div class="row">
     <div class="col-md-12 well">
       <h2>Assembly Id: {{object.pk}}  :  {{object.assembly_name}}</h2>
     </div>
-
     <div class="col-md-6 well">
       <h5><small>Part Name:  </small><strong>{{object.assembly_name}}</strong></h5>
       <h5><small>Part Number:  </small><strong>{{object.assembly_part_number}}</strong></h5>
@@ -16,7 +30,6 @@
       <h5><small>Sub Category:  </small><strong>{{object.sub_category}}</strong></h5>
       <h5><small>CAD File:  </small><strong>{{object.cad_file}}</strong></h5>
     </div>
-
     <div class="col-md-6 well">
       <h5><small>Manufacturer:  </small><strong>{{object.supplier}}</strong></h5>
       <h5><small>Manufacturer Part Number:  </small><strong>{{object.supplier_pn}}</strong></h5>
@@ -68,11 +81,11 @@
 
           </tr>
         {% endfor %}
-        {% for item in object.subassembly_list.all %}
+        {% for item in assembly  %}
         <tr>
           <td><small>{{item.pk}}</small></td>
-          <td><small>{{item.sub_assembly_name}}</small></td>
-          <td><small>{{item.sub_assembly_number}}</small></td>
+          <td><small>{{item.assembly_name}}</small></td>
+          <td><small>{{item.assembly_number}}</small></td>
           <td><small>{{item.description}}</small></td>
           <td><small>{{item.category}}</small></td>
           <td><small>{{item.sub_category}}</small></td>

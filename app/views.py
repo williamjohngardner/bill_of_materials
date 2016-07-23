@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
 from extra_views.generic import GenericInlineFormSet
 
-from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, Customer, Supplier
+from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier
 from app.forms import CreateSubAssembly
 
 
@@ -31,15 +31,21 @@ class PartDetailView(DetailView):
     queryset = Part.objects.all()
 
 
-class PartInline(InlineFormSet):
+class SubAssemblyPartInline(InlineFormSet):
     model = SubAssemblyQuantity
     fields = ['part', 'quantity']
     extra = 1
 
 
+class AssemblyPartInline(InlineFormSet):
+    model = AssemblyQuantity
+    fields = ['part', 'subassembly', 'quantity']
+    extra = 1
+
+
 class CreateSubAssemblyView(CreateWithInlinesView):
     model = SubAssembly
-    inlines = [PartInline]
+    inlines = [SubAssemblyPartInline]
     fields = ['sub_assembly_name', 'sub_assembly_number', 'description', 'category', 'sub_category', 'mfg_supplier', 'mfg_supplier_pn', 'finish', 'plating', 'subassembly_cost', 'notes', 'cad_file']
     success_url = reverse_lazy("subassembly_list_view")
 
@@ -65,23 +71,37 @@ class SubAssemblyDetailView(DetailView):
         return SubAssembly.objects.filter(pk=pk)
 
 
+class SubAssemblyInline(InlineFormSet):
+    model = SubAssembly
+    fields = ['part', 'quantity']
+    extra = 1
+
+
 class CreateAssemblyView(CreateWithInlinesView):
     model = Assembly
-    inlines = [PartInline]
-    fields = ['assembly_name', 'assembly_part_number', 'description', 'category', 'sub_category', 'supplier', 'supplier_pn', 'finish', 'plating', 'part_list', 'part_quantity', 'subassembly_list', 'subassembly_quantity', 'assembly_cost', 'notes', 'cad_file']
+    inlines = [AssemblyPartInline, SubAssemblyInline]
+    fields = ['assembly_name', 'assembly_part_number', 'description', 'category', 'sub_category', 'supplier', 'supplier_pn', 'finish', 'plating', 'assembly_cost', 'notes', 'cad_file']
     success_url = reverse_lazy("assembly_list_view")
-
 
 
 class AssemblyListView(ListView):
     model = Assembly
 
     def get_queryset(self):
-        return Assembly.objects.all()
+        return self.model.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['assembly'] = Assembly.objects.all()
+        return context
 
 
 class AssemblyDetailView(DetailView):
-    pass
+    model = Assembly
+
+    def get_queryset(self, **kwargs):
+        pk = self.kwargs.get('pk', None)
+        return Assembly.objects.filter(pk=pk)
 
 
 class CreateCustomerView(CreateView):

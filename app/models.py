@@ -57,9 +57,10 @@ class SubAssemblyQuantity(models.Model):
 
 
 class AssemblyQuantity(models.Model):
-    part = models.ForeignKey(Part)
+    part = models.ForeignKey(Part, null=True, blank=True)
+    subassembly = models.ForeignKey('app.SubAssembly', null=True, blank=True)
     quantity = models.IntegerField()
-    assembly = models.ForeignKey('app.Assembly')
+    assembly = models.ForeignKey('app.Assembly', null=True, blank=True)
 
     def __str__(self):
         return self.part
@@ -75,10 +76,6 @@ class SubAssembly(models.Model):
     mfg_supplier_pn = models.CharField(max_length=50, null=True, blank=True)
     finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
     plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
-    # part_list = models.ManyToManyField(Part, through=SubAssemblyQuantity)
-    # part_quantity = models.IntegerField(null=True, blank=True)
-    # subassembly_list = models.ManyToManyField('app.SubAssembly', null=True, blank=True)
-    # subassembly_quantity = models.IntegerField(null=True, blank=True)
     subassembly_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(upload_to="cad_files", null=True, blank=True)
@@ -97,10 +94,6 @@ class Assembly(models.Model):
     supplier_pn = models.CharField(max_length=50, null=True, blank=True)
     finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
     plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
-    # part_list = models.ManyToManyField(Part, through=AssemblyQuantity)
-    # part_quantity = models.IntegerField(null=True, blank=True)
-    # subassembly_list = models.ManyToManyField(SubAssembly, null=True, blank=True)
-    # subassembly_quantity = models.IntegerField(null=True, blank=True)
     assembly_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(upload_to="cad_files", null=True, blank=True)
