@@ -72,9 +72,9 @@
           </tr>
           {% for part in object.assemblyquantity_set.all %}
             <tr>
-            <td><a href="{% url 'part_detail_view' part.id %}"><small>{{part.pk}}</small></a></td>
-            <td><small>{{object.part.part_name}}</small></td>
-            <td><small>{{part.part_number}}</small></td>
+            <td><a href="{% url 'part_detail_view' part.id %}"><small>{{part.part.pk}}</small></a></td>
+            <td><small>{{part.part.part_name}}</small></td>
+            <td><small>{{part.part.part_number}}</small></td>
             <td><small>{{part.part.description}}</small></td>
             <td><small>{{part.part.category}}</small></td>
             <td><small>{{part.part.sub_category}}</small></td>

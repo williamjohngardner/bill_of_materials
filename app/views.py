@@ -37,9 +37,15 @@ class SubAssemblyPartInline(InlineFormSet):
     extra = 1
 
 
+class PartInLine(InlineFormSet):
+    model = AssemblyQuantity
+    fields = ['part', 'quantity']
+    extra = 1
+
+
 class AssemblyPartInline(InlineFormSet):
     model = AssemblyQuantity
-    fields = ['part', 'subassembly', 'quantity']
+    fields = ['subassembly', 'quantity']
     extra = 1
 
 
@@ -79,7 +85,7 @@ class SubAssemblyInline(InlineFormSet):
 
 class CreateAssemblyView(CreateWithInlinesView):
     model = Assembly
-    inlines = [AssemblyPartInline, SubAssemblyInline]
+    inlines = [AssemblyPartInline, PartInLine]
     fields = ['assembly_name', 'assembly_part_number', 'description', 'category', 'sub_category', 'supplier', 'supplier_pn', 'finish', 'plating', 'assembly_cost', 'notes', 'cad_file']
     success_url = reverse_lazy("assembly_list_view")
 

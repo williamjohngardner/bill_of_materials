@@ -61,43 +61,41 @@
           <th><small>Extended Cost</small></th>
 
         </tr>
-        {% for item in object.part_list.all  %}
-          <tr>
-          <td><small>{{item.pk}}</small></td>
-          <td><small>{{item.part_name}}</small></td>
-          <td><small>{{item.part_number}}</small></td>
-          <td><small>{{item.description}}</small></td>
-          <td><small>{{item.category}}</small></td>
-          <td><small>{{item.sub_category}}</small></td>
-          <td><small>{{item.manufacturer}}</small></td>
-          <td><small>{{item.manufacturer_pn}}</small></td>
-          <td><small>{{item.dimensions}}</small></td>
-          <td><small>{{item.finish}}</small></td>
-          <td><small>{{item.plating}}</small></td>
-          <td><small></small></td>
-          <td><small>{{item.uom}}</small></td>
-          <td><small>{{item.unit_cost}}</small></td>
-          <td><small></small></td>
 
-          </tr>
-        {% endfor %}
-        {% for item in assembly  %}
+        {% for part in object.assemblyquantity_set.all  %}
         <tr>
-          <td><small>{{item.pk}}</small></td>
-          <td><small>{{item.assembly_name}}</small></td>
-          <td><small>{{item.assembly_number}}</small></td>
-          <td><small>{{item.description}}</small></td>
-          <td><small>{{item.category}}</small></td>
-          <td><small>{{item.sub_category}}</small></td>
-          <td><small>{{item.mfg_supplier}}</small></td>
-          <td><small>{{item.mfg_supplier_pn}}</small></td>
+          <td><small>{{part.part.pk}}</small></td>
+          <td><small>{{part.part.part_name}}</small></td>
+          <td><small>{{part.part.part_number}}</small></td>
+          <td><small>{{part.part.description}}</small></td>
+          <td><small>{{part.part.category}}</small></td>
+          <td><small>{{part.part.sub_category}}</small></td>
+          <td><small>{{part.part.manufacturer}}</small></td>
+          <td><small>{{part.part.manufacturer_pn}}</small></td>
+          <td><small>{{part.part.dimensions}}</small></td>
+          <td><small>{{part.part.finish}}</small></td>
+          <td><small>{{part.part.plating}}</small></td>
+          <td><small>{{part.quantity}}</small></td>
+          <td><small>{{part.part.uom}}</small></td>
+          <td><small>{{part.part.unit_cost}}</small></td>
+          <td><small>fix</small></td>
+        </tr>
+        <tr>
+          <td><small>{{part.subassembly.pk}}</small></td>
+          <td><small>{{part.subassembly.sub_assembly_name}}</small></td>
+          <td><small>{{part.subassembly.sub_assembly_number}}</small></td>
+          <td><small>{{part.subassembly.description}}</small></td>
+          <td><small>{{part.subassembly.category}}</small></td>
+          <td><small>{{part.subassembly.sub_category}}</small></td>
+          <td><small>{{part.subassembly.mfg_supplier}}</small></td>
+          <td><small>{{part.subassembly.mfg_supplier_pn}}</small></td>
           <td><small></small></td>
-          <td><small>{{item.finish}}</small></td>
-          <td><small>{{item.plating}}</small></td>
-          <td><small>{{item.subassembly_quantity}}</small></td>
+          <td><small>{{part.subassembly.finish}}</small></td>
+          <td><small>{{part.subassembly.plating}}</small></td>
+          <td><small>{{part.quantity}}</small></td>
           <td><small>Each</small></td>
-          <td><small>{{item.subassembly_cost}}</small></td>
-          <td><small></small></td>
+          <td><small>{{part.subassembly.subassembly_cost}}</small></td>
+          <td><small>fix</small></td>
         </tr>
         {% endfor %}
       </table>

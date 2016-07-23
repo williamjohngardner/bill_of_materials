@@ -3,25 +3,41 @@
 {% load staticfiles %}
 
 {% block content %}
+<div class="row">
+  <nav>
+    <div class="col-md-2">
+      <a href="{% url 'create_customer_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Customer</small></a>
+      <a href="{% url 'customer_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Customer Listing</small></a>
+      <a href="{% url 'create_supplier_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Supplier</small></a>
+      <a href="{% url 'supplier_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Supplier Listing</small></a>
+      <a href="{% url 'create_part_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Part</small></a>
+      <a href="{% url 'part_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Part Listing</small></a>
+      <a href="{% url 'create_subassembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create SubAssmbly</small></a>
+      <a href="{% url 'subassembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>SubAssembly Listing</small></a>
+      <a href="{% url 'create_assembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Assembly</small></a>
+      <a href="{% url 'assembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Assembly Listing</small></a>
+    </div>
+  </nav>
+  <div class="col-md-9">
+    <div class="row">
 <div class="container">
   <form id="myForm" method="post" action="">
-            <legend>Create A SubAssembly</legend>
-            {% csrf_token %}
-              {{ form|bootstrap }}
+    <legend>Create An Assembly</legend>
+      {% csrf_token %}
+        {{ form|bootstrap }}
         <table border="0" cellpadding="0" cellspacing="0">
             <tbody>
               {% for inline in inlines %}
-              {{inline.management_form}}
-                {% for form in inline.forms %}
-              <tr>
-                <td>{{form|bootstrap}}</td>
-                 <td>{% if inline.instance.pk %}{{ inline.DELETE }}{% endif %}</td>
-              </tr>
+                {{inline.management_form}}
+                  {% for form in inline.forms %}
+                      <tr>
+                        <td>{{form|bootstrap}}</td>
+                        <td>{% if inline.instance.pk %}{{ inline.DELETE }}{% endif %}</td>
+                      </tr>
+                  {% endfor %}
               {% endfor %}
-
-              {% endfor %}
-          </tbody>
-      </table>
+            </tbody>
+        </table>
       <div class="form-group">
         <input type="submit" class="btn btn-primary" value="Create SubAssembly"></input>
       </div>
@@ -32,15 +48,34 @@
 <script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
 <script type="text/javascript" src="{% static 'app/src/jquery.formset.js' %}"></script>
 <script type="text/javascript">
-    $(function() {
+$(function() {
 
-        {% for formset in inlines %}
-          $('#myForm tbody tr').formset({
-              prefix: '{{ formset.prefix }}',
-              formCssClass: 'dynamic-formset{{ forloop.counter }}'
-          });
-        {% endfor %}
+    {% for formset in inlines %}
+      $('#myForm tbody tr').formset({
+          prefix: '{{ formset.prefix }}',
+          formCssClass: 'dynamic-formset{{ forloop.counter }}'
+      });
+    {% endfor %}
 
-    })
+})
 </script>
+
 {% endblock %}
+
+
+
+
+
+        $(function() {
+
+                {% for formset in inlines %}
+                    $('#myForm tbody tr').formset({
+                        prefix: "{{ assemblypartinline.prefix }}",
+                        formCssClass: 'dynamic-formset{{ forloop.counter }}'
+                    })
+                    $('#myForm tbody tr').formset({
+                        prefix: "{{ partinline.prefix }}",
+                        formCssClass: 'dynamic-formset{{ forloop.counter }}'
+                    })
+                })
+                {% endfor %}
