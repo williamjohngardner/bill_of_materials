@@ -2,8 +2,13 @@
 {% load staticfiles %}
 
 {% block content %}
-  <div id="main_wrapper">
     <h3>Centralized Revision Control</h3>
-    <img id="mainimage" src="{% static 'app/images/gbparts.gif' %}" class="img-thumbnail" alt="Bill of Materials" />
+    <img id="mainimage" src="{% static 'app/images/car.jpg' %}" class="img-thumbnail" alt="Bill of Materials" />
+  <div class="container">
+    <h3>What We Do</h3>
+    <div id='one' style="width: 33%; align: center;"><img src="{% static 'app/images/engine.jpg' %}" class="img-thumbnail" alt="Bill of Materials"></div>
+    <div id='two' style="width: 33%; align: center;"><img src="{% static 'app/images/driveshaft.jpg' %}" class="img-thumbnail" alt="Bill of Materials"></div>
+    <div id='three' style="width: 33%; align: center;"><img src="{% static 'app/images/engineblock.jpg' %}" class="img-thumbnail" alt="Bill of Materials"></div>
+    <span class="stretch"></span>
   </div>
 {% endblock %}

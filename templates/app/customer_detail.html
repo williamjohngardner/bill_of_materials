@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+  <nav>
+    <div class="col-md-2">
+      <a href="{% url 'create_customer_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Customer</small></a>
+      <a href="{% url 'customer_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Customer Listing</small></a>
+      <a href="{% url 'create_supplier_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Supplier</small></a>
+      <a href="{% url 'supplier_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Supplier Listing</small></a>
+      <a href="{% url 'create_part_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Part</small></a>
+      <a href="{% url 'part_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Part Listing</small></a>
+      <a href="{% url 'create_subassembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create SubAssmbly</small></a>
+      <a href="{% url 'subassembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>SubAssembly Listing</small></a>
+      <a href="{% url 'create_assembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Assembly</small></a>
+      <a href="{% url 'assembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Assembly Listing</small></a>
+    </div>
+  </nav>
+  <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-12 well">
+            <h2>Customer Id: {{object.pk}}  :  {{object.name}}</h2>
+          </div>
+          <div class="col-md-12 well">
+            <h5><small>Name:  </small><strong>{{object.name}}</strong></h5>
+            <h5><small>Contact:  </small><strong>{{object.contact}}</strong></h5>
+            <h5><small>Phone:  </small><strong>{{object.phone}}</strong></h5>
+            <h5><small>Email:  </small><a href="mailto:{{ object.email }}"><strong>{{object.email}}</strong></a></h5>
+            <h5><small>Website: </small><a href="{{ object.website }}"><strong>{{object.website}}</strong></a></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

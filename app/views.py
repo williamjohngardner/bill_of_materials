@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
 from extra_views.generic import GenericInlineFormSet
 
-from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier
+from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier, Project
 from app.forms import CreateSubAssembly
 
 
@@ -28,7 +28,9 @@ class PartListView(ListView):
 
 class PartDetailView(DetailView):
     model = Part
-    queryset = Part.objects.all()
+    def get_queryset(self, **kwargs):
+        pk = self.kwargs.get('pk', None)
+        return Part.objects.filter(pk=pk)
 
 
 class SubAssemblyPartInline(InlineFormSet):
@@ -59,6 +61,12 @@ class CreateSubAssemblyView(CreateWithInlinesView):
 class SubAssemblyListView(ListView):
     model = SubAssembly
     template_name = "app/subassembly_list.html"
+
+    def set_extended_cost():
+        cost = subassembly.subassembly_cost.part.unit_cost
+        quantity = subassembly.subassemblyquantity.quantity
+        total = cost * quantity
+        print(cost)
 
     def get_queryset(self):
         return self.model.objects.all()
@@ -123,6 +131,14 @@ class CustomerListView(ListView):
         return Customer.objects.all()
 
 
+class CustomerDetailView(DetailView):
+    model = Customer
+
+    def get_queryset(self, **kwargs):
+        pk = self.kwargs.get('pk', None)
+        return Customer.objects.filter(pk=pk)
+
+
 class CreateSupplierView(CreateView):
     model = Supplier
     fields = ['name', 'contact', 'phone', 'email', 'website']
@@ -134,3 +150,32 @@ class SupplierListView(ListView):
 
     def get_queryset(self):
         return Supplier.objects.all()
+
+
+class SupplierDetailView(DetailView):
+    model = Supplier
+
+    def get_queryset(self, **kwargs):
+        pk = self.kwargs.get('pk', None)
+        return Supplier.objects.filter(pk=pk)
+
+
+class CreateProjectView(CreateView):
+    model = Project
+    fields = ['project_number', 'client', 'project_name', 'products', 'quantity_per_product', 'price_per_product', 'extended_price_per_product', 'price_per_project', 'shipping_address', 'shipping_terms', 'expected_delivery']
+    success_url = reverse_lazy("project_list_view")
+
+
+class ProjectListView(ListView):
+    model = Project
+
+    def get_queryset(self):
+        return Project.objects.all()
+
+
+class ProjectDetailView(DetailView):
+    model = Project
+
+    def get_queryset(self, **kwargs):
+        pk = self.kwargs.get('pk', None)
+        return Project.objects.filter(pk=pk)

@@ -116,7 +116,7 @@ class Project(models.Model):
     expected_delivery = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return self.product
+        return self.project_name
 
 
 class Customer(models.Model):

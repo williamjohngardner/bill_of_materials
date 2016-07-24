@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+<nav>
+    <div class="col-md-2">
+      <a href="{% url 'create_customer_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Customer</small></a>
+      <a href="{% url 'customer_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Customer Listing</small></a>
+      <a href="{% url 'create_supplier_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Supplier</small></a>
+      <a href="{% url 'supplier_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Supplier Listing</small></a>
+      <a href="{% url 'create_part_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Part</small></a>
+      <a href="{% url 'part_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Part Listing</small></a>
+      <a href="{% url 'create_subassembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create SubAssmbly</small></a>
+      <a href="{% url 'subassembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>SubAssembly Listing</small></a>
+      <a href="{% url 'create_assembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Assembly</small></a>
+      <a href="{% url 'assembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Assembly Listing</small></a>
+    </div>
+</nav>
+  <div class="col-md-9">
+{% for object in object_list %}
+  <div class="row">
+    <div class="col-md-12 well">
+      <h2><small>Project Id:</small> {{object.pk}}  |  <small>Name:</small> {{object.project_name}}  |  <small>Project Number:</small> {{object.project_number}}</h2>
+    </div>
+    <table class="table table-striped table-bordered table-hover">
+        <tr>
+          <th><small>Project Id</small></th>
+          <th><small>Project Number</small></th>
+          <th><small>Client</small></th>
+          <th><small>Project Name</small></th>
+          <th><small>Products</small></th>
+          <th><small>Quantity</small></th>
+          <th><small>Price/Product</small></th>
+          <th><small>Ext/Price/Product</small></th>
+          <th><small>Project Price</small></th>
+
+        </tr>
+        {% for object in object_list %}
+          <tr>
+          <td><small>{{object.pk}}</small></td>
+          <td><small>{{object.project_number}}</small></td>
+          <td><small>{{object.client}}</small></td>
+          <td><small>{{object.project_name}}</small></td>
+          <td><small>{{object.products}}</small></td>
+          <td><small>{{object.quantity_per_product}}</small></td>
+          <td><small>{{object.price_per_product}}</small></td>
+          <td><small>{{object.extended_price_per_product}}</small></td>
+          <td><small>{{object.price_per_project}}</small></td>
+          </tr>
+          {% endfor %}
+      </table>
+    </div>
+  {% endfor %}
+</div>
+</div>
+{% endblock %}

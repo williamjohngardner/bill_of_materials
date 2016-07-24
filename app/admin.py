@@ -52,7 +52,7 @@ class PlatingTableAdmin(admin.ModelAdmin):
 admin.site.register(PlatingTable, PlatingTableAdmin)
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('project_number', 'client', 'price_per_project', 'expected_delivery')
+    list_display = ('project_number', 'project_name', 'client', 'price_per_project', 'expected_delivery')
 
 admin.site.register(Project, ProjectAdmin)
 
