@@ -3,12 +3,22 @@
 
 {% block content %}
     <h3>Centralized Revision Control</h3>
-    <img id="mainimage" src="{% static 'app/images/car.jpg' %}" class="img-thumbnail" alt="Bill of Materials" />
+    <img id="mainimage" src="{% static 'app/images/car.jpg' %}" class="img-thumbnail drop-shadow" alt="Bill of Materials" />
   <div class="container">
     <h3>What We Do</h3>
-    <div id='one' style="width: 33%; align: center;"><img src="{% static 'app/images/engine.jpg' %}" class="img-thumbnail" alt="Bill of Materials"></div>
-    <div id='two' style="width: 33%; align: center;"><img src="{% static 'app/images/driveshaft.jpg' %}" class="img-thumbnail" alt="Bill of Materials"></div>
-    <div id='three' style="width: 33%; align: center;"><img src="{% static 'app/images/engineblock.jpg' %}" class="img-thumbnail" alt="Bill of Materials"></div>
-    <span class="stretch"></span>
+    <div id='one'><img id="tripleimg" src="{% static 'app/images/engine.jpg' %}" class="img-thumbnail img-rounded drop-shadow" alt="Bill of Materials"></div>
+    <div id='two'><img id="tripleimg" src="{% static 'app/images/driveshaft.jpg' %}" class="img-thumbnail img-rounded drop-shadow" alt="Bill of Materials"></div>
+    <div id='three'><img id="tripleimg" src="{% static 'app/images/engineblock.jpg' %}" class="img-thumbnail img-rounded drop-shadow" alt="Bill of Materials"></div>
+  </div>
+  <div class="container">
+    <div id='textone'><p>
+      Tofu pop-up vice venmo, art party wolf twee. Hella cronut shoreditch, green juice paleo crucifix 90's normcore austin. Bitters kinfolk tattooed hammock ramps, selvage biodiesel leggings everyday carry actually sartorial. Letterpress kinfolk health goth, chia pitchfork swag etsy chambray before they sold out paleo tousled kogi.
+    </p></div>
+    <div id='texttwo'><p>
+      Tofu pop-up vice venmo, art party wolf twee. Hella cronut shoreditch, green juice paleo crucifix 90's normcore austin. Bitters kinfolk tattooed hammock ramps, selvage biodiesel leggings everyday carry actually sartorial. Letterpress kinfolk health goth, chia pitchfork swag etsy chambray before they sold out paleo tousled kogi.
+    </p></div>
+    <div id='textthree'><p>
+      Tofu pop-up vice venmo, art party wolf twee. Hella cronut shoreditch, green juice paleo crucifix 90's normcore austin. Bitters kinfolk tattooed hammock ramps, selvage biodiesel leggings everyday carry actually sartorial. Letterpress kinfolk health goth, chia pitchfork swag etsy chambray before they sold out paleo tousled kogi.
+    </p></div>
   </div>
 {% endblock %}

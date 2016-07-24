@@ -1,44 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
-  <table class="table table-striped table-bordered table-hover">
-    <tr>
-      <th>ID</th>
-      <th>Part Name</th>
-      <th>Part NO</th>
-      <th>Description</th>
-      <th>Category</th>
-      <th>Sub Category</th>
-      <th>Manufacturer</th>
-      <th>Mfg PN</th>
-      <th>Dimensions</th>
-      <th>Finish</th>
-      <th>Plating</th>
-      <th>UOM</th>
-      <th>Cost/Unit</th>
-      <th>Part URL</th>
-      <th>Notes</th>
-    </tr>
-    {% for object in object_list  %}
-      <tr>
-        <td>{{object.pk}}</td>
-        <td>{{object.part_name}}</td>
-        <td>{{object.part_number}}</td>
-        <td>{{object.description}}</td>
-        <td>{{object.category}}</td>
-        <td>{{object.sub_category}}</td>
-        <td>{{object.manufacturer}}</td>
-        <td>{{object.manufacturer_pn}}</td>
-        <td>{{object.dimensions}}</td>
-        <td>{{object.finish}}</td>
-        <td>{{object.plating}}</td>
-        <td>{{object.unit_cost}}</td>
-        <td>{{object.uom}}</td>
-        <td>{{object.part_url}}</td>
-        <td>{{object.notes}}</td>
-      </tr>
-    {% endfor %}
-  </table>
+<div class="row">
+<nav>
+    <div class="col-md-2">
+      <a href="{% url 'create_customer_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Customer</small></a>
+      <a href="{% url 'customer_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Customer Listing</small></a>
+      <a href="{% url 'create_supplier_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Supplier</small></a>
+      <a href="{% url 'supplier_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Supplier Listing</small></a>
+      <a href="{% url 'create_part_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Part</small></a>
+      <a href="{% url 'part_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Part Listing</small></a>
+      <a href="{% url 'create_subassembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create SubAssmbly</small></a>
+      <a href="{% url 'subassembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>SubAssembly Listing</small></a>
+      <a href="{% url 'create_assembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Assembly</small></a>
+      <a href="{% url 'assembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Assembly Listing</small></a>
+      <a href="{% url 'create_project_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Project</small></a>
+      <a href="{% url 'project_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Project Listing</small></a>
+    </div>
+</nav>
+  <div class="col-md-9">
+{% for object in object_list %}
+  <div class="row">
+    <div class="col-md-12 well">
+      <h2>Part Id: {{object.pk}}  :  {{object.part_name}}</h2>
+    </div>
+    <div class="col-md-6 well">
+      <h5><small>Part Name:  </small><strong>{{object.part_name}}</strong></h5>
+      <h5><small>Part Number:  </small><strong>{{object.part_number}}</strong></h5>
+      <h5><small>Description:  </small><strong>{{object.description}}</strong></h5>
+      <h5><small>Category:  </small><strong>{{object.category}}</strong></h5>
+      <h5><small>Sub Category:  </small><strong>{{object.sub_category}}</strong></h5>
+      <h5><small>CAD File:  </small><strong>{{object.cad_file}}</strong></h5>
+    </div>
+
+    <div class="col-md-6 well">
+      <h5><small>Manufacturer:  </small><strong>{{object.manufacturer}}</strong></h5>
+      <h5><small>Manufacturer Part Number:  </small><strong>{{object.manufacturer_pn}}</strong></h5>
+      <h5><small>Finish:  </small><strong>{{object.finish}}</strong></h5>
+      <h5><small>Plating:  </small><strong>{{object.plating}}</strong></h5>
+      <h5><small>Cost:  </small><strong>Needs to come from Project Data</strong></h5>
+      <h5><small>Cost:  </small><strong>{{object.unit_cost}}</strong></h5>
+    </div>
+    <div class="col-md-12 well">
+    <h5>{{object.notes}}</h5>
+    </div>
+{% endfor %}
+</div>
 </div>
 {% endblock %}
