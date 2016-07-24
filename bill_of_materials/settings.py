@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    'bootstrapform'
+    'bootstrapform',
+    'mathfilters'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -123,3 +124,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR
+USE_THOUSAND_SEPARATOR = True

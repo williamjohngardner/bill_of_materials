@@ -1,0 +1,6 @@
+django
+django-bootstrap-form
+django-extra-views
+pillow
+six
+django-mathfilters

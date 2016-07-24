@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load mathfilters %}
 
 {% block content %}
 <div class="row">
@@ -22,7 +23,7 @@
 {% for object in object_list %}
   <div class="row">
     <div class="col-md-12 well">
-      <h2><small>SubAssembly Id:</small> {{object.id}}  |  <small>Name:</small> {{object.sub_assembly_name}}  |  <small>Part Number:</small> {{object.sub_assembly_number}}  |  <small>CAD: <a href="{{object.cad_file.url}}">Click to View CAD</a></small></h2>
+      <h2><small>SubAssembly Id:</small> {{object.id}}  |  <small>Name:</small> {{object.sub_assembly_name}}  |  <small>Part Number:</small> {{object.sub_assembly_number}}  |  <small><a href="{{object.cad_file.url}}">Click to View CAD</a></small></h2>
     </div>
     <table class="table table-striped table-bordered table-hover">
         <tr>
@@ -58,8 +59,8 @@
           <td><small>{{part.part.plating}}</small></td>
           <td><small>{{part.quantity}}</small></td>
           <td><small>{{part.part.uom}}</small></td>
-          <td><small>{{part.part.unit_cost}}</small></td>
-          <td><small></small></td>
+          <td><small>${{part.part.unit_cost}}</small></td>
+          <td><small>${{part.quantity|mul:part.part.unit_cost}}</small></td>
           </tr>
           {% endfor %}
       </table>

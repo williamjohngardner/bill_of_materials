@@ -5,6 +5,12 @@
   box-shadow: 0 0 15px gray;
 }
 
+#title{
+  display: inline-block;;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #one, #two, #three{
     width: 950px;
     margin-left: auto;

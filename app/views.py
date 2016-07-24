@@ -54,20 +54,14 @@ class AssemblyPartInline(InlineFormSet):
 class CreateSubAssemblyView(CreateWithInlinesView):
     model = SubAssembly
     inlines = [SubAssemblyPartInline]
-    fields = ['sub_assembly_name', 'sub_assembly_number', 'description', 'category', 'sub_category', 'mfg_supplier', 'mfg_supplier_pn', 'finish', 'plating', 'subassembly_cost', 'notes', 'cad_file']
+    fields = ['sub_assembly_name', 'sub_assembly_number', 'description', 'category', 'sub_category', 'mfg_supplier', 'mfg_supplier_pn', 'finish', 'plating', 'notes', 'cad_file']
     success_url = reverse_lazy("subassembly_list_view")
 
 
 class SubAssemblyListView(ListView):
     model = SubAssembly
     template_name = "app/subassembly_list.html"
-
-    def set_extended_cost():
-        cost = subassembly.subassembly_cost.part.unit_cost
-        quantity = subassembly.subassemblyquantity.quantity
-        total = cost * quantity
-        print(cost)
-
+    
     def get_queryset(self):
         return self.model.objects.all()
 

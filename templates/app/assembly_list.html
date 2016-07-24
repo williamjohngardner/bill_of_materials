@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load mathfilters %}
 
 {% block content %}
 <div class="row">
@@ -22,7 +23,7 @@
   {% for object in object_list  %}
   <div class="row">
     <div class="col-md-12 well">
-      <h2>Assembly Id: {{object.pk}}  :  {{object.assembly_name}}</h2>
+      <h2><small>Id:</small> {{object.pk}}  |  <small>Name:</small> {{object.assembly_name}}  |  <small>Cost/Assembly:</small> ${% for part in object.assemblyquantity_set.all %}{{part.subassembly.subassembly_cost|mul:part.quantity}}{% endfor %}</h2>
     </div>
     <div class="col-md-6 well">
       <h5><small>Part Name:  </small><strong>{{object.assembly_name}}</strong></h5>
@@ -30,15 +31,13 @@
       <h5><small>Description:  </small><strong>{{object.description}}</strong></h5>
       <h5><small>Category:  </small><strong>{{object.category}}</strong></h5>
       <h5><small>Sub Category:  </small><strong>{{object.sub_category}}</strong></h5>
-      <h5><small>CAD File:  </small><strong>{{object.cad_file}}</strong></h5>
     </div>
     <div class="col-md-6 well">
       <h5><small>Manufacturer:  </small><strong>{{object.supplier}}</strong></h5>
       <h5><small>Manufacturer Part Number:  </small><strong>{{object.supplier_pn}}</strong></h5>
       <h5><small>Finish:  </small><strong>{{object.finish}}</strong></h5>
       <h5><small>Plating:  </small><strong>{{object.plating}}</strong></h5>
-      <h5><small>Cost:  </small><strong>Needs to come from Project Data</strong></h5>
-      <h5><small>Cost:  </small><strong>{{object.assembly_cost}}</strong></h5>
+      <h5><small><a href="{{object.cad_file.url}}">Click to View CAD</a></small></h5>
     </div>
     <div class="col-md-12 well">
     <h5>{{object.notes}}</h5>
