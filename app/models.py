@@ -106,7 +106,7 @@ class Project(models.Model):
     project_number = models.AutoField(primary_key=True)
     client = models.ForeignKey('app.Customer')
     project_name = models.CharField(max_length=50)
-    products = models.ManyToManyField(Assembly, null=True, blank=True)
+    products = models.ForeignKey(Assembly, null=True, blank=True)
     quantity_per_product = models.IntegerField(null=True, blank=True)
     price_per_product = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     extended_price_per_product = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)

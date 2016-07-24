@@ -24,7 +24,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-5">
-      <form role="form">
+      <form role="form" method="post">
         <legend>Create A New Part</legend>
           {% csrf_token %}
             {{ form|bootstrap }}

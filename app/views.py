@@ -4,6 +4,8 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import User
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
 from extra_views.generic import GenericInlineFormSet
+from django.db.models import Sum
+
 
 from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier, Project
 from app.forms import CreateSubAssembly
@@ -61,13 +63,15 @@ class CreateSubAssemblyView(CreateWithInlinesView):
 class SubAssemblyListView(ListView):
     model = SubAssembly
     template_name = "app/subassembly_list.html"
-    
+
     def get_queryset(self):
         return self.model.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['subassembly'] = SubAssembly.objects.all()
+        context['unit_cost'] = Part.objects.aggregate(Sum('unit_cost'))
+        context['quantity'] = SubAssemblyQuantity.objects.aggregate(Sum('quantity'))
         return context
 
 
