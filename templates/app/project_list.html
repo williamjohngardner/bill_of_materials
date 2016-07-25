@@ -30,25 +30,18 @@
           <th><small>Project Number</small></th>
           <th><small>Client</small></th>
           <th><small>Project Name</small></th>
-          <th><small>Price/Product</small></th>
-          <th><small>Ext/Price/Product</small></th>
           <th><small>Project Price</small></th>
 
         </tr>
-        {% for object in object_list %}
           <tr>
           <td><small>{{object.pk}}</small></td>
           <td><small>{{object.project_number}}</small></td>
           <td><small>{{object.client}}</small></td>
           <td><small>{{object.project_name}}</small></td>
-          <td><small>{{object.price_per_product}}</small></td>
-          <td><small>{{object.extended_price_per_product}}</small></td>
           <td><small>{{object.price_per_project}}</small></td>
           </tr>
-          {% endfor %}
       </table>
     </div>
-  {% endfor %}
   <div class="row">
     <div class="col-md-12 page-header">
       <h3><small>Items Ordered:</small></h3>
@@ -69,23 +62,25 @@
       <th><small>Quantity</small></th>
       <th><small>Cost/Assembly</small></th>
     </tr>
-    {% for object in object_list %}
+    {% for assembly in object.projectquantity_set.all %}
     <tr>
-      <td><small>{{object.products.pk}}</small></td>
-      <td><small>{{object.products.assembly_name}}</small></td>
-      <td><small>{{object.products.assembly_part_number}}</small></td>
-      <td><small>{{object.products.description}}</small></td>
-      <td><small>{{object.products.category}}</small></td>
-      <td><small>{{object.products.sub_category}}</small></td>
-      <td><small>{{object.products.supplier}}</small></td>
-      <td><small>{{object.products.supplier_pn}}</small></td>
-      <td><small>{{object.products.finish}}</small></td>
-      <td><small>{{object.products.plating}}</small></td>
-      <td><small>{{object.quantity_per_product}}</small></td>
-      <td><small>{{object.products.assembly_cost}}</small></td>
+      <td><small>{{assembly.assembly.pk}}</small></td>
+      <td><small>{{assembly.assembly.assembly_name}}</small></td>
+      <td><small>{{assembly.assembly.assembly_part_number}}</small></td>
+      <td><small>{{assembly.assembly.description}}</small></td>
+      <td><small>{{assembly.assembly.category}}</small></td>
+      <td><small>{{assembly.assembly.sub_category}}</small></td>
+      <td><small>{{assembly.assembly.supplier}}</small></td>
+      <td><small>{{assembly.assembly.supplier_pn}}</small></td>
+      <td><small>{{assembly.assembly.finish}}</small></td>
+      <td><small>{{assembly.assembly.plating}}</small></td>
+      <td><small>{{assembly.quantity}}</small></td>
+      <td><small>{{assembly.assembly.assembly_cost}}</small></td>
     </tr>
+
     {% endfor %}
   </table>
 </div>
+{% endfor %}
 </div>
 {% endblock %}

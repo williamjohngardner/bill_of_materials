@@ -23,7 +23,7 @@
 {% for object in object_list %}
   <div class="row">
     <div class="col-md-12 well">
-      <h2><small>ID:</small> {{object.id}}  |  <small>Name:</small> {{object.sub_assembly_name}}  |  <small>Part Number:</small> {{object.sub_assembly_number}}  |  <small><a href="{{object.cad_file.url}}">Click to View CAD</a></small>  |  <small>Cost/SubAssembly:</small> ${% for part in object.subassemblyquantity_set.all %}{{part.part.unit_cost|mul:part.quantity}}{% endfor %}</h2>
+      <h2><small>ID:</small> {{object.id}}  |  <small>Name:</small> {{object.sub_assembly_name}}  |  <small>Part Number:</small> {{object.sub_assembly_number}}  |  {% if object.cad_file %}<small><a href="{{object.cad_file.url}}">Click to View CAD</a></small>{% else %}<small>No CAD File Uploaded</small>{% endif %}  |  <small>Cost/SubAssembly:</small> ${% for part in object.subassemblyquantity_set.all %}{{part.part.unit_cost|mul:part.quantity}}{% endfor %}</h2>
     </div>
     <table class="table table-striped table-bordered table-hover">
         <tr>

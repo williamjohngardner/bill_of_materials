@@ -7,7 +7,7 @@
 
 #title{
   display: inline-block;;
-  margin-left: auto;
+  margin-left: 7%;
   margin-right: auto;
 }
 
@@ -27,6 +27,14 @@
     text-align: justify;
 }
 
+#textfour{
+    width: 950px;
+    margin-left: 7%;
+    margin-right: auto;
+    display: inline-block;
+    text-align: justify;
+}
+
 #tripleimg{
   box-shadow: 0 0 8px gray;
 }
@@ -35,4 +43,13 @@ H3 { text-align: center }
 
 input[type='button'] {
    text-align: left;
+}
+
+footer{
+  background-color: gray;
+  padding: 50px 20px;
+}
+
+#copyright{
+  display: inline;
 }

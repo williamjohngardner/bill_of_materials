@@ -125,7 +125,7 @@ class AssemblyDetailView(DetailView):
 class CreateProjectView(CreateWithInlinesView):
     model = Project
     inlines = [ProjectPartInline]
-    fields = ['project_number', 'client', 'project_name', 'extended_price_per_product', 'price_per_project', 'shipping_address', 'shipping_terms', 'expected_delivery']
+    fields = ['project_number', 'client', 'project_name', 'price_per_project', 'shipping_address', 'shipping_terms', 'expected_delivery']
     success_url = reverse_lazy("project_list_view")
 
 
