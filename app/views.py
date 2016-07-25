@@ -7,7 +7,7 @@ from extra_views.generic import GenericInlineFormSet
 from django.db.models import Sum
 
 
-from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier, Project
+from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier, Project, ProjectQuantity
 from app.forms import CreateSubAssembly
 
 
@@ -50,6 +50,12 @@ class PartInLine(InlineFormSet):
 class AssemblyPartInline(InlineFormSet):
     model = AssemblyQuantity
     fields = ['subassembly', 'quantity']
+    extra = 1
+
+
+class ProjectPartInline(InlineFormSet):
+    model = ProjectQuantity
+    fields = ['assembly', 'quantity', 'price_per_assembly']
     extra = 1
 
 
@@ -116,6 +122,29 @@ class AssemblyDetailView(DetailView):
         return Assembly.objects.filter(pk=pk)
 
 
+class CreateProjectView(CreateWithInlinesView):
+    model = Project
+    inlines = [ProjectPartInline]
+    fields = ['project_number', 'client', 'project_name', 'extended_price_per_product', 'price_per_project', 'shipping_address', 'shipping_terms', 'expected_delivery']
+    success_url = reverse_lazy("project_list_view")
+
+
+class ProjectListView(ListView):
+    model = Project
+
+    def get_queryset(self):
+        return Project.objects.all()
+
+
+class ProjectDetailView(DetailView):
+    model = Project
+
+    def get_queryset(self, **kwargs):
+        pk = self.kwargs.get('pk', None)
+        return Project.objects.filter(pk=pk)
+
+
+
 class CreateCustomerView(CreateView):
     model = Customer
     fields = ['name', 'contact', 'phone', 'email', 'website']
@@ -156,24 +185,3 @@ class SupplierDetailView(DetailView):
     def get_queryset(self, **kwargs):
         pk = self.kwargs.get('pk', None)
         return Supplier.objects.filter(pk=pk)
-
-
-class CreateProjectView(CreateView):
-    model = Project
-    fields = ['project_number', 'client', 'project_name', 'products', 'quantity_per_product', 'price_per_product', 'extended_price_per_product', 'price_per_project', 'shipping_address', 'shipping_terms', 'expected_delivery']
-    success_url = reverse_lazy("project_list_view")
-
-
-class ProjectListView(ListView):
-    model = Project
-
-    def get_queryset(self):
-        return Project.objects.all()
-
-
-class ProjectDetailView(DetailView):
-    model = Project
-
-    def get_queryset(self, **kwargs):
-        pk = self.kwargs.get('pk', None)
-        return Project.objects.filter(pk=pk)

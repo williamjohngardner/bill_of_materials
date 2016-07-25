@@ -20,10 +20,10 @@
     </div>
 </nav>
   <div class="col-md-9">
+    <div class="row">
 {% for object in object_list %}
-  <div class="row">
     <div class="col-md-12 well">
-      <h2><small>Part Id: </small>{{object.pk}}  |  <small>Part Name: </small>{{object.part_name}}  |  <small>Unit Cost: </small>${{object.unit_cost}}  |  <img class="thumbnail" src="{{object.image.url}}" alt="{{object.part_name}}" /></h2>
+      <h2><small>Part Id: </small>{{object.pk}}  |  <small>Part Name: </small>{{object.part_name}}  |  <small>Unit Cost: </small>${{object.unit_cost}}  |  <img class="thumbnail" src="{{object.image_url}}" alt="{{object.part_name}}" /></h2>
     </div>
     <div class="col-md-6 well">
       <h5><small>Part Name:  </small><strong>{{object.part_name}}</strong></h5>
@@ -38,7 +38,11 @@
       <h5><small>Manufacturer Part Number:  </small><strong>{{object.manufacturer_pn}}</strong></h5>
       <h5><small>Finish:  </small><strong>{{object.finish}}</strong></h5>
       <h5><small>Plating:  </small><strong>{{object.plating}}</strong></h5>
+      {% if object.cad_file %}
       <h5><small><a href="{{object.cad_file.url}}">Click to View CAD</a></small></h5>
+        {% else %}
+          <h5><small>No CAD File Uploaded</small></h5>
+      {% endif %}
     </div>
     <div class="col-md-12 well">
     <h5>{{object.notes}}</h5>
