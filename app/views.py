@@ -49,7 +49,7 @@ class PartInLine(InlineFormSet):
 
 class AssemblyPartInline(InlineFormSet):
     model = AssemblyQuantity
-    fields = ['subassembly', 'quantity']
+    fields = ['part', 'subassembly', 'quantity']
     extra = 1
 
 
@@ -76,8 +76,7 @@ class SubAssemblyListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['subassembly'] = SubAssembly.objects.all()
-        context['unit_cost'] = Part.objects.aggregate(Sum('unit_cost'))
-        context['quantity'] = SubAssemblyQuantity.objects.aggregate(Sum('quantity'))
+
         return context
 
 
@@ -97,7 +96,7 @@ class SubAssemblyInline(InlineFormSet):
 
 class CreateAssemblyView(CreateWithInlinesView):
     model = Assembly
-    inlines = [AssemblyPartInline, PartInLine]
+    inlines = [AssemblyPartInline]
     fields = ['assembly_name', 'assembly_part_number', 'description', 'category', 'sub_category', 'supplier', 'supplier_pn', 'finish', 'plating', 'assembly_cost', 'notes', 'cad_file']
     success_url = reverse_lazy("assembly_list_view")
 
@@ -107,11 +106,6 @@ class AssemblyListView(ListView):
 
     def get_queryset(self):
         return self.model.objects.all()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['assembly'] = Assembly.objects.all()
-        return context
 
 
 class AssemblyDetailView(DetailView):
@@ -142,7 +136,6 @@ class ProjectDetailView(DetailView):
     def get_queryset(self, **kwargs):
         pk = self.kwargs.get('pk', None)
         return Project.objects.filter(pk=pk)
-
 
 
 class CreateCustomerView(CreateView):

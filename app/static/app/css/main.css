@@ -1,3 +1,32 @@
+nav{
+  padding-bottom: 20px;
+}
+
+#menu{
+  padding-top: 10px;
+}
+
+#search{
+  padding-top: 15px;
+}
+
+#logo{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#logo_sm{
+  padding-bottom: 5px;
+}
+
+
+#tag{
+  display: block;
+  margin-left: 41.5%;
+  margin-right: auto;
+}
+
 #mainimage{
   display: block;
   margin-left: auto;
@@ -27,12 +56,18 @@
     text-align: justify;
 }
 
+#tritext{
+  padding-top: 15px;
+}
+
 #textfour{
     width: 950px;
-    margin-left: 7%;
+    margin-left: 8.25%;
     margin-right: auto;
     display: inline-block;
     text-align: justify;
+    padding-top: 15px;
+    padding-bottom: 100px;
 }
 
 #tripleimg{

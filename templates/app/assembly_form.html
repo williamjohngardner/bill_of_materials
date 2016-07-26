@@ -51,9 +51,11 @@
 </div>
 
 
+{% endblock %}
 
-<script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
+{% block extrascript %}
 <script type="text/javascript" src="{% static 'app/src/jquery.formset.js' %}"></script>
+
 <script type="text/javascript">
 $(function() {
 
@@ -66,23 +68,4 @@ $(function() {
 
 })
 </script>
-
 {% endblock %}
-
-
-
-
-
-        $(function() {
-
-                {% for formset in inlines %}
-                    $('#myForm tbody tr').formset({
-                        prefix: "{{ assemblypartinline.prefix }}",
-                        formCssClass: 'dynamic-formset{{ forloop.counter }}'
-                    })
-                    $('#myForm tbody tr').formset({
-                        prefix: "{{ partinline.prefix }}",
-                        formCssClass: 'dynamic-formset{{ forloop.counter }}'
-                    })
-                })
-                {% endfor %}

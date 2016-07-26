@@ -52,19 +52,23 @@
 </div>
 
 
+{% endblock %}
 
-<script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
+{% block extrascript %}
 <script type="text/javascript" src="{% static 'app/src/jquery.formset.js' %}"></script>
+
+
 <script type="text/javascript">
-    $(function() {
+  $(document).ready(function() {
+    {% for formset in inlines %}
+      $('#myForm tbody tr').formset({
+          prefix: '{{ formset.prefix }}',
+          formCssClass: 'dynamic-formset{{ forloop.counter }}'
+      });
+    {% endfor %}
 
-        {% for formset in inlines %}
-          $('#myForm tbody tr').formset({
-              prefix: '{{ formset.prefix }}',
-              formCssClass: 'dynamic-formset{{ forloop.counter }}'
-          });
-        {% endfor %}
 
-    })
+  })
+
 </script>
 {% endblock %}

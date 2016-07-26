@@ -2,3 +2,4 @@ __pycache__
 *.pyc
 dbsqlite3
 .idea/
+highton.py

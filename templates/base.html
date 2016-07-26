@@ -18,22 +18,22 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">Dammit Bill! of Materials</a>
+      <a class="navbar-brand" href="/"><img id="logo-sm" src="{% static 'app/images/logo_sm.jpg' %}" alt="Subasmbly"/></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-      <form class="navbar-form navbar-left" role="search">
+      <form id="search" class="navbar-form navbar-right" role="search">
         <button type="submit" class="btn btn-default">Login</button>
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Login">
         </div>
       </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="{% url 'create_part_view' %}">Get Started</a></li>
+      <ul id="menu" class="nav navbar-nav navbar-left">
+        <li><a href="{% url 'create_part_view' %}"><strong>Get Started</strong></a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Dropdown</strong><span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Action</a></li>
             <li><a href="#">Another action</a></li>
@@ -48,6 +48,10 @@
 </nav>
       {% block content %}
         There is nothing here.
+      {% endblock %}
+      <script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
+      <script type="text/javascript" src="{% static 'app/js/bootstrap.js' %}"></script>
+      {% block extrascript %}
       {% endblock %}
   </body>
 </html>

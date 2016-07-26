@@ -49,7 +49,6 @@ class Part(models.Model):
             return self.image.url
         return "https://cdn3.iconfinder.com/data/icons/smoothfill-action/30/action_088-no_camera-capture-picture-image-photo-128.png"
 
-
     def __str__(self):
         return self.part_name
 
@@ -59,6 +58,11 @@ class SubAssemblyQuantity(models.Model):
     quantity = models.IntegerField()
     assembly = models.ForeignKey('app.SubAssembly')
 
+    @property
+    def cost(self):
+        cost = self.part.unit_cost * self.quantity
+        return cost
+
     def __str__(self):
         return self.part
 
@@ -67,10 +71,21 @@ class AssemblyQuantity(models.Model):
     part = models.ForeignKey(Part, null=True, blank=True)
     subassembly = models.ForeignKey('app.SubAssembly', null=True, blank=True)
     quantity = models.IntegerField()
+    cost = models.DecimalField(max_digits=10, decimal_places=2)
     assembly = models.ForeignKey('app.Assembly', null=True, blank=True)
 
+    @property
+    def subassembly_cost(self):
+        cost = self.subassembly.cost
+        return cost
+
+    @property
+    def assembly_cost(self):
+        cost = self.part.unit_cost * self.quantity
+        return self.cost
+
     def __str__(self):
-        return self.part
+        return ""
 
 
 class SubAssembly(models.Model):
@@ -105,8 +120,6 @@ class Assembly(models.Model):
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(upload_to="cad_files", null=True, blank=True)
 
-    def __str__(self):
-        return self.assembly_name
 
 
 class ProjectQuantity(models.Model):
@@ -115,9 +128,6 @@ class ProjectQuantity(models.Model):
     price_per_assembly = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     project = models.ForeignKey('app.Project', null=True, blank=True)
 
-
-    def __str__(self):
-        return self.assembly
 
 
 class Project(models.Model):

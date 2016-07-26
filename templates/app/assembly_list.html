@@ -20,10 +20,10 @@
     </div>
   </nav>
   <div class="col-md-9">
+    <div class="row">
   {% for object in object_list  %}
-  <div class="row">
     <div class="col-md-12 well">
-      <h2><small>Id:</small> {{object.pk}}  |  <small>Name:</small> {{object.assembly_name}}  |  <small>Cost/Assembly:</small> ${% for part in object.assemblyquantity_set.all %}{{part.subassembly.subassembly_cost|mul:part.quantity}}{% endfor %}</h2>
+        <h2><small>Id:</small> {{object.pk}}  |  <small>Name:</small> {{object.assembly_name}}  |  <small>Cost/Assembly:</small> $THIS DONT WORK YET</h2>
     </div>
     <div class="col-md-6 well">
       <h5><small>Part Name:  </small><strong>{{object.assembly_name}}</strong></h5>
@@ -37,7 +37,11 @@
       <h5><small>Manufacturer Part Number:  </small><strong>{{object.supplier_pn}}</strong></h5>
       <h5><small>Finish:  </small><strong>{{object.finish}}</strong></h5>
       <h5><small>Plating:  </small><strong>{{object.plating}}</strong></h5>
+      {% if object.cad_file %}
       <h5><small><a href="{{object.cad_file.url}}">Click to View CAD</a></small></h5>
+        {% else %}
+          <h5><small>No CAD File Uploaded</small></h5>
+      {% endif %}
     </div>
     <div class="col-md-12 well">
     <h5>{{object.notes}}</h5>
@@ -60,11 +64,11 @@
           <th><small>UoM</small></th>
           <th><small>Cost/Unit</small></th>
           <th><small>Extended Cost</small></th>
-
         </tr>
 
         {% for part in object.assemblyquantity_set.all  %}
-        <tr>
+          {% if part.part %}
+          <tr>
           <td><small>{{part.part.pk}}</small></td>
           <td><small>{{part.part.part_name}}</small></td>
           <td><small>{{part.part.part_number}}</small></td>
@@ -79,9 +83,11 @@
           <td><small>{{part.quantity}}</small></td>
           <td><small>{{part.part.uom}}</small></td>
           <td><small>{{part.part.unit_cost}}</small></td>
-          <td><small>fix</small></td>
-        </tr>
+          <td><small>${{part.quantity|mul:part.part.unit_cost}}</small></td>
+          </tr>
+        {% endif %}
         <tr>
+        {% if part.subassembly %}
           <td><small>{{part.subassembly.pk}}</small></td>
           <td><small>{{part.subassembly.sub_assembly_name}}</small></td>
           <td><small>{{part.subassembly.sub_assembly_number}}</small></td>
@@ -96,10 +102,11 @@
           <td><small>{{part.quantity}}</small></td>
           <td><small>Each</small></td>
           <td><small>{{part.subassembly.subassembly_cost}}</small></td>
-          <td><small>fix</small></td>
-        </tr>
+          <td><small>${{part.quantity|mul:part.subassembly.subassembly_cost}}</small></td>
+        {% endif %}
         {% endfor %}
-      </table>
+      </tr>
+    </table>
   {% endfor %}
 </div>
 {% endblock %}
