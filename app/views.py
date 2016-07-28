@@ -5,10 +5,12 @@ from django.contrib.auth.models import User
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
 from extra_views.generic import GenericInlineFormSet
 from django.db.models import Sum
+from highton import Highton
+import os
 
 
 from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier, Project, ProjectQuantity
-from app.forms import CreateSubAssembly
+from app.forms import CreateCustomer, CreateSupplier
 
 
 class IndexView(TemplateView):
@@ -140,8 +142,18 @@ class ProjectDetailView(DetailView):
 
 class CreateCustomerView(CreateView):
     model = Customer
-    fields = ['name', 'contact', 'phone', 'email', 'website']
+    form_class = CreateCustomer
+    # fields = ['name', 'contact', 'phone', 'email', 'website']
     success_url = reverse_lazy("customer_list_view")
+
+    def form_valid(self, form):
+        high = Highton(
+            api_key = os.environ['highrise_api_key'],
+            user = 'williamjohngardner')
+
+        customer = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address>{}</address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>{http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format('first_name', 'last_name', 'title', 'company_name', 'phone_number', 'email_address', 'twitter_account', 'twitter_account', 'web_address', 'street_address', 'city', 'state', 'zip_code', 'country')
+        high.post_person(customer)
+        return super().form_valid(form)
 
 
 class CustomerListView(ListView):
@@ -161,8 +173,18 @@ class CustomerDetailView(DetailView):
 
 class CreateSupplierView(CreateView):
     model = Supplier
-    fields = ['name', 'contact', 'phone', 'email', 'website']
+    form_class = CreateSupplier
+    # fields = ['name', 'contact', 'phone', 'email', 'website']
     success_url = reverse_lazy("supplier_list_view")
+
+    def form_valid(self, form):
+        high = Highton(
+            api_key = os.environ['highrise_api_key'],
+            user = 'williamjohngardner')
+
+        supplier = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address>{}</address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>{http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format('first_name', 'last_name', 'title', 'company_name', 'phone_number', 'email_address', 'twitter_account', 'twitter_account', 'web_address', 'street_address', 'city', 'state', 'zip_code', 'country')
+        high.post_person(supplier)
+        return super().form_valid(form)
 
 
 class SupplierListView(ListView):

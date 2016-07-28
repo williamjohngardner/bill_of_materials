@@ -32,12 +32,12 @@ class AssemblyAdmin(admin.ModelAdmin):
 admin.site.register(Assembly, AssemblyAdmin)
 
 class SupplierAdmin(admin.ModelAdmin):
-    list_display = ('name', 'contact', 'phone', 'email', 'website')
+    list_display = ('first_name', 'last_name', 'title', 'company_name', 'phone_number', 'email_address', 'twitter_account', 'web_address', 'street_address', 'city', 'state', 'zip_code', 'country')
 
 admin.site.register(Supplier, SupplierAdmin)
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'contact', 'phone', 'email', 'website')
+    list_display = ('first_name', 'last_name', 'title', 'company_name', 'phone_number', 'email_address', 'twitter_account', 'web_address', 'street_address', 'city', 'state', 'zip_code', 'country')
 
 admin.site.register(Customer, CustomerAdmin)
 

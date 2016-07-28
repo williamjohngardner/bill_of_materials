@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'app',
     'bootstrapform',
     'mathfilters',
+    'highton'
 ]
 
 MIDDLEWARE_CLASSES = [

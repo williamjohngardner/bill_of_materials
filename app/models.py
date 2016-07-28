@@ -148,22 +148,38 @@ class Project(models.Model):
 
 
 class Customer(models.Model):
-    name = models.CharField(max_length=50)
-    contact = models.CharField(max_length=25, null=True, blank=True)
-    phone = models.IntegerField(null=True, blank=True)
-    email = models.EmailField(null=True, blank=True)
-    website = models.URLField(null=True, blank=True)
+    first_name = models.CharField(max_length=50, null=True, blank=True)
+    last_name = models.CharField(max_length=50, null=True, blank=True )
+    title = models.CharField(max_length=30)
+    company_name = models.CharField(max_length=25, null=True, blank=True)
+    phone_number = models.IntegerField(null=True, blank=True)
+    email_address = models.EmailField(null=True, blank=True)
+    twitter_account = models.CharField(max_length=25, null=True, blank=True)
+    web_address = models.URLField(null=True, blank=True)
+    street_address = models.CharField(max_length=50, null=True, blank=True)
+    city = models.CharField(max_length=50, null=True, blank=True)
+    state = models.CharField(max_length=2, null=True, blank=True)
+    zip_code = models.IntegerField(null=True, blank=True)
+    country = models.CharField(max_length=25, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
 
 class Supplier(models.Model):
-    name = models.CharField(max_length=50)
-    contact = models.CharField(max_length=25, null=True, blank=True)
-    phone = models.IntegerField(null=True, blank=True)
-    email = models.EmailField(null=True, blank=True)
-    website = models.URLField(null=True, blank=True)
+    first_name = models.CharField(max_length=50, null=True, blank=True)
+    last_name = models.CharField(max_length=50, null=True, blank=True )
+    title = models.CharField(max_length=30)
+    company_name = models.CharField(max_length=25, null=True, blank=True)
+    phone_number = models.IntegerField(null=True, blank=True)
+    email_address = models.EmailField(null=True, blank=True)
+    twitter_account = models.CharField(max_length=25, null=True, blank=True)
+    web_address = models.URLField(null=True, blank=True)
+    street_address = models.CharField(max_length=50, null=True, blank=True)
+    city = models.CharField(max_length=50, null=True, blank=True)
+    state = models.CharField(max_length=2, null=True, blank=True)
+    zip_code = models.IntegerField(null=True, blank=True)
+    country = models.CharField(max_length=25, null=True, blank=True)
 
     def __str__(self):
         return self.name
