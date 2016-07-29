@@ -18,13 +18,21 @@
       <a href="{% url 'project_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Project Listing</small></a>
     </div>
 </nav>
-  <div class="col-md-9">
-      <div class="row">
-        {% for object in object_list %}
-            <div class="col-md-12 well well-sm">
-              <h4><small>Supplier Id: </small>{{object.pk}}  |  <small>Supplier Name: </small>{{object.name}} <a class="btn btn-primary pull-right" type="button" name="drilldown" href="{% url 'supplier_detail_view' object.pk %}">Details</a></h4>
-            </div>
-        {% endfor %}
-  </div>
+<div class="col-md-9">
+    <div class="row">
+      <div class="col-md-12 well well-lg">
+        <h3 class="pull-left">Supplier Listing</h3>
+        </div>
+      {% for object in object_list %}
+          <div class="col-md-12 well well-sm">
+            <h4><small>Subasmbly ID: </small>{{object.pk}}  |  <small>Company: </small>{{object.company_name}}  |  <small>Supplier Name: </small>{{object.first_name}} {{object.last_name}}, {{object.title}}<a class="btn btn-primary pull-right" type="button" name="drilldown" href="{% url 'customer_detail_view' object.pk %}">Details</a></h4>
+          </div>
+      {% endfor %}
+      {% for person in people  %}
+      <div class="col-md-12 well well-sm">
+        <h4><small>Highrise ID: </small>{{person.highrise_id}}  |  <small>Company: </small>{{person.company_name}}  |  <small>Supplier Name: </small>{{person.first_name}} {{person.last_name}}  |  <small>Title: </small>{{person.title}}<a class="btn btn-primary pull-right" type="button" name="drilldown" href="{% url 'supplier_detail_view' person.highrise_id %}">Details</a></h4>
+      </div>
+      {% endfor %}
+</div>
 </div>
 {% endblock %}

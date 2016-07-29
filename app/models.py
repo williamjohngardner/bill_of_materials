@@ -153,7 +153,7 @@ class Customer(models.Model):
     title = models.CharField(max_length=30)
     company_name = models.CharField(max_length=25, null=True, blank=True)
     phone_number = models.IntegerField(null=True, blank=True)
-    email_address = models.EmailField(null=True, blank=True)
+    email_address = models.CharField(max_length=60, null=True, blank=True)
     twitter_account = models.CharField(max_length=25, null=True, blank=True)
     web_address = models.URLField(null=True, blank=True)
     street_address = models.CharField(max_length=50, null=True, blank=True)
@@ -163,7 +163,7 @@ class Customer(models.Model):
     country = models.CharField(max_length=25, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.company_name
 
 
 class Supplier(models.Model):
@@ -172,7 +172,7 @@ class Supplier(models.Model):
     title = models.CharField(max_length=30)
     company_name = models.CharField(max_length=25, null=True, blank=True)
     phone_number = models.IntegerField(null=True, blank=True)
-    email_address = models.EmailField(null=True, blank=True)
+    email_address = models.CharField(max_length=60, null=True, blank=True)
     twitter_account = models.CharField(max_length=25, null=True, blank=True)
     web_address = models.URLField(null=True, blank=True)
     street_address = models.CharField(max_length=50, null=True, blank=True)
@@ -182,7 +182,7 @@ class Supplier(models.Model):
     country = models.CharField(max_length=25, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.company_name
 
 
 class FinishTable(models.Model):

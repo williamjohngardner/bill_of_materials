@@ -6,7 +6,7 @@ from django.conf import settings
 
 from app.views import IndexView, CreatePartView, PartListView, PartDetailView, CreateSubAssemblyView, SubAssemblyListView, SubAssemblyDetailView
 from app.views import CreateAssemblyView, AssemblyListView, AssemblyDetailView, CreateCustomerView, CustomerListView, CreateSupplierView, SupplierListView
-from app.views import CreateProjectView, ProjectListView, ProjectDetailView, CustomerDetailView, SupplierDetailView
+from app.views import CreateProjectView, ProjectListView, ProjectDetailView, CustomerDetailView, SupplierDetailView, CustomerHighRiseDetailView
 
 
 urlpatterns = [
@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^assembly_list/(?P<pk>\d+)/$', AssemblyDetailView.as_view(), name="assembly_detail_view"),
     url(r'^create_customer/$', CreateCustomerView.as_view(), name="create_customer_view"),
     url(r'^customer_list/$', CustomerListView.as_view(), name="customer_list_view"),
+    url(r'^customer_list/(?P<slug>\d+)/$', CustomerHighRiseDetailView.as_view(), name="customer_highrise_detail_view"),
     url(r'^customer_list/(?P<pk>\d+)/$', CustomerDetailView.as_view(), name="customer_detail_view"),
     url(r'^create_supplier/$', CreateSupplierView.as_view(), name="create_supplier_view"),
     url(r'^supplier_list/$', SupplierListView.as_view(), name="supplier_list_view"),

@@ -78,7 +78,6 @@ class SubAssemblyListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['subassembly'] = SubAssembly.objects.all()
-
         return context
 
 
@@ -150,8 +149,21 @@ class CreateCustomerView(CreateView):
         high = Highton(
             api_key = os.environ['highrise_api_key'],
             user = 'williamjohngardner')
+        first_name = form.cleaned_data["first_name"]
+        last_name = form.cleaned_data["last_name"]
+        title = form.cleaned_data["title"]
+        company_name = form.cleaned_data["company_name"]
+        phone_number = form.cleaned_data["phone_number"]
+        email_address = form.cleaned_data["email_address"]
+        twitter_account = form.cleaned_data["twitter_account"]
+        web_address = form.cleaned_data["web_address"]
+        street_address = form.cleaned_data["street_address"]
+        city = form.cleaned_data["city"]
+        state = form.cleaned_data["state"]
+        zip_code = form.cleaned_data["zip_code"]
+        country = form.cleaned_data["country"]
 
-        customer = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address>{}</address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>{http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format('first_name', 'last_name', 'title', 'company_name', 'phone_number', 'email_address', 'twitter_account', 'twitter_account', 'web_address', 'street_address', 'city', 'state', 'zip_code', 'country')
+        customer = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address></address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
         high.post_person(customer)
         return super().form_valid(form)
 
@@ -162,6 +174,14 @@ class CustomerListView(ListView):
     def get_queryset(self):
         return Customer.objects.all()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        high = Highton(
+            api_key = os.environ['highrise_api_key'],
+            user = 'williamjohngardner')
+        context["people"] = high.get_people()
+        return context
+
 
 class CustomerDetailView(DetailView):
     model = Customer
@@ -169,6 +189,18 @@ class CustomerDetailView(DetailView):
     def get_queryset(self, **kwargs):
         pk = self.kwargs.get('pk', None)
         return Customer.objects.filter(pk=pk)
+
+
+class CustomerHighRiseDetailView(DetailView):
+    model = Customer
+
+    def get_queryset(self, **kwargs):
+        slug = self.kwargs.get('slug', None)
+        high = Highton(
+            api_key = os.environ['highrise_api_key'],
+            user = 'williamjohngardner')
+        highrise_id = high.get_people() 
+        return Customer.objects.filter(slug=highrise_id)
 
 
 class CreateSupplierView(CreateView):
@@ -181,8 +213,22 @@ class CreateSupplierView(CreateView):
         high = Highton(
             api_key = os.environ['highrise_api_key'],
             user = 'williamjohngardner')
+        first_name = form.cleaned_data["first_name"]
+        last_name = form.cleaned_data["last_name"]
+        title = form.cleaned_data["title"]
+        company_name = form.cleaned_data["company_name"]
+        phone_number = form.cleaned_data["phone_number"]
+        email_address = form.cleaned_data["email_address"]
+        twitter_account = form.cleaned_data["twitter_account"]
+        web_address = form.cleaned_data["web_address"]
+        street_address = form.cleaned_data["street_address"]
+        city = form.cleaned_data["city"]
+        state = form.cleaned_data["state"]
+        zip_code = form.cleaned_data["zip_code"]
+        country = form.cleaned_data["country"]
 
-        supplier = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address>{}</address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>{http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format('first_name', 'last_name', 'title', 'company_name', 'phone_number', 'email_address', 'twitter_account', 'twitter_account', 'web_address', 'street_address', 'city', 'state', 'zip_code', 'country')
+
+        supplier = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address>{}</address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
         high.post_person(supplier)
         return super().form_valid(form)
 
@@ -192,6 +238,14 @@ class SupplierListView(ListView):
 
     def get_queryset(self):
         return Supplier.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        high = Highton(
+            api_key = os.environ['highrise_api_key'],
+            user = 'williamjohngardner')
+        context["people"] = high.get_people()
+        return context
 
 
 class SupplierDetailView(DetailView):
