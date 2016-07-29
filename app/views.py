@@ -180,6 +180,9 @@ class CustomerListView(ListView):
             api_key = os.environ['highrise_api_key'],
             user = 'williamjohngardner')
         context["people"] = high.get_people()
+        for person in context['people']:
+            Customer.objects.update_or_create(first_name=person.first_name, last_name=person.last_name, title=person.title, company_name=person.company_name)
+
         return context
 
 
@@ -189,18 +192,6 @@ class CustomerDetailView(DetailView):
     def get_queryset(self, **kwargs):
         pk = self.kwargs.get('pk', None)
         return Customer.objects.filter(pk=pk)
-
-
-class CustomerHighRiseDetailView(DetailView):
-    model = Customer
-
-    def get_queryset(self, **kwargs):
-        slug = self.kwargs.get('slug', None)
-        high = Highton(
-            api_key = os.environ['highrise_api_key'],
-            user = 'williamjohngardner')
-        highrise_id = high.get_people() 
-        return Customer.objects.filter(slug=highrise_id)
 
 
 class CreateSupplierView(CreateView):
