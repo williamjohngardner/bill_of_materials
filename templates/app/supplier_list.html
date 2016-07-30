@@ -1,37 +1,15 @@
-{% extends "base.html" %}
+{% extends "bom.html" %}
 
 {% block content %}
-<div class="row">
-<nav>
-    <div class="col-md-2">
-      <a href="{% url 'create_customer_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Customer</small></a>
-      <a href="{% url 'customer_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Customer Listing</small></a>
-      <a href="{% url 'create_supplier_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Supplier</small></a>
-      <a href="{% url 'supplier_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Supplier Listing</small></a>
-      <a href="{% url 'create_part_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Part</small></a>
-      <a href="{% url 'part_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Part Listing</small></a>
-      <a href="{% url 'create_subassembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create SubAssmbly</small></a>
-      <a href="{% url 'subassembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>SubAssembly Listing</small></a>
-      <a href="{% url 'create_assembly_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Assembly</small></a>
-      <a href="{% url 'assembly_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Assembly Listing</small></a>
-      <a href="{% url 'create_project_view' %}" type="button" class="btn btn-primary btn-block"><small>Create Project</small></a>
-      <a href="{% url 'project_list_view' %}" type="button" class="btn btn-primary btn-block"><small>Project Listing</small></a>
-    </div>
-</nav>
-<div class="col-md-9">
+
     <div class="row">
       <div class="col-md-12 well well-lg">
         <h3 class="pull-left">Supplier Listing</h3><a class="btn btn-primary pull-right" type="button" name="refresh" href="" method="post">Refresh View</a>
         </div>
       {% for object in object_list %}
           <div class="col-md-12 well well-sm">
-            <h4>{{object.first_name}} {{object.last_name}}  |  <small>Title: </small>{{object.title}}  |  <small>Company: </small>{{object.company_name}}  |  <small>Customer ID: </small>{{object.pk}}<small><a class="btn btn-primary pull-right" type="button" name="drilldown" href="{% url 'customer_detail_view' object.pk %}">Details</a></h4>
+            <h4>{{object.first_name}} {{object.last_name}}  |  <small>Title: </small>{{object.title}}  |  <small>Company: </small>{{object.company_name}}  |  <small>Customer ID: </small>{{object.pk}}<small><a class="btn btn-primary pull-right" type="button" name="drilldown" href="{% url 'supplier_detail_view' object.pk %}">Details</a></h4>
           </div>
-      {% endfor %}
-      {% for person in people  %}
-      <div class="col-md-12 well well-sm">
-        <h4>{{person.first_name}} {{person.last_name}}  |  <small>Title: </small>{{person.title}}  |  <small>Company: </small>{{person.company_name}}  |  <small>Highrise ID: </small>{{person.highrise_id}}<a class="btn btn-primary pull-right" type="button" name="drilldown" href="{% url 'customer_detail_view' person.highrise_id %}">Details</a></h4>
-      </div>
       {% endfor %}
 </div>
 </div>

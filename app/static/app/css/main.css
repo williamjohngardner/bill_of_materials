@@ -1,6 +1,9 @@
-body{
-  background-color: gray;
+.background
+{
+background-repeat:no-repeat;
+background-size:100%;
 }
+
 
 nav{
   padding-bottom: 20px;
@@ -35,7 +38,6 @@ nav{
   display: block;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 0 15px gray;
 }
 
 #title{
@@ -85,7 +87,6 @@ input[type='button'] {
 }
 
 footer{
-  background-color: gray;
   padding: 50px 20px;
 }
 

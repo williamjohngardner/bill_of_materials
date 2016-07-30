@@ -9,12 +9,38 @@ from highton import Highton
 import os
 
 
-from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier, Project, ProjectQuantity
+from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier, Project, ProjectQuantity, Category, SubCategory
 from app.forms import CreateCustomer, CreateSupplier
 
 
 class IndexView(TemplateView):
     template_name = "index.html"
+
+
+class CreateCategoryView(CreateView):
+    model = Category
+    fields = ['category']
+    success_url = reverse_lazy("category_list_view")
+
+
+class CategoryListView(ListView):
+    model = Category
+
+    def get_queryset(self):
+        return Category.objects.all()
+
+
+class CreateSubCategoryView(CreateView):
+    model = SubCategory
+    fields = ['category', 'subcategory']
+    success_url = reverse_lazy("subcategory_list_view")
+
+
+class SubCategoryListView(ListView):
+    model = SubCategory
+
+    def get_queryset(self):
+        return SubCategory.objects.all()
 
 
 class CreatePartView(CreateView):
@@ -181,7 +207,7 @@ class CustomerListView(ListView):
             user = 'williamjohngardner')
         context["people"] = high.get_people()
         for person in context['people']:
-            Customer.objects.update_or_create(first_name=person.first_name, last_name=person.last_name, title=person.title, company_name=person.company_name)
+            Customer.objects.update_or_create(first_name=person.first_name, last_name=person.last_name, title=person.title, company_name=person.company_name, email_address=person.email_addresses)
 
         return context
 
@@ -236,6 +262,9 @@ class SupplierListView(ListView):
             api_key = os.environ['highrise_api_key'],
             user = 'williamjohngardner')
         context["people"] = high.get_people()
+        for person in context['people']:
+            Supplier.objects.update_or_create(first_name=person.first_name, last_name=person.last_name, title=person.title, company_name=person.company_name)
+
         return context
 
 
