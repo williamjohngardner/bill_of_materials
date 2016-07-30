@@ -81,7 +81,7 @@ class AssemblyQuantity(models.Model):
 
     @property
     def assembly_cost(self):
-        cost = self.part.unit_cost * self.quantity
+        cost = (self.part.unit_cost * self.quantity)
         return self.cost
 
     def __str__(self):

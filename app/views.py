@@ -17,6 +17,10 @@ class IndexView(TemplateView):
     template_name = "index.html"
 
 
+class HighriseView(TemplateView):
+    template_name = "highrise.html"
+
+
 class CreateCategoryView(CreateView):
     model = Category
     fields = ['category']

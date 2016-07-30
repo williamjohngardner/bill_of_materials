@@ -6,7 +6,7 @@
     <div class="row">
   {% for object in object_list  %}
     <div class="col-md-12 well">
-        <h2><small>Id:</small> {{object.pk}}  |  <small>Name:</small> {{object.assembly_name}}  |  <small>Cost/Assembly:</small> $THIS DONT WORK YET</h2>
+        <h2><small>Id:</small> {{object.pk}}  |  <small>Name:</small> {{object.assembly_name}}  |  <small>Cost/Assembly:</small> object.</h2>
     </div>
     <div class="col-md-6 well">
       <h5><small>Part Name:  </small><strong>{{object.assembly_name}}</strong></h5>
@@ -47,6 +47,7 @@
           <th><small>UoM</small></th>
           <th><small>Cost/Unit</small></th>
           <th><small>Extended Cost</small></th>
+          <th><small>Assembly Cost</small></th>
         </tr>
 
         {% for part in object.assemblyquantity_set.all  %}
@@ -67,6 +68,7 @@
           <td><small>{{part.part.uom}}</small></td>
           <td><small>{{part.part.unit_cost}}</small></td>
           <td><small>${{part.quantity|mul:part.part.unit_cost}}</small></td>
+          <td><small>${{part.part.assembly_cost}}</small></td>
           </tr>
         {% endif %}
         <tr>

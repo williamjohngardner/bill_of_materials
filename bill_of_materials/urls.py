@@ -7,11 +7,12 @@ from django.conf import settings
 from app.views import IndexView, CreatePartView, PartListView, PartDetailView, CreateSubAssemblyView, SubAssemblyListView, SubAssemblyDetailView
 from app.views import CreateAssemblyView, AssemblyListView, AssemblyDetailView, CreateCustomerView, CustomerListView, CreateSupplierView, SupplierListView
 from app.views import CreateProjectView, ProjectListView, ProjectDetailView, CustomerDetailView, SupplierDetailView, CreateSubCategoryView, CreateCategoryView
-from app.views import CategoryListView, SubCategoryListView
+from app.views import CategoryListView, SubCategoryListView, HighriseView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', IndexView.as_view(), name="index_view"),
+    url(r'^highrise/$', HighriseView.as_view(), name="highrise_view"),
     url(r'^create_category/$', CreateCategoryView.as_view(), name="create_category_view"),
     url(r'^category_list/$', CategoryListView.as_view(), name="category_list_view"),
     url(r'^create_subcategory/$', CreateSubCategoryView.as_view(), name="create_subcategory_view"),
