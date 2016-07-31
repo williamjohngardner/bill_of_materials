@@ -39,8 +39,6 @@
 
 {% block extrascript %}
 <script type="text/javascript" src="{% static 'app/src/jquery.formset.js' %}"></script>
-
-
 <script type="text/javascript">
   $(document).ready(function() {
     {% for formset in inlines %}
@@ -49,9 +47,6 @@
           formCssClass: 'dynamic-formset{{ forloop.counter }}'
       });
     {% endfor %}
-
-
   })
-
 </script>
 {% endblock %}

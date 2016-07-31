@@ -38,8 +38,6 @@
           </form>
         </ul>
       <ul id="menu" class="nav navbar-nav navbar-left">
-        <li><a href="{% url 'login' %}"><strong>Login</strong></a></li>
-        <li><a href="{% url 'logout' %}"><strong>Logout</strong></a></li>
         <li><a href="{% url 'create_user' %}"><strong>Sign Up!</strong></a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>What is {subasmbly}?</strong><span class="caret"></span></a>
@@ -49,9 +47,9 @@
             <li><a href="#">Increase Accuracy</a></li>
             <li><a href="#">Reduce Risk</a></li>
             <li><a href="#">Manage Costs</a></li>
-
           </ul>
         </li>
+        <li><a>Logged in as {{request.user}}</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

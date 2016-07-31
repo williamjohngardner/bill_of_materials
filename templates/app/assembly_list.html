@@ -1,35 +1,14 @@
 {% extends "bom.html" %}
 {% load mathfilters %}
+{% load app_filters %}
 
 {% block content %}
 
-    <div class="row">
+<div class="row">
   {% for object in object_list  %}
     <div class="col-md-12 well">
-        <h2><small>Id:</small> {{object.pk}}  |  <small>Name:</small> {{object.assembly_name}}  |  <small>Cost/Assembly:</small> object.</h2>
+        <h3>{{object.assembly_name}}  |  <small>Part Number:</small> {{object.assembly_part_number}}  |  <small>ID:</small> {{object.pk}}  |  {% if object.cad_file %}<small><a href="{{object.cad_file.url}}">Click to View CAD</a></small>{% else %}<small>No CAD File Uploaded</small>{% endif %}  |  <small>Cost/Assembly: </small>${{ object.assemblyquantity_set.all|part_sum }}<a class="btn btn-primary pull-right" type="button" name="drilldown" href="{% url 'assembly_detail_view' object.pk %}">Details</a></h3>
     </div>
-    <div class="col-md-6 well">
-      <h5><small>Part Name:  </small><strong>{{object.assembly_name}}</strong></h5>
-      <h5><small>Part Number:  </small><strong>{{object.assembly_part_number}}</strong></h5>
-      <h5><small>Description:  </small><strong>{{object.description}}</strong></h5>
-      <h5><small>Category:  </small><strong>{{object.category}}</strong></h5>
-      <h5><small>Sub Category:  </small><strong>{{object.sub_category}}</strong></h5>
-    </div>
-    <div class="col-md-6 well">
-      <h5><small>Manufacturer:  </small><strong>{{object.supplier}}</strong></h5>
-      <h5><small>Manufacturer Part Number:  </small><strong>{{object.supplier_pn}}</strong></h5>
-      <h5><small>Finish:  </small><strong>{{object.finish}}</strong></h5>
-      <h5><small>Plating:  </small><strong>{{object.plating}}</strong></h5>
-      {% if object.cad_file %}
-      <h5><small><a href="{{object.cad_file.url}}">Click to View CAD</a></small></h5>
-        {% else %}
-          <h5><small>No CAD File Uploaded</small></h5>
-      {% endif %}
-    </div>
-    <div class="col-md-12 well">
-    <h5>{{object.notes}}</h5>
-    </div>
-  </div>
     <table class="table table-striped table-bordered table-hover">
         <tr>
           <th><small>Part Id</small></th>
@@ -47,7 +26,6 @@
           <th><small>UoM</small></th>
           <th><small>Cost/Unit</small></th>
           <th><small>Extended Cost</small></th>
-          <th><small>Assembly Cost</small></th>
         </tr>
 
         {% for part in object.assemblyquantity_set.all  %}
@@ -68,7 +46,6 @@
           <td><small>{{part.part.uom}}</small></td>
           <td><small>{{part.part.unit_cost}}</small></td>
           <td><small>${{part.quantity|mul:part.part.unit_cost}}</small></td>
-          <td><small>${{part.part.assembly_cost}}</small></td>
           </tr>
         {% endif %}
         <tr>

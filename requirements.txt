@@ -4,3 +4,9 @@ django-extra-views
 pillow
 six
 django-mathfilters
+et-xmlfile
+Highton
+jdcal
+lxml
+openpyxl
+requests

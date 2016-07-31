@@ -57,7 +57,7 @@ class Part(models.Model):
         return "https://cdn3.iconfinder.com/data/icons/smoothfill-action/30/action_088-no_camera-capture-picture-image-photo-128.png"
 
     def __str__(self):
-        return self.part_name
+        return str(self.part_name)
 
 
 class SubAssemblyQuantity(models.Model):
@@ -70,29 +70,29 @@ class SubAssemblyQuantity(models.Model):
         cost = self.part.unit_cost * self.quantity
         return cost
 
+
     def __str__(self):
-        return self.part
+        return str(self.part)
 
 
 class AssemblyQuantity(models.Model):
     part = models.ForeignKey(Part, null=True, blank=True)
     subassembly = models.ForeignKey('app.SubAssembly', null=True, blank=True)
     quantity = models.IntegerField()
-    cost = models.DecimalField(max_digits=10, decimal_places=2)
     assembly = models.ForeignKey('app.Assembly', null=True, blank=True)
 
     @property
     def subassembly_cost(self):
-        cost = self.subassembly.cost
-        return cost
+        subassembly_cost = self.subassembly.cost
+        return subassembly_cost
 
     @property
-    def assembly_cost(self):
-        cost = (self.part.unit_cost * self.quantity)
-        return self.cost
+    def cost(self):
+        cost = self.part.unit_cost * self.quantity
+        return cost
 
     def __str__(self):
-        return ""
+        return str(self.assembly)
 
 
 class SubAssembly(models.Model):
@@ -154,7 +154,7 @@ class Project(models.Model):
 
 
 class Customer(models.Model):
-    user = models.ForeignKey("auth.User")
+    user = models.ForeignKey("auth.User", null=True, blank=True)
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True )
     title = models.CharField(max_length=30)
@@ -174,7 +174,7 @@ class Customer(models.Model):
 
 
 class Supplier(models.Model):
-    user = models.ForeignKey("auth.User")
+    user = models.ForeignKey("auth.User", null=True, blank=True)
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True )
     title = models.CharField(max_length=30)

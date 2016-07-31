@@ -13,28 +13,49 @@
   <body>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <a class="navbar-brand" href="/"><img id="logo-sm" src="{% static 'app/images/logo_sm.jpg' %}" alt="{subasmbly} - Revision Control for Makers"/></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img id="logo-sm" src="{% static 'app/images/logo_sm.jpg' %}" alt="Subasmbly"/></a>
         </div>
-      </div>
+
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul id="menu" class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>{{request.user}}</strong><span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{% url 'profile_page_view' %}">{{request.user}} Profile</a></li>
+                <li><a href="{% url 'logout'%}?next=/">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
     </nav>
 <div class="row">
     <div class="col-md-2">
-      <div class="btn btn-default btn-xs btn-block"><h4>Project Management</h4></div>
+      <div class="btn btn-default btn-xs btn-block"><h6>Project Management</h6></div>
       <a href="{% url 'create_customer_view' %}" type="button" class="btn btn-primary btn-block">Create Customer</a>
       <a href="{% url 'customer_list_view' %}" type="button" class="btn btn-primary btn-block">Customer Listing</a>
       <a href="{% url 'create_supplier_view' %}" type="button" class="btn btn-primary btn-block">Create Supplier</a>
       <a href="{% url 'supplier_list_view' %}" type="button" class="btn btn-primary btn-block">Supplier Listing</a>
       <a href="{% url 'create_project_view' %}" type="button" class="btn btn-primary btn-block">Create Project</a>
       <a href="{% url 'project_list_view' %}" type="button" class="btn btn-primary btn-block">Project Listing</a>
-      <div class="btn btn-default btn-xs btn-block"><h4>Parts & Assembly Mgmt</h4></div>
+      <div class="btn btn-default btn-xs btn-block"><h6>Parts & Assembly Mgmt</h6></div>
       <a href="{% url 'create_part_view' %}" type="button" class="btn btn-primary btn-block">Create Part</a>
       <a href="{% url 'part_list_view' %}" type="button" class="btn btn-primary btn-block">Part Listing</a>
       <a href="{% url 'create_subassembly_view' %}" type="button" class="btn btn-primary btn-block">Create SubAssmbly</a>
       <a href="{% url 'subassembly_list_view' %}" type="button" class="btn btn-primary btn-block">SubAssembly Listing</a>
       <a href="{% url 'create_assembly_view' %}" type="button" class="btn btn-primary btn-block">Create Assembly</a>
       <a href="{% url 'assembly_list_view' %}" type="button" class="btn btn-primary btn-block">Assembly Listing</a>
-      <div class="btn btn-default btn-xs btn-block"><h4>Category Management</h4></div>
+      <div class="btn btn-default btn-xs btn-block"><h6>Category Management</h6></div>
       <a href="{% url 'create_category_view' %}" type="button" class="btn btn-primary btn-block">Create Category</a>
       <a href="{% url 'category_list_view' %}" type="button" class="btn btn-primary btn-block">Category Listing</a>
       <a href="{% url 'create_subcategory_view' %}" type="button" class="btn btn-primary btn-block">Create SubCategory</a>
@@ -49,5 +70,12 @@
           There is nothing here.
       {% endblock %}
     </div>
-  </body>
+    <script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'app/js/bootstrap.js' %}"></script>
+    {% block extrascript %}
+    {% endblock %}
+</body>
+<footer>
+  <h6><div class="glyphicon glyphicon-copyright-mark">  Copyright 2016 William John Gardner</div><h6>
+</footer>
 </html>
