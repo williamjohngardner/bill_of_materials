@@ -1,20 +1,49 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, ListView, DetailView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
+from django.contrib.auth.forms import UserCreationForm
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import User
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
 from extra_views.generic import GenericInlineFormSet
 from django.db.models import Sum
 from highton import Highton
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 import os
 
-
-from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier, Project, ProjectQuantity, Category, SubCategory
+from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier, Project, ProjectQuantity, Category, SubCategory, UserProfile
 from app.forms import CreateCustomer, CreateSupplier
+
+
+def handler404(request):
+    response = render_to_response('404.html', {}, context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+# Code for 404 and 500 pages from : http://stackoverflow.com/questions/17662928/django-creating-a-custom-500-404-error-page
+
+def handler500(request):
+    response = render_to_response('500.html', {}, context_instance=RequestContext(request))
+    response.status_code = 500
+    return response
 
 
 class IndexView(TemplateView):
     template_name = "index.html"
+
+
+class CreateUserView(CreateView):
+    model = UserProfile
+    form_class = UserCreationForm
+    success_url = reverse_lazy("auth/user_form.html")
+
+
+class ProfilePageView(UpdateView):
+    fields = ["user_name", "first_name", "last_name", "email", "title", "company_name"]
+    model = UserProfile
+    success_url = reverse_lazy("project_list_view")
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 class HighriseView(TemplateView):
@@ -26,12 +55,17 @@ class CreateCategoryView(CreateView):
     fields = ['category']
     success_url = reverse_lazy("category_list_view")
 
+    def form_valid(self, form):
+        category = form.save(commit=False)
+        Category.objects.create(user=self.request.user)
+        return super(CreateCategoryView, self).form_valid(form)
+
 
 class CategoryListView(ListView):
     model = Category
 
     def get_queryset(self):
-        return Category.objects.all()
+        return Category.objects.filter(user=self.request.user)
 
 
 class CreateSubCategoryView(CreateView):
@@ -39,12 +73,17 @@ class CreateSubCategoryView(CreateView):
     fields = ['category', 'subcategory']
     success_url = reverse_lazy("subcategory_list_view")
 
+    def form_valid(self, form):
+        subcategory = form.save(commit=False)
+        SubCategory.objects.create(user=self.request.user)
+        return super(CreateSubCategoryView, self).form_valid(form)
+
 
 class SubCategoryListView(ListView):
     model = SubCategory
 
     def get_queryset(self):
-        return SubCategory.objects.all()
+        return SubCategory.objects.filter(user=self.request.user)
 
 
 class CreatePartView(CreateView):
@@ -52,19 +91,24 @@ class CreatePartView(CreateView):
     fields = ['part_name', 'part_number', 'description', 'category', 'sub_category', 'manufacturer', 'manufacturer_pn', 'dimensions', 'finish', 'plating', 'uom', 'unit_cost', 'part_url', 'notes', 'cad_file', 'image']
     success_url = reverse_lazy("part_list_view")
 
+    def form_valid(self, form):
+        part = form.save(commit=False)
+        Part.objects.create(user=self.request.user)
+        return super(CreatePartView, self).form_valid(form)
+
 
 class PartListView(ListView):
     model = Part
 
     def get_queryset(self):
-        return Part.objects.all()
+        return Part.objects.filter(user=self.request.user)
 
 
 class PartDetailView(DetailView):
     model = Part
-    def get_queryset(self, **kwargs):
-        pk = self.kwargs.get('pk', None)
-        return Part.objects.filter(pk=pk)
+
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
 
 
 class SubAssemblyPartInline(InlineFormSet):
@@ -97,13 +141,18 @@ class CreateSubAssemblyView(CreateWithInlinesView):
     fields = ['sub_assembly_name', 'sub_assembly_number', 'description', 'category', 'sub_category', 'mfg_supplier', 'mfg_supplier_pn', 'finish', 'plating', 'notes', 'cad_file']
     success_url = reverse_lazy("subassembly_list_view")
 
+    def form_valid(self, form):
+        subassembly = form.save(commit=False)
+        SubAssembly.objects.create(user=self.request.user)
+        return super(CreateSubAssemblyView, self).form_valid(form)
+
 
 class SubAssemblyListView(ListView):
     model = SubAssembly
     template_name = "app/subassembly_list.html"
 
     def get_queryset(self):
-        return self.model.objects.all()
+        return self.model.objects.filter(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -114,9 +163,8 @@ class SubAssemblyListView(ListView):
 class SubAssemblyDetailView(DetailView):
     model = SubAssembly
 
-    def get_queryset(self, **kwargs):
-        pk = self.kwargs.get('pk', None)
-        return SubAssembly.objects.filter(pk=pk)
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
 
 
 class SubAssemblyInline(InlineFormSet):
@@ -131,20 +179,24 @@ class CreateAssemblyView(CreateWithInlinesView):
     fields = ['assembly_name', 'assembly_part_number', 'description', 'category', 'sub_category', 'supplier', 'supplier_pn', 'finish', 'plating', 'assembly_cost', 'notes', 'cad_file']
     success_url = reverse_lazy("assembly_list_view")
 
+    def form_valid(self, form):
+        assembly = form.save(commit=False)
+        Assembly.objects.create(user=self.request.user)
+        return super(CreateAssemblyView, self).form_valid(form)
+
 
 class AssemblyListView(ListView):
     model = Assembly
 
     def get_queryset(self):
-        return self.model.objects.all()
+        return self.model.objects.filter(user=self.request.user)
 
 
 class AssemblyDetailView(DetailView):
     model = Assembly
 
-    def get_queryset(self, **kwargs):
-        pk = self.kwargs.get('pk', None)
-        return Assembly.objects.filter(pk=pk)
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
 
 
 class CreateProjectView(CreateWithInlinesView):
@@ -153,20 +205,24 @@ class CreateProjectView(CreateWithInlinesView):
     fields = ['project_number', 'client', 'project_name', 'price_per_project', 'shipping_address', 'shipping_terms', 'expected_delivery']
     success_url = reverse_lazy("project_list_view")
 
+    def form_valid(self, form):
+        project = form.save(commit=False)
+        Project.objects.create(user=self.request.user)
+        return super(CreateProjectView, self).form_valid(form)
+
 
 class ProjectListView(ListView):
     model = Project
 
     def get_queryset(self):
-        return Project.objects.all()
+        return Project.objects.filter(user=self.request.user)
 
 
 class ProjectDetailView(DetailView):
     model = Project
 
-    def get_queryset(self, **kwargs):
-        pk = self.kwargs.get('pk', None)
-        return Project.objects.filter(pk=pk)
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
 
 
 class CreateCustomerView(CreateView):
@@ -195,14 +251,16 @@ class CreateCustomerView(CreateView):
 
         customer = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address></address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
         high.post_person(customer)
-        return super().form_valid(form)
+        customer = form.save(commit=False)
+        Customer.objects.create(user=self.request.user)
+        return super(CreateCustomerView, self).form_valid(form)
 
 
 class CustomerListView(ListView):
     model = Customer
 
     def get_queryset(self):
-        return Customer.objects.all()
+        return Customer.objects.filter(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -219,9 +277,8 @@ class CustomerListView(ListView):
 class CustomerDetailView(DetailView):
     model = Customer
 
-    def get_queryset(self, **kwargs):
-        pk = self.kwargs.get('pk', None)
-        return Customer.objects.filter(pk=pk)
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
 
 
 class CreateSupplierView(CreateView):
@@ -251,14 +308,16 @@ class CreateSupplierView(CreateView):
 
         supplier = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address>{}</address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
         high.post_person(supplier)
-        return super().form_valid(form)
+        supplier = form.save(commit=False)
+        Supplier.objects.create(user=self.request.user)
+        return super(CreateSupplierView, self).form_valid(form)
 
 
 class SupplierListView(ListView):
     model = Supplier
 
     def get_queryset(self):
-        return Supplier.objects.all()
+        return Supplier.objects.filter(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -275,6 +334,5 @@ class SupplierListView(ListView):
 class SupplierDetailView(DetailView):
     model = Supplier
 
-    def get_queryset(self, **kwargs):
-        pk = self.kwargs.get('pk', None)
-        return Supplier.objects.filter(pk=pk)
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)

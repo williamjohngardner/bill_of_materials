@@ -1,7 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 
 class Category(models.Model):
+    user = models.ForeignKey("auth.User")
     category = models.CharField(max_length=30)
 
     def __str__(self):
@@ -9,6 +13,7 @@ class Category(models.Model):
 
 
 class SubCategory(models.Model):
+    user = models.ForeignKey("auth.User")
     category = models.ForeignKey(Category)
     subcategory = models.CharField(max_length=30)
 
@@ -17,6 +22,7 @@ class SubCategory(models.Model):
 
 
 class ShippingTerms(models.Model):
+    user = models.ForeignKey("auth.User")
     shipping_type = models.CharField(max_length=50)
     description = models.TextField(null=True, blank=True)
     preferred_shipper = models.CharField(max_length=50, null=True, blank=True)
@@ -26,6 +32,7 @@ class ShippingTerms(models.Model):
 
 
 class Part(models.Model):
+    user = models.ForeignKey("auth.User")
     part_name = models.CharField(max_length=50)
     part_number = models.CharField(max_length=50)
     description = models.CharField(max_length=50)
@@ -89,6 +96,7 @@ class AssemblyQuantity(models.Model):
 
 
 class SubAssembly(models.Model):
+    user = models.ForeignKey("auth.User")
     sub_assembly_name = models.CharField(max_length=50)
     sub_assembly_number = models.CharField(max_length=50)
     description = models.CharField(max_length=50, null=True, blank=True)
@@ -107,6 +115,7 @@ class SubAssembly(models.Model):
 
 
 class Assembly(models.Model):
+    user = models.ForeignKey("auth.User")
     assembly_name = models.CharField(max_length=50)
     assembly_part_number = models.CharField(max_length=50)
     description = models.CharField(max_length=50, null=True, blank=True)
@@ -131,13 +140,10 @@ class ProjectQuantity(models.Model):
 
 
 class Project(models.Model):
+    user = models.ForeignKey("auth.User")
     project_number = models.AutoField(primary_key=True)
     client = models.ForeignKey('app.Customer')
     project_name = models.CharField(max_length=50)
-    # products = models.ForeignKey(Assembly, null=True, blank=True)
-    # quantity_per_product = models.IntegerField(null=True, blank=True)
-    # price_per_product = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    # extended_price_per_product = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     price_per_project = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     shipping_address = models.TextField(null=True, blank=True)
     shipping_terms = models.ForeignKey(ShippingTerms, null=True, blank=True)
@@ -148,6 +154,7 @@ class Project(models.Model):
 
 
 class Customer(models.Model):
+    user = models.ForeignKey("auth.User")
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True )
     title = models.CharField(max_length=30)
@@ -167,6 +174,7 @@ class Customer(models.Model):
 
 
 class Supplier(models.Model):
+    user = models.ForeignKey("auth.User")
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True )
     title = models.CharField(max_length=30)
@@ -186,6 +194,7 @@ class Supplier(models.Model):
 
 
 class FinishTable(models.Model):
+    user = models.ForeignKey("auth.User")
     finish = models.CharField(max_length=50)
     description = models.TextField(null=True, blank=True)
     source = models.ForeignKey(Supplier, null=True, blank=True)
@@ -195,9 +204,40 @@ class FinishTable(models.Model):
 
 
 class PlatingTable(models.Model):
+    user = models.ForeignKey("auth.User")
     plating = models.CharField(max_length=50)
     description = models.TextField(null=True, blank=True)
     source = models.ForeignKey(Supplier, null=True, blank=True)
 
     def __str__(self):
         return self.plating
+
+
+class UserProfile(models.Model):
+    user = models.ForeignKey("auth.User")
+    user_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=30, null=True, blank=True)
+    last_name = models.CharField(max_length=30, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    title = models.CharField(max_length=30, null=True, blank=True)
+    company_name = models.CharField(max_length=50, null=True, blank=True)
+
+    def __str__(self):
+        return self.first_name
+
+
+@receiver(post_save, sender='auth.User')
+def create_user_profile(**kwargs):
+    created = kwargs.get("created")
+    instance = kwargs.get("instance")
+
+    if created:
+        UserProfile.objects.create(user=instance)
+
+
+# @receiver(post_save, sender="auth.User") #every post save will call def User
+# def create_token(**kwargs):
+#     created = kwargs.get("created")
+#     instance = kwargs.get("instance")
+#     if created:
+#         Token.objects.create(user=instance)

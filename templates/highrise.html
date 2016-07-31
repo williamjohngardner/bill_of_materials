@@ -1,93 +1,35 @@
+{% extends "base.html" %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>{subasmbly} - Revision Control for Makers</title>
-    <link rel="stylesheet" href="{% static "app/css/bootstrap.css" %}" media="screen" charset="utf-8">
-    <link rel="stylesheet" href="{% static "app/css/main.css" %}" media="screen" charset="utf-8">
-  </head>
-  <body>
-    <div id="background" class="inner" style="background-image: url({% static "app/images/highrise_login.jpg" %}");>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/"><img id="logo-sm" src="{% static 'app/images/logo_sm.jpg' %}" alt="Subasmbly"/></a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-      <form id="search" class="navbar-form navbar-right" role="search">
-        <button type="submit" class="btn btn-default">Login</button>
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="User Name">
-          <input type="text" class="form-control" placeholder="Password">
-        </div>
-      </form>
-      <ul id="menu" class="nav navbar-nav navbar-left">
-        <li><a href="{% url 'create_part_view' %}"><strong>Sign Up!</strong></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>What is {subasmbly}?</strong><span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Revision Control</a></li>
-            <li><a href="#">CRM with Highrise</a></li>
-            <li><a href="#">Increase Accuracy</a></li>
-            <li><a href="#">Reduce Risk</a></li>
-            <li><a href="#">Manage Costs</a></li>
-
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-      {% block content %}
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-      
-      {% endblock %}
-      <script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
-      <script type="text/javascript" src="{% static 'app/js/bootstrap.js' %}"></script>
-      {% block extrascript %}
-      {% endblock %}
-  </body>
-  <footer>
-    <h6><div class="glyphicon glyphicon-copyright-mark">  Copyright 2016 William John Gardner</div><h6>
-  </footer>
-</html>
+{% block content %}
+<div id="background" class="inner" style="background-image: url({% static "app/images/highrise_login.jpg" %}");>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+{% endblock %}
