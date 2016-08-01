@@ -3,50 +3,45 @@
 {% load staticfiles %}
 
 {% block content %}
-
+<div class="row">
+  <div class="container">
     <div class="row">
-<div class="container">
-  <div class="row">
-    <div class="col-lg-5">
-  <form id="myForm" method="post" action="">
-            <legend>Create A SubAssembly</legend>
+      <div class="col-lg-5">
+        <form id="myForm" method="post" action="">
+          <legend>Create A SubAssembly</legend>
             {% csrf_token %}
               {{ form|bootstrap }}
-        <table border="0" cellpadding="0" cellspacing="0">
-            <tbody>
-              {% for inline in inlines %}
-              {{inline.management_form}}
-                {% for form in inline.forms %}
-              <tr>
-                <td>{{form|bootstrap}}</td>
-                 <td>{% if inline.instance.pk %}{{ inline.DELETE }}{% endif %}</td>
-              </tr>
-              {% endfor %}
-
-              {% endfor %}
-          </tbody>
-      </table>
-      <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Create SubAssembly"></input>
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                      {% for inline in inlines %}
+                        {{inline.management_form}}
+                          {% for form in inline.forms %}
+                            <tr>
+                              <td>{{form|bootstrap}}</td>
+                              <td>{% if inline.instance.pk %}{{ inline.DELETE }}{% endif %}</td>
+                            </tr>
+                          {% endfor %}
+                      {% endfor %}
+                  </tbody>
+                </table>
+              <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Create SubAssembly"></input>
+              </div>
+        </form>
       </div>
-  </form>
-</div>
-</div>
-</div>
-
-
+    </div>
+  </div>
 {% endblock %}
-
 {% block extrascript %}
 <script type="text/javascript" src="{% static 'app/src/jquery.formset.js' %}"></script>
-<script type="text/javascript">
-  $(document).ready(function() {
-    {% for formset in inlines %}
-      $('#myForm tbody tr').formset({
-          prefix: '{{ formset.prefix }}',
-          formCssClass: 'dynamic-formset{{ forloop.counter }}'
-      });
-    {% endfor %}
-  })
-</script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      {% for formset in inlines %}
+        $('#myForm tbody tr').formset({
+            prefix: '{{ formset.prefix }}',
+            formCssClass: 'dynamic-formset{{ forloop.counter }}'
+        });
+      {% endfor %}
+    })
+  </script>
 {% endblock %}

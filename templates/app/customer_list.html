@@ -1,15 +1,15 @@
 {% extends "bom.html" %}
 
+
 {% block content %}
-      <div class="row">
-        <div class="col-md-12 well well-lg">
-          <h3 class="pull-left">Customer Listing</h3><a class="btn btn-primary pull-right" type="button" name="refresh" href="" method="post">Refresh View</a>
-          </div>
-        {% for object in object_list %}
-            <div class="col-md-12 well well-sm">
-              <h4>{{object.first_name}} {{object.last_name}}  |  <small>Title: </small>{{object.title}}  |  <small>Company: </small>{{object.company_name}}  |  <small>Customer ID: </small>{{object.pk}}<small><a class="btn btn-primary pull-right" type="button" name="drilldown" href="{% url 'customer_detail_view' object.pk %}">Details</a></h4>
-            </div>
-        {% endfor %}
+  <div class="row">
+    <div class="col-md-12 well well-lg">
+      <h3 class="pull-left">Customer Listing</h3><a class="btn btn-primary pull-right" type="button" name="refresh" href="" method="post">Refresh View</a>
+    </div>
+    {% for object in object_list %}
+      <div class="col-md-12 well well-sm">
+        <h4>{{object.first_name}} {{object.last_name}}  |  <small>Title: </small>{{object.title}}  |  <small>Company: </small>{{object.company_name}}  |  <small>Customer ID: </small>{{object.pk}}<small><a class="btn btn-primary pull-right" type="button" name="drilldown" href="{% url 'customer_detail_view' object.pk %}">Details</a></h4>
+      </div>
+    {% endfor %}
   </div>
-</div>
 {% endblock %}

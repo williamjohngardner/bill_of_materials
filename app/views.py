@@ -34,7 +34,7 @@ class IndexView(TemplateView):
 class CreateUserView(CreateView):
     model = UserProfile
     form_class = UserCreationForm
-    success_url = reverse_lazy("auth/user_form.html")
+    success_url = reverse_lazy("create_part_view")
 
 
 class ProfilePageView(UpdateView):
@@ -182,7 +182,8 @@ class CreateAssemblyView(CreateWithInlinesView):
     def form_valid(self, form):
         assembly = form.save(commit=False)
         Assembly.objects.create(user=self.request.user)
-        return super(CreateAssemblyView, self).form_valid(form)
+        assembly.save()
+        return super(CreateAssemblyView, self).form_valid(assembly)
 
 
 class AssemblyListView(ListView):
@@ -202,13 +203,14 @@ class AssemblyDetailView(DetailView):
 class CreateProjectView(CreateWithInlinesView):
     model = Project
     inlines = [ProjectPartInline]
-    fields = ['project_number', 'client', 'project_name', 'price_per_project', 'shipping_address', 'shipping_terms', 'expected_delivery']
+    fields = ['user', 'project_number', 'client', 'project_name', 'price_per_project', 'shipping_address', 'shipping_terms', 'expected_delivery']
     success_url = reverse_lazy("project_list_view")
 
     def form_valid(self, form):
         project = form.save(commit=False)
         Project.objects.create(user=self.request.user)
-        return super(CreateProjectView, self).form_valid(form)
+        project.save()
+        return super(CreateProjectView, self).form_valid(project)
 
 
 class ProjectListView(ListView):
@@ -269,7 +271,7 @@ class CustomerListView(ListView):
             user = 'williamjohngardner')
         context["people"] = high.get_people()
         for person in context['people']:
-            Customer.objects.update_or_create(first_name=person.first_name, last_name=person.last_name, title=person.title, company_name=person.company_name, email_address=person.email_addresses)
+            Customer.objects.update_or_create(first_name=person.first_name, last_name=person.last_name, title=person.title, company_name=person.company_name, email_address=str(person.email_addresses))
 
         return context
 

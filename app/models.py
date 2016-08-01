@@ -34,16 +34,16 @@ class ShippingTerms(models.Model):
 class Part(models.Model):
     user = models.ForeignKey("auth.User")
     part_name = models.CharField(max_length=50)
-    part_number = models.CharField(max_length=50)
-    description = models.CharField(max_length=50)
+    part_number = models.CharField(max_length=50, null=True, blank=True)
+    description = models.CharField(max_length=50, null=True, blank=True)
     category = models.ForeignKey(Category)
     sub_category = models.ForeignKey(SubCategory)
     manufacturer = models.ForeignKey('app.Supplier', null=True, blank=True)
     manufacturer_pn = models.CharField(max_length=50, null=True, blank=True)
-    dimensions = models.CharField(max_length=50)
+    dimensions = models.CharField(max_length=50, null=True, blank=True)
     finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
     plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
-    uom = models.CharField(max_length=15)
+    uom = models.CharField(max_length=15, null=True, blank=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     part_url = models.URLField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
@@ -98,7 +98,7 @@ class AssemblyQuantity(models.Model):
 class SubAssembly(models.Model):
     user = models.ForeignKey("auth.User")
     sub_assembly_name = models.CharField(max_length=50)
-    sub_assembly_number = models.CharField(max_length=50)
+    sub_assembly_number = models.CharField(max_length=50, null=True, blank=True)
     description = models.CharField(max_length=50, null=True, blank=True)
     category = models.ForeignKey(Category, null=True, blank=True)
     sub_category = models.ForeignKey(SubCategory, null=True, blank=True)
@@ -117,7 +117,7 @@ class SubAssembly(models.Model):
 class Assembly(models.Model):
     user = models.ForeignKey("auth.User")
     assembly_name = models.CharField(max_length=50)
-    assembly_part_number = models.CharField(max_length=50)
+    assembly_part_number = models.CharField(max_length=50, null=True, blank=True)
     description = models.CharField(max_length=50, null=True, blank=True)
     category = models.ForeignKey(Category, null=True, blank=True)
     sub_category = models.ForeignKey(SubCategory, null=True, blank=True)
@@ -150,14 +150,14 @@ class Project(models.Model):
     expected_delivery = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return self.project_name
+        return self.client
 
 
 class Customer(models.Model):
     user = models.ForeignKey("auth.User", null=True, blank=True)
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True )
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=30, null=True, blank=True)
     company_name = models.CharField(max_length=25, null=True, blank=True)
     phone_number = models.IntegerField(null=True, blank=True)
     email_address = models.CharField(max_length=60, null=True, blank=True)
@@ -170,7 +170,7 @@ class Customer(models.Model):
     country = models.CharField(max_length=25, null=True, blank=True)
 
     def __str__(self):
-        return ""
+        return self.company_name
 
 
 class Supplier(models.Model):
@@ -223,7 +223,7 @@ class UserProfile(models.Model):
     company_name = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
-        return self.first_name
+        return self.user_name
 
 
 @receiver(post_save, sender='auth.User')

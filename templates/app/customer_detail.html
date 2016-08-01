@@ -1,7 +1,6 @@
 {% extends "bom.html" %}
 
 {% block content %}
-
         <div class="row">
           <div class="col-md-12 well">
             <h2>Customer ID: {{object.pk}}  :  {{object.name}}</h2>
@@ -11,7 +10,9 @@
             <h5><small>Contact:  </small><strong>{{object.first_name}} {{object.last_name}}</strong></h5>
             <h5><small>Title:  </small><strong>{{object.title}}</strong></h5>
             <h5><small>Phone:  </small><strong>{{object.phone_number}}</strong></h5>
-            <h5><small>Email:  </small><a href="mailto:{{ object.email_address }}"><strong>{{ object.email_address }}</strong></a></h5>
+            <h5><small>Email:  </small>{% for email in object.email_addresses %}
+              <a href="mailto:{{ email.address }}"><strong>{{ email.address }}
+            {% endfor %}</strong></a></h5>
             <h5><small>Website: </small><a href="{{ object.web_address }}"><strong>{{object.web_address}}</strong></a></h5>
             <h5><small>Street Address:  </small><strong>{{object.street_address}}</strong></h5>
             <h5><small>City:  </small><strong>{{object.city}}</strong></h5>
