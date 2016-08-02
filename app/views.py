@@ -34,7 +34,7 @@ class IndexView(TemplateView):
 class CreateUserView(CreateView):
     model = UserProfile
     form_class = UserCreationForm
-    success_url = reverse_lazy("create_part_view")
+    # success_url = reverse_lazy("create_part_view")
 
 
 class ProfilePageView(UpdateView):

@@ -3,7 +3,9 @@
 {% block content %}
 <div class="row">
   <div class="col-md-12 well">
-    <h2>Part Id: {{object.pk}}  |  {{object.part_name}}<img class="thumbnail pull-right" height="300px" width="400px" src="{{object.image_url}}" alt="{{object.part_name}}" /></h2>
+    <h3><small>Part ID: </small>{{object.pk}}  |  {{object.part_name}}<img class="thumbnail pull-right" height="250px" width="250px" src="{{object.image_url}}" alt="{{object.part_name}}" /></h3>
+    <h3><small>Unit Cost: </small>$ {{object.unit_cost}}</h3>
+    <h3><small>Part Url: </small></h3><h5>{{object.part_url}}</h5>
   </div>
   <div class="col-md-6 well">
     <h5><small>Part Name:  </small><strong>{{object.part_name}}</strong></h5>
