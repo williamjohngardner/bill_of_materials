@@ -1,0 +1,15 @@
+{% extends "bom.html" %}
+
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12 well well-lg">
+      <h3 class="pull-left">Plating Listing</h3>
+    </div>
+    {% for object in object_list %}
+      <div class="col-md-12 well well-sm">
+        <h4>{{object.plating}}  |  <small>Description: </small>{{object.description}}  |  <small>Source: </small>{{object.source}}<a class="btn btn-primary pull-right" type="button" name="drilldown" href="{% url 'plating_detail_view' object.pk %}">Details</a></h4>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

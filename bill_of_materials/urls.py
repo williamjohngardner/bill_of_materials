@@ -9,7 +9,7 @@ from django.contrib.auth.views import logout, login
 from app.views import IndexView, CreatePartView, PartListView, PartDetailView, CreateSubAssemblyView, SubAssemblyListView, SubAssemblyDetailView
 from app.views import CreateAssemblyView, AssemblyListView, AssemblyDetailView, CreateCustomerView, CustomerListView, CreateSupplierView, SupplierListView
 from app.views import CreateProjectView, ProjectListView, ProjectDetailView, CustomerDetailView, SupplierDetailView, CreateSubCategoryView, CreateCategoryView
-from app.views import CategoryListView, SubCategoryListView, HighriseView, CreateUserView, ProfilePageView
+from app.views import CategoryListView, SubCategoryListView, HighriseView, CreateUserView, ProfilePageView, CreateFinishView, FinishListView, FinishDetailView, CreatePlatingView, PlatingListView, PlatingDetailView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -40,4 +40,10 @@ urlpatterns = [
     url(r'^create_project/$', login_required(CreateProjectView.as_view()), name="create_project_view"),
     url(r'^project_list/$', login_required(ProjectListView.as_view()), name="project_list_view"),
     url(r'^project_list/(?P<pk>\d+)/$', login_required(ProjectDetailView.as_view()), name="project_detail_view"),
+    url(r'^create_finish/$', login_required(CreateFinishView.as_view()), name="create_finish_view"),
+    url(r'^finish_list/$', login_required(FinishListView.as_view()) , name="finish_list_view"),
+    url(r'^finish_list/(?P<pk>\d+)/$', login_required(FinishDetailView.as_view()), name="finish_detail_view"),
+    url(r'^create_plating/$', login_required(CreatePlatingView.as_view()), name="create_plating_view"),
+    url(r'^plating_list/$', login_required(PlatingListView.as_view()) , name="plating_list_view"),
+    url(r'^plating_list/(?P<pk>\d+)/$', login_required(PlatingDetailView.as_view()), name="plating_detail_view")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

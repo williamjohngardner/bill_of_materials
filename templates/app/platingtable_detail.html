@@ -1,0 +1,10 @@
+{% extends "bom.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12 well">
+    <h3>{{object.plating}}  |  <small>Part ID: </small>{{object.pk}}
+    <h3><small>Description </small>{{object.description}}</h3>
+    <h3><small>Source: </small>{{object.source}}</h3>
+  </div>
+{% endblock %}

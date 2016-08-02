@@ -11,7 +11,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 import os
 
-from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier, Project, ProjectQuantity, Category, SubCategory, UserProfile
+from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier, Project, ProjectQuantity, Category, SubCategory, UserProfile, FinishTable, PlatingTable
 from app.forms import CreateCustomer, CreateSupplier
 
 
@@ -191,12 +191,6 @@ class AssemblyListView(ListView):
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user)
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["part"] = self.model.assemblyquantity_set.all()|part_sum
-    #     context["sub"] = self.model.assemblyquantity_set.all()|sub_sum
-    #     return context
-
 
 class AssemblyDetailView(DetailView):
     model = Assembly
@@ -211,10 +205,10 @@ class CreateProjectView(CreateWithInlinesView):
     fields = ['project_number', 'client', 'project_name', 'price_per_project', 'shipping_address', 'shipping_terms', 'expected_delivery']
     success_url = reverse_lazy("project_list_view")
 
-    def form_valid(self, form):
+    def forms_valid(self, form, inlines):
         project = form.save(commit=False)
         project.user = self.request.user
-        return super(CreateProjectView, self).form_valid(form)
+        return super(CreateProjectView, self).forms_valid(form, inlines)
 
 
 class ProjectListView(ListView):
@@ -338,6 +332,56 @@ class SupplierListView(ListView):
 
 class SupplierDetailView(DetailView):
     model = Supplier
+
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
+
+
+class CreateFinishView(CreateView):
+    model = FinishTable
+    fields = ['finish', 'description', 'source']
+    success_url = reverse_lazy("finish_list_view")
+
+    def form_valid(self, form):
+        finish = form.save(commit=False)
+        finish.user = self.request.user
+        return super(CreateFinishView, self).form_valid(form)
+
+
+class FinishListView(ListView):
+    model = FinishTable
+
+    def get_queryset(self):
+        return FinishTable.objects.filter(user=self.request.user)
+
+
+class FinishDetailView(DetailView):
+    model = FinishTable
+
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
+
+
+class CreatePlatingView(CreateView):
+    model = PlatingTable
+    fields = ['plating', 'description', 'source']
+    success_url = reverse_lazy("plating_list_view")
+
+    def form_valid(self, form):
+        plating = form.save(commit=False)
+        plating.user = self.request.user
+        return super(CreatePlatingView, self).form_valid(form)
+
+
+class PlatingListView(ListView):
+    model = PlatingTable
+
+    def get_queryset(self):
+        return PlatingTable.objects.filter(user=self.request.user)
+
+
+class PlatingDetailView(DetailView):
+    model = PlatingTable
 
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user)
