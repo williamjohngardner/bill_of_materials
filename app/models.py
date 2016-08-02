@@ -114,6 +114,14 @@ class SubAssembly(models.Model):
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(upload_to="cad_files", null=True, blank=True)
 
+    @property
+    def cost(self):
+        cost = 0
+        for subassemblyquantity in self.subassemblyquantity_set.all():
+            cost += subassemblyquantity.cost
+        return cost
+
+
     def __str__(self):
         return self.sub_assembly_name
 
@@ -132,6 +140,16 @@ class Assembly(models.Model):
     assembly_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(upload_to="cad_files", null=True, blank=True)
+
+    @property
+    def cost(self):
+        cost = 0
+        for assembly_quantity in self.assemblyquantity_set.all():
+            cost += assembly_quantity.cost
+            subassembly = assembly_quantity.subassembly
+            if subassembly:
+                cost += subassembly.cost * assembly_quantity.quantity
+        return cost
 
     def __str__(self):
         return self.assembly_name

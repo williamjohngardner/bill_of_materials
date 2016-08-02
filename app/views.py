@@ -213,7 +213,7 @@ class CreateProjectView(CreateWithInlinesView):
 
     def form_valid(self, form):
         project = form.save(commit=False)
-        assembly.user = self.request.user
+        project.user = self.request.user
         return super(CreateProjectView, self).form_valid(form)
 
 
@@ -257,7 +257,7 @@ class CreateCustomerView(CreateView):
         customer = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address></address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
         high.post_person(customer)
         customer = form.save(commit=False)
-        Customer.objects.create(user=self.request.user)
+        customer.user=self.request.user
         return super(CreateCustomerView, self).form_valid(form)
 
 
@@ -314,7 +314,7 @@ class CreateSupplierView(CreateView):
         supplier = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address>{}</address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
         high.post_person(supplier)
         supplier = form.save(commit=False)
-        Supplier.objects.create(user=self.request.user)
+        supplier.user=self.request.user
         return super(CreateSupplierView, self).form_valid(form)
 
 

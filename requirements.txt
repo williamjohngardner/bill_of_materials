@@ -10,3 +10,5 @@ jdcal
 lxml
 openpyxl
 requests
+gunicorn
+psycopg2
