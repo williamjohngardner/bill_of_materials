@@ -3,66 +3,68 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>{subasmbly} - Revision Control for Makers</title>
-    <link rel="stylesheet" href="{% static "app/css/bootstrap.css" %}" media="screen" charset="utf-8">
-    <link rel="stylesheet" href="{% static "app/css/main.css" %}" media="screen" charset="utf-8">
+      <title>{subasmbly} - Revision Control for Makers</title>
+        <link rel="stylesheet" href="{% static "app/css/bootstrap.css" %}" media="screen" charset="utf-8">
+        <link rel="stylesheet" href="{% static "app/css/main.css" %}" media="screen" charset="utf-8">
   </head>
   <body>
+
     <div id="background" class="inner" style="background-image: url({% static "app/images/bot.jpg" %}");>
+      <nav id="navigation" class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><img id="logo-sm" src="{% static 'app/images/logo_sm.jpg' %}" alt="Subasmbly"/></a>
+          </div>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/"><img id="logo-sm" src="{% static 'app/images/logo_sm.jpg' %}" alt="Subasmbly"/></a>
-    </div>
 
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right">
-          <form class="navbar-form navbar-right" method="POST", action="{% url 'django.contrib.auth.views.login' %}">{% csrf_token %}
-            <div class="form-group">
-              <input type="text" class="form-control" name='username' placeholder="Username">
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-control" name='password' placeholder="Password">
-            </div>
-              <button type="submit" class="btn btn-success">Login</button>
-          </form>
-        </ul>
-      <ul id="menu" class="nav navbar-nav navbar-left">
-        <li><a href="{% url 'create_user' %}"><strong>Sign Up!</strong></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>What is {subasmbly}?</strong><span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Revision Control</a></li>
-            <li><a href="{% url 'highrise_view' %}">CRM with Highrise</a></li>
-            <li><a href="#">Increase Accuracy</a></li>
-            <li><a href="#">Reduce Risk</a></li>
-            <li><a href="#">Manage Costs</a></li>
-          </ul>
-        </li>
-        <li><a>Logged in as {{request.user}}</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-      {% block content %}
-        There is nothing here.
-      {% endblock %}
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <form id="login" class="navbar-form navbar-right" method="POST", action="{% url 'django.contrib.auth.views.login' %}">{% csrf_token %}
+                  <div class="form-group">
+                    <input type="text" class="form-control" name='username' placeholder="Username">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control" name='password' placeholder="Password">
+                  </div>
+                    <button type="submit" class="btn btn-success">Login</button>
+                </form>
+              </ul>
+            <ul id="menu" class="nav navbar-nav navbar-left">
+              <li><a href="{% url 'create_user' %}">Get Started With Subasmbly!</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">What is Subasmbly?<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Revision Control</a></li>
+                  <li><a href="{% url 'highrise_view' %}">CRM with Highrise</a></li>
+                  <li><a href="#">Increase Accuracy</a></li>
+                  <li><a href="#">Reduce Risk</a></li>
+                  <li><a href="#">Manage Costs</a></li>
+                </ul>
+              </li>
+              {# <li><a>Logged in as {{request.user}}</a></li>#}
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    {% block content %}
+      There is nothing here.
+    {% endblock %}
       <script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
       <script type="text/javascript" src="{% static 'app/js/bootstrap.js' %}"></script>
-      {% block extrascript %}
-      {% endblock %}
+
+    {% block extrascript %}
+
+    {% endblock %}
   </body>
-  <footer>
-    <h6><div class="glyphicon glyphicon-copyright-mark">  Copyright 2016 William John Gardner</div><h6>
-  </footer>
+    <footer>
+      <h6><div class="glyphicon glyphicon-copyright-mark">  Copyright 2016 William John Gardner</div><h6>
+    </footer>
 </html>

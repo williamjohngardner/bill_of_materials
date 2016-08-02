@@ -57,7 +57,7 @@ class CreateCategoryView(CreateView):
 
     def form_valid(self, form):
         category = form.save(commit=False)
-        Category.objects.create(user=self.request.user)
+        category.user = self.request.user
         return super(CreateCategoryView, self).form_valid(form)
 
 
@@ -75,7 +75,7 @@ class CreateSubCategoryView(CreateView):
 
     def form_valid(self, form):
         subcategory = form.save(commit=False)
-        SubCategory.objects.create(user=self.request.user)
+        subcategory.user = self.request.user
         return super(CreateSubCategoryView, self).form_valid(form)
 
 
@@ -93,7 +93,7 @@ class CreatePartView(CreateView):
 
     def form_valid(self, form):
         part = form.save(commit=False)
-        Part.objects.create(user=self.request.user)
+        part.user = self.request.user
         return super(CreatePartView, self).form_valid(form)
 
 
@@ -141,10 +141,10 @@ class CreateSubAssemblyView(CreateWithInlinesView):
     fields = ['sub_assembly_name', 'sub_assembly_number', 'description', 'category', 'sub_category', 'mfg_supplier', 'mfg_supplier_pn', 'finish', 'plating', 'notes', 'cad_file']
     success_url = reverse_lazy("subassembly_list_view")
 
-    def form_valid(self, form):
+    def forms_valid(self, form, inlines):
         subassembly = form.save(commit=False)
-        SubAssembly.objects.create(user=self.request.user)
-        return super(CreateSubAssemblyView, self).form_valid(form)
+        subassembly.user = self.request.user
+        return super(CreateSubAssemblyView, self).forms_valid(form, inlines)
 
 
 class SubAssemblyListView(ListView):
@@ -179,11 +179,10 @@ class CreateAssemblyView(CreateWithInlinesView):
     fields = ['assembly_name', 'assembly_part_number', 'description', 'category', 'sub_category', 'supplier', 'supplier_pn', 'finish', 'plating', 'assembly_cost', 'notes', 'cad_file']
     success_url = reverse_lazy("assembly_list_view")
 
-    def form_valid(self, form):
+    def forms_valid(self, form, inlines):
         assembly = form.save(commit=False)
-        Assembly.objects.create(user=self.request.user)
-        assembly.save()
-        return super(CreateAssemblyView, self).form_valid(assembly)
+        assembly.user = self.request.user
+        return super(CreateAssemblyView, self).forms_valid(form, inlines)
 
 
 class AssemblyListView(ListView):
@@ -191,6 +190,12 @@ class AssemblyListView(ListView):
 
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user)
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context["part"] = self.model.assemblyquantity_set.all()|part_sum
+    #     context["sub"] = self.model.assemblyquantity_set.all()|sub_sum
+    #     return context
 
 
 class AssemblyDetailView(DetailView):
@@ -203,14 +208,13 @@ class AssemblyDetailView(DetailView):
 class CreateProjectView(CreateWithInlinesView):
     model = Project
     inlines = [ProjectPartInline]
-    fields = ['user', 'project_number', 'client', 'project_name', 'price_per_project', 'shipping_address', 'shipping_terms', 'expected_delivery']
+    fields = ['project_number', 'client', 'project_name', 'price_per_project', 'shipping_address', 'shipping_terms', 'expected_delivery']
     success_url = reverse_lazy("project_list_view")
 
     def form_valid(self, form):
         project = form.save(commit=False)
-        Project.objects.create(user=self.request.user)
-        project.save()
-        return super(CreateProjectView, self).form_valid(project)
+        assembly.user = self.request.user
+        return super(CreateProjectView, self).form_valid(form)
 
 
 class ProjectListView(ListView):
@@ -230,7 +234,6 @@ class ProjectDetailView(DetailView):
 class CreateCustomerView(CreateView):
     model = Customer
     form_class = CreateCustomer
-    # fields = ['name', 'contact', 'phone', 'email', 'website']
     success_url = reverse_lazy("customer_list_view")
 
     def form_valid(self, form):

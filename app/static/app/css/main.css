@@ -4,9 +4,17 @@ background-repeat:no-repeat;
 background-size:100%;
 }
 
+/*#navigation{
+  background-color: white;
+}*/
+
+#login{
+  padding-top: 10px;
+  padding-right: 20px;
+}
 
 nav{
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 #menu{

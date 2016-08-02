@@ -57,7 +57,7 @@ class Part(models.Model):
         return "https://cdn3.iconfinder.com/data/icons/smoothfill-action/30/action_088-no_camera-capture-picture-image-photo-128.png"
 
     def __str__(self):
-        return str(self.part_name)
+        return self.part_name
 
 
 class SubAssemblyQuantity(models.Model):
@@ -72,7 +72,7 @@ class SubAssemblyQuantity(models.Model):
 
 
     def __str__(self):
-        return str(self.part)
+        return self.part.part_name
 
 
 class AssemblyQuantity(models.Model):
@@ -82,17 +82,21 @@ class AssemblyQuantity(models.Model):
     assembly = models.ForeignKey('app.Assembly', null=True, blank=True)
 
     @property
-    def subassembly_cost(self):
-        subassembly_cost = self.subassembly.cost
-        return subassembly_cost
+    def sub_cost(self):
+        if not self.part:
+            return 0
+        cost = self.part.unit_cost * self.quantity
+        return cost
 
     @property
     def cost(self):
+        if not self.part:
+            return 0
         cost = self.part.unit_cost * self.quantity
         return cost
 
     def __str__(self):
-        return str(self.assembly)
+        return self.assembly.assembly_name
 
 
 class SubAssembly(models.Model):
@@ -129,6 +133,8 @@ class Assembly(models.Model):
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(upload_to="cad_files", null=True, blank=True)
 
+    def __str__(self):
+        return self.assembly_name
 
 
 class ProjectQuantity(models.Model):
@@ -150,15 +156,14 @@ class Project(models.Model):
     expected_delivery = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return self.client
-
+        return self.project_name
 
 class Customer(models.Model):
     user = models.ForeignKey("auth.User", null=True, blank=True)
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True )
     title = models.CharField(max_length=30, null=True, blank=True)
-    company_name = models.CharField(max_length=25, null=True, blank=True)
+    company_name = models.CharField(max_length=25, blank=True)
     phone_number = models.IntegerField(null=True, blank=True)
     email_address = models.CharField(max_length=60, null=True, blank=True)
     twitter_account = models.CharField(max_length=25, null=True, blank=True)
