@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'app',
     'bootstrapform',
     'mathfilters',
-    'highton'
+    'highton',
+    'storages'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -85,6 +86,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
 
@@ -125,8 +127,28 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 USE_THOUSAND_SEPARATOR = False
 LOGIN_REDIRECT_URL = '/accounts/profile/'
+
+AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'Cache-Control': 'max-age=94608000',
+    }
+
+
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = os.getenv('aws_access_key_id')
+AWS_SECRET_ACCESS_KEY = os.getenv('aws_secret_access_key')
+
+if AWS_STORAGE_BUCKET_NAME:
+
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+    print('BOOM')
+    STATICFILES_LOCATION = 'static'
+    STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
