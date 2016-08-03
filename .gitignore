@@ -4,3 +4,5 @@ dbsqlite3
 .idea/
 highton.py
 mailgun_test.py
+.env
+venv

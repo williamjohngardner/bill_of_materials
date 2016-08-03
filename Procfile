@@ -1,1 +1,1 @@
-web: bill_of_materials.wsgi
+web: gunicorn bill_of_materials.wsgi

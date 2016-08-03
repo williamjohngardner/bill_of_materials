@@ -125,5 +125,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR
+STATIC_ROOT = BASE_DIR
 USE_THOUSAND_SEPARATOR = False
 LOGIN_REDIRECT_URL = '/accounts/profile/'
