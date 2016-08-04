@@ -7,7 +7,7 @@
 {% for object in object_list %}
   <div class="row">
     <div class="col-md-12 well">
-      <h3>{{object.sub_assembly_name}}  |  <small>Part Number:</small> {{object.sub_assembly_number}}  |  <small>ID:</small> {{object.id}}  |  {% if object.cad_file %}<small><a href="{{object.cad_file.url}}">Click to View CAD</a></small>{% else %}<small>No CAD File Uploaded</small>{% endif %}  |  <small>Cost/SubAssembly: </small>${{ object.subassemblyquantity_set.all|part_sum }}<a class="btn btn-primary pull-right" type="button" name="drilldown" href="{% url 'subassembly_detail_view' object.pk %}">Details</a></h3>
+      <h3>{{object.sub_assembly_name}}  |  <small>Part Number:</small> {{object.sub_assembly_number}}  |  <small>ID:</small> {{object.id}}  |  {% if object.cad_file %}<small><a href="{{object.cad_file.url}}">Click to View CAD</a></small>{% else %}<small>No CAD File Uploaded</small>{% endif %}  |  <small>Cost/SubAssembly: </small>${{ object.subassemblyquantity_set.all|part_sum }}<a class="btn btn-success pull-right" type="button" name="drilldown" href="{% url 'subassembly_detail_view' object.pk %}">Details</a></h3>
     </div>
     <table class="table table-striped table-bordered table-hover">
         <tr>

@@ -29,6 +29,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <form id="login" class="navbar-form navbar-right" method="POST", action="{% url 'login' %}">{% csrf_token %}
                   {% if request.user.is_authenticated %}
+                  <a href="{% url 'project_list_view' %}"><button type="button" name="index_jump" class="btn btn-info btn-default">Return to Bills of Materials</button></a>
                   <a href="{% url 'logout' %}?next=/"><button type="button" name="logout" class="btn btn-danger btn-default">Logout</button></a>
                   {% endif %}
                   <div class="form-group">
@@ -47,9 +48,6 @@
                 <ul class="dropdown-menu">
                   <li><a href="#">Revision Control</a></li>
                   <li><a href="{% url 'highrise_view' %}">CRM with Highrise</a></li>
-                  <li><a href="#">Increase Accuracy</a></li>
-                  <li><a href="#">Reduce Risk</a></li>
-                  <li><a href="#">Manage Costs</a></li>
                 </ul>
               </li>
               {# <li><a>Logged in as {{request.user}}</a></li>#}

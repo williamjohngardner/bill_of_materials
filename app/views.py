@@ -138,7 +138,7 @@ class ProjectPartInline(InlineFormSet):
 class CreateSubAssemblyView(CreateWithInlinesView):
     model = SubAssembly
     inlines = [SubAssemblyPartInline]
-    fields = ['sub_assembly_name', 'sub_assembly_number', 'description', 'category', 'sub_category', 'mfg_supplier', 'mfg_supplier_pn', 'finish', 'plating', 'notes', 'cad_file']
+    fields = ['sub_assembly_name', 'sub_assembly_number', 'description', 'category', 'sub_category', 'mfg_supplier', 'mfg_supplier_pn', 'finish', 'plating', 'notes', 'cad_file', 'image']
     success_url = reverse_lazy("subassembly_list_view")
 
     def forms_valid(self, form, inlines):
@@ -176,7 +176,7 @@ class SubAssemblyInline(InlineFormSet):
 class CreateAssemblyView(CreateWithInlinesView):
     model = Assembly
     inlines = [AssemblyPartInline]
-    fields = ['assembly_name', 'assembly_part_number', 'description', 'category', 'sub_category', 'supplier', 'supplier_pn', 'finish', 'plating', 'assembly_cost', 'notes', 'cad_file']
+    fields = ['assembly_name', 'assembly_part_number', 'description', 'category', 'sub_category', 'supplier', 'supplier_pn', 'finish', 'plating', 'assembly_cost', 'notes', 'cad_file', 'image']
     success_url = reverse_lazy("assembly_list_view")
 
     def forms_valid(self, form, inlines):
@@ -339,7 +339,7 @@ class SupplierDetailView(DetailView):
 
 class CreateFinishView(CreateView):
     model = FinishTable
-    fields = ['finish', 'description', 'source']
+    fields = ['finish', 'description', 'source', 'image']
     success_url = reverse_lazy("finish_list_view")
 
     def form_valid(self, form):

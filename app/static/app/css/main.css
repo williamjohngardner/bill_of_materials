@@ -18,6 +18,14 @@ background-size:100%;
   padding-right: 20px;
 }
 
+#sidenav{
+  padding-left: 30px;
+}
+
+#highrise{
+  padding-top: 50px; 
+}
+
 nav{
   padding-bottom: 10px;
 }

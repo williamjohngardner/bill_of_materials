@@ -7,7 +7,7 @@
   </div>
         {% for object in object_list %}
             <div class="col-md-12 well well-sm">
-              <h4><small>Category: </small>{{object.category}}</h4>
+              <h3><small>Category: </small>{{object.category}}<a class="btn btn-success pull-right" type="button" name="drilldown" href="{% url 'create_category_view' %}">Update Category Information</a></h3>
             </div>
         {% endfor %}
   </div>

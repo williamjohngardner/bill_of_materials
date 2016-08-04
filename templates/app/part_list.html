@@ -6,7 +6,7 @@
     <div class="row">
 {% for object in object_list %}
     <div class="col-md-12 well">
-      <h3><small>Part ID: </small>{{object.pk}}  |  <small>Part Name: </small>{{object.part_name}}  |  <small>Unit Cost: </small>${{object.unit_cost}} <a class="btn btn-primary pull-right" type="button" name="drilldown" href="{% url 'part_detail_view' object.pk %}">Details</a></h3>
+      <h3><small>Part ID: </small>{{object.pk}}  |  <small>Part Name: </small>{{object.part_name}}  |  <small>Unit Cost: </small>${{object.unit_cost}} <a class="btn btn-success pull-right" type="button" name="drilldown" href="{% url 'part_detail_view' object.pk %}">Details</a></h3>
     </div>
 
 {% endfor %}

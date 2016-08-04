@@ -3,8 +3,8 @@
 {% block content %}
 <div class="row">
   <div class="col-md-12 well">
-    <h3>{{object.finish}}  |  <small>Part ID: </small>{{object.pk}}
-    <h3><small>Description </small>{{object.description}}</h3>
-    <h3><small>Source: </small>{{object.source}}</h3>
+    <h4>{{object.finish}}  |  <small>Part ID: </small>{{object.pk}}<img class="thumbnail pull-right" height="250px" width="250px" src="{{object.image_url}}" alt="{{object.finish}}"/></h4>
+    <h4><small>Description </small>{{object.description}}</h4>
+    <h4><small>Source: </small>{{object.source}}</h4>
   </div>
 {% endblock %}

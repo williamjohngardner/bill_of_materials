@@ -113,6 +113,8 @@ class SubAssembly(models.Model):
     subassembly_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(upload_to="cad_files", null=True, blank=True)
+    image = models.ImageField(upload_to="image_files", null=True, blank=True, verbose_name="Part Image")
+
 
     @property
     def cost(self):
@@ -121,6 +123,11 @@ class SubAssembly(models.Model):
             cost += subassemblyquantity.cost
         return cost
 
+    @property
+    def image_url(self):
+        if self.image:
+            return self.image.url
+        return "https://cdn3.iconfinder.com/data/icons/smoothfill-action/30/action_088-no_camera-capture-picture-image-photo-128.png"
 
     def __str__(self):
         return self.sub_assembly_name
@@ -140,6 +147,8 @@ class Assembly(models.Model):
     assembly_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(upload_to="cad_files", null=True, blank=True)
+    image = models.ImageField(upload_to="image_files", null=True, blank=True, verbose_name="Part Image")
+
 
     @property
     def cost(self):
@@ -150,6 +159,12 @@ class Assembly(models.Model):
             if subassembly:
                 cost += subassembly.cost * assembly_quantity.quantity
         return cost
+
+    @property
+    def image_url(self):
+        if self.image:
+            return self.image.url
+        return "https://cdn3.iconfinder.com/data/icons/smoothfill-action/30/action_088-no_camera-capture-picture-image-photo-128.png"
 
     def __str__(self):
         return self.assembly_name
@@ -221,6 +236,13 @@ class FinishTable(models.Model):
     finish = models.CharField(max_length=50)
     description = models.TextField(null=True, blank=True)
     source = models.ForeignKey(Supplier, null=True, blank=True)
+    image = models.ImageField(upload_to="image_files", null=True, blank=True, verbose_name="Part Image")
+
+    @property
+    def image_url(self):
+        if self.image:
+            return self.image.url
+        return "https://cdn3.iconfinder.com/data/icons/smoothfill-action/30/action_088-no_camera-capture-picture-image-photo-128.png"
 
     def __str__(self):
         return self.finish

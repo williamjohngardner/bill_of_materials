@@ -3,9 +3,9 @@
 {% block content %}
         <div class="row">
           <div class="col-md-12 well">
-            <h2>Customer ID: {{object.pk}}  :  {{object.name}}</h2>
+            <h4>{{object.first_name}} {{object.last_name}}  |  {{object.title}}  |  {{ object.company_name}}</h4>
           </div>
-          <div class="col-md-12 well">
+          <div class="col-md-6 well">
             <h5><small>Company:  </small><strong>{{object.company_name}}</strong></h5>
             <h5><small>Contact:  </small><strong>{{object.first_name}} {{object.last_name}}</strong></h5>
             <h5><small>Title:  </small><strong>{{object.title}}</strong></h5>
@@ -13,12 +13,13 @@
             <h5><small>Email:  </small>{% for email in object.email_addresses %}
               <a href="mailto:{{ email.address }}"><strong>{{ email.address }}
             {% endfor %}</strong></a></h5>
+          </div>
+          <div class="col-md-6 well">
             <h5><small>Website: </small><a href="{{ object.web_address }}"><strong>{{object.web_address}}</strong></a></h5>
             <h5><small>Street Address:  </small><strong>{{object.street_address}}</strong></h5>
             <h5><small>City:  </small><strong>{{object.city}}</strong></h5>
             <h5><small>State:  </small><strong>{{object.state}}</strong></h5>
             <h5><small>Zip Code:  </small><strong>{{object.zip_code}}</strong></h5>
-            <h5><small>Country:  </small><strong>{{object.country}}</strong></h5>
           </div>
         </div>
       </div>
