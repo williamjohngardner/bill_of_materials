@@ -9,13 +9,17 @@ from django.contrib.auth.views import logout, login
 from app.views import IndexView, CreatePartView, PartListView, PartDetailView, CreateSubAssemblyView, SubAssemblyListView, SubAssemblyDetailView
 from app.views import CreateAssemblyView, AssemblyListView, AssemblyDetailView, CreateCustomerView, CustomerListView, CreateSupplierView, SupplierListView
 from app.views import CreateProjectView, ProjectListView, ProjectDetailView, CustomerDetailView, SupplierDetailView, CreateSubCategoryView, CreateCategoryView
-from app.views import CategoryListView, SubCategoryListView, HighriseView, CreateUserView, ProfilePageView, CreateFinishView, FinishListView, FinishDetailView, CreatePlatingView, PlatingListView, PlatingDetailView
+from app.views import CategoryListView, SubCategoryListView, HighriseView, CreateUserView, ProfilePageView, CreateFinishView, FinishListView, FinishDetailView
+from app.views import CreatePlatingView, PlatingListView, PlatingDetailView, AboutView
+
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^$', IndexView.as_view(), name="index_view"),
     url(r'^highrise/$', HighriseView.as_view(), name="highrise_view"),
+    url(r'^about/$', AboutView.as_view(), name="about_view"),
     url(r'^create_user/$', CreateUserView.as_view(), name="create_user"),
     url(r'^accounts/profile/$', login_required(ProfilePageView.as_view()), name="profile_page_view"),
     url(r'^create_category/$', login_required(CreateCategoryView.as_view()), name="create_category_view"),

@@ -5,11 +5,10 @@
     <meta charset="utf-8">
       <title>{subasmbly} - Revision Control for Makers</title>
         <link rel="stylesheet" href="{% static "app/css/bootstrap.css" %}" media="screen" charset="utf-8">
+        <link rel="stylesheet" href="{% static "app/font-awesome/css/font-awesome.css" %}">
         <link rel="stylesheet" href="{% static "app/css/main.css" %}" media="screen" charset="utf-8">
   </head>
   <body>
-
-    <div id="background" class="inner" style="background-image: url({% static "app/images/bot.jpg" %}");>
       <nav id="navigation" class="navbar navbar-default">
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
@@ -56,7 +55,38 @@
         </div><!-- /.container-fluid -->
       </nav>
     {% block content %}
-      There is nothing here.
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <img id="headshot" class="thumbnail" src="{% static 'app/images/headshot.jpg' %}" alt="Bill Gardner"></img>
+        </div>
+        <div class="col-lg-7">
+          <h3>Bill Gardner</h3>
+          <br>
+          <h6><i class="fa fa-github" aria-hidden="true"></i><a href="http://www.github.com/williamjohngardner" target="blank" >  github.com/williamjohngardner</a></h6>
+          <h6><i class="fa fa-desktop" aria-hidden="true"></i><a href="http://www.williamjgardner.com" target="blank">  www.williamjgardner.com</a></h6>
+          <br>
+          <h5>I’ve had a hammer in my hand since I was big enough to hold one and have been building things ever since I got my first set of Legos for Christmas.
+            <h5>I hold a strong connection to the ethos of the Maker and DIY movements and truly value skills and work ethic above most other things; to that end I made Subasmbly as a tool to help Makers of all types create beautiful objects in a more efficient and accurate fashion.</h5>
+            <h5>I’m a recent graduate of The Iron Yard in Greenville, South Carolina, learning backend web development including Python and Django, with the goal of creating elegant and useful web-based tools.</h5> <h5>I love cheese more than I should.</h5>
+          <h6 class="page-header">Backend Development Skills: </h6>
+          <div class="col-lg-4">
+            <h6><i class="fa fa-circle-o" aria-hidden="true"></i>  Python</h6>
+            <h6><i class="fa fa-circle-o" aria-hidden="true"></i>  Django</h6>
+            <h6><i class="fa fa-circle-o" aria-hidden="true"></i>  RESTful APIs</h6>
+            <h6><i class="fa fa-circle-o" aria-hidden="true"></i>  HTML & CSS</h6>
+            <h6><i class="fa fa-circle-o" aria-hidden="true"></i>  Java</h6>
+          </div>
+          <div class="col-lg-4">
+            <h6><i class="fa fa-circle-o" aria-hidden="true"></i>  Git-based Revision Control</h6>
+            <h6><i class="fa fa-circle-o" aria-hidden="true"></i>  Object Oriented Programming</h6>
+            <h6><i class="fa fa-circle-o" aria-hidden="true"></i>  Functional Programming</h6>
+            <h6><i class="fa fa-circle-o" aria-hidden="true"></i>  Cloud Deployment with Heroku</h6>
+            <h6><i class="fa fa-circle-o" aria-hidden="true"></i>  Witty Banter</h6>
+          </div>
+        </div>
+      </div>
+    </div>
     {% endblock %}
     <div class="container">
       <footer>
@@ -70,5 +100,4 @@
 
     {% endblock %}
   </body>
-
 </html>

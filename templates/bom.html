@@ -73,13 +73,14 @@
       {% block content %}
           There is nothing here.
       {% endblock %}
+      <footer>
+        <h6><div class="glyphicon glyphicon-copyright-mark pull-right">  Copyright 2016 William John Gardner</div><h6>
+      </footer>
     </div>
     <script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
     <script type="text/javascript" src="{% static 'app/js/bootstrap.js' %}"></script>
     {% block extrascript %}
     {% endblock %}
 </body>
-<footer>
-  <h6><div class="glyphicon glyphicon-copyright-mark">  Copyright 2016 William John Gardner</div><h6>
-</footer>
+
 </html>

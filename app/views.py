@@ -50,6 +50,10 @@ class HighriseView(TemplateView):
     template_name = "highrise.html"
 
 
+class AboutView(TemplateView):
+    template_name = "about.html"
+
+
 class CreateCategoryView(CreateView):
     model = Category
     fields = ['category']

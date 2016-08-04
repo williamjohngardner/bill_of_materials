@@ -51,7 +51,7 @@
         {% endif %}
         <tr>
         {% if part.subassembly %}
-          <td><small>{{part.subassembly.pk}}</small></td>
+          <td><a href="{% url 'subassembly_detail_view' part.subassembly.id %}"><small>{{part.subassembly.pk}}</small></a></td>
           <td><small>{{part.subassembly.sub_assembly_name}}</small></td>
           <td><small>{{part.subassembly.sub_assembly_number}}</small></td>
           <td><small>{{part.subassembly.description}}</small></td>
