@@ -60,7 +60,7 @@
           {% for part in object.assemblyquantity_set.all  %}
             {% if part.part %}
             <tr>
-            <td><small>{{part.part.pk}}</small></td>
+            <td><a href="{% url 'part_detail_view' part.part.pk %}"><small>{{part.part.pk}}</small></a></td>
             <td><small>{{part.part.part_name}}</small></td>
             <td><small>{{part.part.part_number}}</small></td>
             <td><small>{{part.part.description}}</small></td>
@@ -79,7 +79,7 @@
           {% endif %}
           <tr>
           {% if part.subassembly %}
-            <td><small>{{part.subassembly.pk}}</small></td>
+            <td><a href="{% url 'subassembly_detail_view' part.subassembly.pk %}"><small>{{part.subassembly.pk}}</small></a></td>
             <td><small>{{part.subassembly.sub_assembly_name}}</small></td>
             <td><small>{{part.subassembly.sub_assembly_number}}</small></td>
             <td><small>{{part.subassembly.description}}</small></td>
