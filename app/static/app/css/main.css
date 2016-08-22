@@ -1,7 +1,8 @@
-.background
+#background
 {
 background-repeat:no-repeat;
 background-size:100%;
+
 }
 
 /*#navigation{
@@ -23,7 +24,7 @@ background-size:100%;
 }
 
 #highrise{
-  padding-top: 50px; 
+  padding-top: 50px;
 }
 
 nav{
