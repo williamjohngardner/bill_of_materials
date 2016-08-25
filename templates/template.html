@@ -5,6 +5,7 @@
   <head>
     <meta charset="utf-8">
     <title>This is a Test</title>
+    <link rel="stylesheet" href="{% static "app/font-awesome/css/font-awesome.min.css" %}">
     <link rel="stylesheet" href="{% static "app/css/bootstrap.css" %}" media="screen" charset="utf-8">
     <link rel="stylesheet" href="{% static "app/css/main.css" %}" media="screen" charset="utf-8">
   </head>
@@ -15,7 +16,7 @@
         <div class="masthead">
           <a href="/"><h1>{subasmbly}</h1></a>
         </div>
-        <div class="navbar navbar-default navbar-static-top">
+        <div id="dropshadow" class="navbar navbar-default navbar-static-top">
               <ul class="nav nav-justified">
                 <li role="presentation" class="active"><a href="/">Home</a></li>
                 <li role="presentation"><a href="#">Profile</a></li>
@@ -28,7 +29,7 @@
     </div>
     <!-- END NAVIGATION -->
     <!-- BEGIN CAROUSEL -->
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <div id="dropshadow" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
       <ol class="carousel-indicators">
         <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -69,7 +70,7 @@
               <div class="center-block">
                 <h4 id="trititle" class="text-center">Complete Part and Assembly Management</h4>
               </div>
-              <img src="{% static "app/images/wrench.jpg" %}" alt="" class="img-circle center-block"/>
+              <img id="dropshadow" src="{% static "app/images/wrench.jpg" %}" alt="" class="img-circle center-block"/>
               <p id="tritext" class="text-center">
                 Four loko disrupt ethical, blog tattooed swag sustainable chambray brooklyn. Etsy austin ennui, you probably haven't heard of them meggings polaroid green juice art party franzen XOXO pinterest stumptown post-ironic. Marfa forage vice echo park retro, skateboard gluten.
               </p>
@@ -77,7 +78,7 @@
             </div>
             <div class="col-lg-4">
               <h4 id="trititle" class="text-center">Online Revision Control</h4>
-              <img src="{% static "app/images/maker.jpg" %}" alt="" class="img-circle center-block"/>
+              <img id="dropshadow" src="{% static "app/images/maker.jpg" %}" alt="" class="img-circle center-block"/>
               <p id="tritext" class="text-center">
                 Four loko disrupt ethical, blog tattooed swag sustainable chambray brooklyn. Etsy austin ennui, you probably haven't heard of them meggings polaroid green juice art party franzen XOXO pinterest stumptown post-ironic. Marfa forage vice echo park retro, skateboard gluten.
               </p>
@@ -85,7 +86,7 @@
             </div>
             <div class="col-lg-4">
               <h4 id="trititle" class="text-center">Integrated CRM With Highrise</h4>
-              <img src="{% static "app/images/highriselogo.jpg" %}" alt="" class="img-circle center-block"/>
+              <img id="dropshadow" src="{% static "app/images/highriselogo.jpg" %}" alt="" class="img-circle center-block"/>
               <p id="tritext" class="text-center">
                 Four loko disrupt ethical, blog tattooed swag sustainable chambray brooklyn. Etsy austin ennui, you probably haven't heard of them meggings polaroid green juice art party franzen XOXO pinterest stumptown post-ironic. Marfa forage vice echo park retro, skateboard gluten.
               </p>
@@ -96,7 +97,7 @@
     {% endblock %}
     {% block action %}
     <br>
-      <div class="jumbotron">
+      <div id="dropshadow" class="jumbotron">
         <div class="container">
           <h1 class="text-center">Caviar and Nanners!</h1>
           <p class="lead">
