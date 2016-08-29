@@ -28,7 +28,7 @@ def handler500(request):
 
 
 class IndexView(TemplateView):
-    template_name = "template.html"
+    template_name = "index.html"
 
 
 class CreateUserView(CreateView):
