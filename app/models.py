@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
@@ -70,7 +69,6 @@ class SubAssemblyQuantity(models.Model):
         cost = self.part.unit_cost * self.quantity
         return cost
 
-
     def __str__(self):
         return self.part.part_name
 
@@ -115,7 +113,6 @@ class SubAssembly(models.Model):
     cad_file = models.FileField(upload_to="cad_files", null=True, blank=True)
     image = models.ImageField(upload_to="image_files", null=True, blank=True, verbose_name="Part Image")
 
-
     @property
     def cost(self):
         cost = 0
@@ -149,7 +146,6 @@ class Assembly(models.Model):
     cad_file = models.FileField(upload_to="cad_files", null=True, blank=True)
     image = models.ImageField(upload_to="image_files", null=True, blank=True, verbose_name="Part Image")
 
-
     @property
     def cost(self):
         cost = 0
@@ -177,7 +173,6 @@ class ProjectQuantity(models.Model):
     project = models.ForeignKey('app.Project', null=True, blank=True)
 
 
-
 class Project(models.Model):
     user = models.ForeignKey("auth.User")
     project_number = models.AutoField(primary_key=True)
@@ -191,10 +186,11 @@ class Project(models.Model):
     def __str__(self):
         return self.project_name
 
+
 class Customer(models.Model):
     user = models.ForeignKey("auth.User", null=True, blank=True)
     first_name = models.CharField(max_length=50, null=True, blank=True)
-    last_name = models.CharField(max_length=50, null=True, blank=True )
+    last_name = models.CharField(max_length=50, null=True, blank=True)
     title = models.CharField(max_length=30, null=True, blank=True)
     company_name = models.CharField(max_length=25, blank=True)
     phone_number = models.IntegerField(null=True, blank=True)
@@ -214,7 +210,7 @@ class Customer(models.Model):
 class Supplier(models.Model):
     user = models.ForeignKey("auth.User", null=True, blank=True)
     first_name = models.CharField(max_length=50, null=True, blank=True)
-    last_name = models.CharField(max_length=50, null=True, blank=True )
+    last_name = models.CharField(max_length=50, null=True, blank=True)
     title = models.CharField(max_length=30)
     company_name = models.CharField(max_length=25, null=True, blank=True)
     phone_number = models.IntegerField(null=True, blank=True)
