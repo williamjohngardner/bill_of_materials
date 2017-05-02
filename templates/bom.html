@@ -83,7 +83,14 @@
           There is nothing here.
       {% endblock %}
       <footer>
-        <h6><div class="glyphicon glyphicon-copyright-mark pull-right">  Copyright 2016 William John Gardner</div><h6>
+        <h6><div style="float:right;">  &copy; Copyright 2016 -
+          <script language="JavaScript" type="text/javascript">
+          now = new Date
+          theYear=now.getYear()
+          if (theYear < 1900)
+          theYear=theYear+1900
+          document.write(theYear)
+          </script> William John Gardner</div><h6>
       </footer>
     </div>
     <script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>

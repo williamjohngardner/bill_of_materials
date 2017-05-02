@@ -9,7 +9,7 @@
             <h5><small>Company:  </small></h5><h5><strong>{{object.company_name}}</strong></h5>
             <h5><small>Contact:  </small></h5><h5><strong>{{object.first_name}} {{object.last_name}}</strong></h5>
             <h5><small>Title:  </small></h5><h5><strong>{{object.title}}</strong></h5>
-            <h5><small>Phone:  </small></h5><h5><strong>{{object.phone_number}}</strong></h5>
+            <h5><small>Phone:  </small></h5><h5><a href="tel:{{object.phone_number}}"><strong>{{object.phone_number}}</strong></a></h5>
             <h5><small>Email:  </small></h5><h5>{% for email in object.email_addresses %}
               <a href="mailto:{{ email.address }}"><strong>{{ email.address }}
             {% endfor %}</strong></a></h5>
