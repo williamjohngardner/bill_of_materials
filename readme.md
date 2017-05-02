@@ -1,4 +1,3 @@
-#bill_of_materials
 Subasmbly - A bill of materials application
 
 Bill of Materials is an application for small, manufacturing-based businesses that aims to fill the space between using Excel spreadsheets for parts management and making a capital investment in an enterprise level database management system.  By creating a centralized hub for BoM management, Bill of Materials provides parts management and revision control as well as communication tools to manage suppliers and customers and ensure that all parties are working from the latest and greatest information.  Revision control saves project cost and hours by minimizing the risk of purchasing or manufacturing incorrect or out of date parts and Bill of Materials
