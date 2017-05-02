@@ -8,7 +8,19 @@
     </div>
     {% for object in object_list %}
       <div class="col-md-12 well well-sm">
-        <h4>{{object.first_name}} {{object.last_name}}  |  <small>Title: </small>{{object.title}}  |  <small>Company: </small>{{object.company_name}}  |  <small>Customer ID: </small>{{object.pk}}<small><a class="btn btn-success pull-right" type="button" name="drilldown" href="{% url 'customer_detail_view' object.pk %}">Details</a></h4>
+        <div class="col-md-3">
+          <h4>{{object.first_name}} {{object.last_name}}</h4>
+        </div>
+        <div class="col-md-2">
+          <h5>Title: </h5>{{object.title}}
+        </div>
+        <div class="col-md-4">
+          <h5>Company: </h5>{{object.company_name}}
+        </div>
+        <div class="col-md-2">
+          <h5>Customer ID: </h5>{{object.pk}}
+        </div>
+        <a class="btn btn-success pull-right" type="button" name="drilldown" href="{% url 'customer_detail_view' object.pk %}">Details</a></h4>
       </div>
     {% endfor %}
   </div>

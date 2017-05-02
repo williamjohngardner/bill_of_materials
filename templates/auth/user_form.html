@@ -6,6 +6,9 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-5">
+      <h3>Welcome to {subasmbly}, {{request.user}}!</h3>
+      <h4>If necessary, please update your user profile.</h4>
+      <br>
       <form class="" action="" method="post">
         {% csrf_token %}
           {{form|bootstrap}}

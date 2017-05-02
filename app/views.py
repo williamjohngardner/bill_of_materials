@@ -250,7 +250,7 @@ class CreateCustomerView(CreateView):
     def form_valid(self, form):
         high = Highton(
             api_key=os.environ['highrise_api_key'],
-            user='williamjohngardner'
+            user='williamjohngardner')
         first_name=form.cleaned_data["first_name"]
         last_name=form.cleaned_data["last_name"]
         title=form.cleaned_data["title"]
