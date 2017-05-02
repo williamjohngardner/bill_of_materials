@@ -1,17 +1,20 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.core.urlresolvers import reverse_lazy
-from django.contrib.auth.models import User
-from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSet
-from extra_views.generic import GenericInlineFormSet
-from django.db.models import Sum
+# from django.contrib.auth.models import User
+from extra_views import CreateWithInlinesView, InlineFormSet
+# from extra_views.generic import GenericInlineFormSet
+# from django.db.models import Sum
 from highton import Highton
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 import os
 
-from app.models import Part, Assembly, SubAssembly, SubAssemblyQuantity, AssemblyQuantity, Customer, Supplier, Project, ProjectQuantity, Category, SubCategory, UserProfile, FinishTable, PlatingTable
+from app.models import (Part, Assembly, SubAssembly, SubAssemblyQuantity,
+                        AssemblyQuantity, Customer, Supplier, Project,
+                        ProjectQuantity, Category, SubCategory, UserProfile,
+                        FinishTable, PlatingTable)
 from app.forms import CreateCustomer, CreateSupplier
 
 
@@ -19,7 +22,9 @@ def handler404(request):
     response = render_to_response('404.html', {}, context_instance=RequestContext(request))
     response.status_code = 404
     return response
-# Code for 404 and 500 pages from : http://stackoverflow.com/questions/17662928/django-creating-a-custom-500-404-error-page
+# Code for 404 and 500 pages from :
+# http://stackoverflow.com/questions/17662928/django-creating-a-custom-500-404-error-page
+
 
 def handler500(request):
     response = render_to_response('500.html', {}, context_instance=RequestContext(request))
@@ -92,7 +97,10 @@ class SubCategoryListView(ListView):
 
 class CreatePartView(CreateView):
     model = Part
-    fields = ['part_name', 'part_number', 'description', 'category', 'sub_category', 'manufacturer', 'manufacturer_pn', 'dimensions', 'finish', 'plating', 'uom', 'unit_cost', 'part_url', 'notes', 'cad_file', 'image']
+    fields = ['part_name', 'part_number', 'description', 'category',
+              'sub_category', 'manufacturer', 'manufacturer_pn', 'dimensions',
+              'finish', 'plating', 'uom', 'unit_cost', 'part_url', 'notes',
+              'cad_file', 'image']
     success_url = reverse_lazy("part_list_view")
 
     def form_valid(self, form):
@@ -142,7 +150,9 @@ class ProjectPartInline(InlineFormSet):
 class CreateSubAssemblyView(CreateWithInlinesView):
     model = SubAssembly
     inlines = [SubAssemblyPartInline]
-    fields = ['sub_assembly_name', 'sub_assembly_number', 'description', 'category', 'sub_category', 'mfg_supplier', 'mfg_supplier_pn', 'finish', 'plating', 'notes', 'cad_file', 'image']
+    fields = ['sub_assembly_name', 'sub_assembly_number', 'description',
+              'category', 'sub_category', 'mfg_supplier', 'mfg_supplier_pn',
+              'finish', 'plating', 'notes', 'cad_file', 'image']
     success_url = reverse_lazy("subassembly_list_view")
 
     def forms_valid(self, form, inlines):
@@ -180,7 +190,9 @@ class SubAssemblyInline(InlineFormSet):
 class CreateAssemblyView(CreateWithInlinesView):
     model = Assembly
     inlines = [AssemblyPartInline]
-    fields = ['assembly_name', 'assembly_part_number', 'description', 'category', 'sub_category', 'supplier', 'supplier_pn', 'finish', 'plating', 'assembly_cost', 'notes', 'cad_file', 'image']
+    fields = ['assembly_name', 'assembly_part_number', 'description', 'category',
+              'sub_category', 'supplier', 'supplier_pn', 'finish', 'plating',
+              'assembly_cost', 'notes', 'cad_file', 'image']
     success_url = reverse_lazy("assembly_list_view")
 
     def forms_valid(self, form, inlines):
@@ -206,7 +218,8 @@ class AssemblyDetailView(DetailView):
 class CreateProjectView(CreateWithInlinesView):
     model = Project
     inlines = [ProjectPartInline]
-    fields = ['project_number', 'client', 'project_name', 'price_per_project', 'shipping_address', 'shipping_terms', 'expected_delivery']
+    fields = ['project_number', 'client', 'project_name', 'price_per_project',
+              'shipping_address', 'shipping_terms', 'expected_delivery']
     success_url = reverse_lazy("project_list_view")
 
     def forms_valid(self, form, inlines):
@@ -236,31 +249,31 @@ class CreateCustomerView(CreateView):
 
     def form_valid(self, form):
         high = Highton(
-            api_key = os.environ['highrise_api_key'],
-            user = 'williamjohngardner')
-        first_name = form.cleaned_data["first_name"]
-        last_name = form.cleaned_data["last_name"]
-        title = form.cleaned_data["title"]
-        company_name = form.cleaned_data["company_name"]
-        phone_number = form.cleaned_data["phone_number"]
-        email_address = form.cleaned_data["email_address"]
-        twitter_account = form.cleaned_data["twitter_account"]
-        web_address = form.cleaned_data["web_address"]
-        street_address = form.cleaned_data["street_address"]
-        city = form.cleaned_data["city"]
-        state = form.cleaned_data["state"]
-        zip_code = form.cleaned_data["zip_code"]
-        country = form.cleaned_data["country"]
+            api_key=os.environ['highrise_api_key'],
+            user='williamjohngardner'
+        first_name=form.cleaned_data["first_name"]
+        last_name=form.cleaned_data["last_name"]
+        title=form.cleaned_data["title"]
+        company_name=form.cleaned_data["company_name"]
+        phone_number=form.cleaned_data["phone_number"]
+        email_address=form.cleaned_data["email_address"]
+        twitter_account=form.cleaned_data["twitter_account"]
+        web_address=form.cleaned_data["web_address"]
+        street_address=form.cleaned_data["street_address"]
+        city=form.cleaned_data["city"]
+        state=form.cleaned_data["state"]
+        zip_code=form.cleaned_data["zip_code"]
+        country=form.cleaned_data["country"]
 
-        customer = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address></address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
+        customer="<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address></address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
         high.post_person(customer)
-        customer = form.save(commit=False)
+        customer=form.save(commit=False)
         customer.user=self.request.user
         return super(CreateCustomerView, self).form_valid(form)
 
 
 class CustomerListView(ListView):
-    model = Customer
+    model=Customer
 
     def get_queryset(self):
         return Customer.objects.filter(user=self.request.user)
@@ -308,7 +321,6 @@ class CreateSupplierView(CreateView):
         zip_code = form.cleaned_data["zip_code"]
         country = form.cleaned_data["country"]
 
-
         supplier = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address>{}</address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
         high.post_person(supplier)
         supplier = form.save(commit=False)
@@ -325,8 +337,8 @@ class SupplierListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         high = Highton(
-            api_key = os.environ['highrise_api_key'],
-            user = 'williamjohngardner')
+            api_key=os.environ['highrise_api_key'],
+            user='williamjohngardner')
         context["people"] = high.get_people()
         for person in context['people']:
             Supplier.objects.update_or_create(first_name=person.first_name, last_name=person.last_name, title=person.title, company_name=person.company_name)
