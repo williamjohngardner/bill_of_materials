@@ -5,7 +5,7 @@
   <div class="col-md-12 well">
     <h3><small>Part ID: </small>{{object.pk}}  |  {{object.part_name}}<img class="thumbnail pull-right" height="250px" width="250px" src="{{object.image_url}}" alt="{{object.part_name}}" /></h3>
     <h3><small>Unit Cost: </small>$ {{object.unit_cost}}</h3>
-    <h3><small>Part Url: </small></h3><h5>{{object.part_url}}</h5>
+    <h3><small>Part Url: </small></h3><h5><a href="{{object.part_url}}" target="_blank">{{object.part_url}}</a></h5>
   </div>
   <div class="col-md-6 well">
     <h5><small>Part Name:  </small><strong>{{object.part_name}}</strong></h5>
@@ -21,7 +21,7 @@
     <h5><small>Finish:  </small><strong>{{object.finish}}</strong></h5>
     <h5><small>Plating:  </small><strong>{{object.plating}}</strong></h5>
     {% if object.cad_file %}
-    <h5><small><a href="{{object.cad_file.url}}">Click to View CAD</a></small></h5>
+    <h5><small><a href="{{object.cad_file.url}}" target="_blank">Click to View CAD</a></small></h5>
       {% else %}
         <h5><small>No CAD File Uploaded</small></h5>
     {% endif %}
