@@ -1,0 +1,121 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{ subasmbly }</title>
+    <link rel="stylesheet" href="{% static "app/font-awesome/css/font-awesome.min.css" %}">
+    <link rel="stylesheet" href="{% static "app/css/bootstrap.css" %}" media="screen" charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "app/css/style.css" %}" media="screen" charset="utf-8">
+
+  </head>
+  <body>
+    <nav>
+      <span class="site-logo">
+        <img src="static/app/images/logo.png" alt="{subasmbly}">
+      </span>
+      <span class="site-menu">
+        <ul>
+          <li>home</li>
+          <li>profile</li>
+          <li>log in</li>
+          <li>about</li>
+        </ul>
+      </span>
+    </nav>
+    <section class="hero">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1 class="section-title">always make the greatest with the latest</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h1 class="section-title" id="section-sub-title">revision control for makers</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm_12 hero-image">
+            <img src="{% static 'app/images/shifters_opt.png' %}" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="prod-features">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4 feature">
+            <h3>Revision Control</h3>
+            <p>Hot chicken four dollar toast vegan, fingerstache affogato truffaut hella tofu blue </p>
+          </div>
+          <div class="col-sm-4 feature">
+            <h3>Revision Control</h3>
+            <p>Hot chicken four dollar toast vegan, fingerstache affogato truffaut hella tofu blue </p>
+          </div>
+          <div class="col-sm-4 feature">
+            <h3>Revision Control</h3>
+            <p>Hot chicken four dollar toast vegan, fingerstache affogato truffaut hella tofu blue </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="prod-examples">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1 class="section-title">here are some amazing examples</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h1 class="section-title" id="section-sub-title">i have mad pictures to show you</h1>
+          </div>
+        </div>
+        <div class="example-wrapper">
+          <div class="row">
+            <div class="col-sm-12 example example-right">
+              <h3>Absolute Revision Control.  Guranteed.</h3>
+              <p>Axe tote bag vexillologist, selfies DIY kogi la croix kale chips four loko poke literally. Blog cred copper mug franzen umami readymade.</p>
+              <img src="{% static 'app/images/wrench.jpg' %}" alt="">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 example example-left">
+              <h3>Manage Clients, Vendors, &amp; Suppliers.</h3>
+              <p>Axe tote bag vexillologist, selfies DIY kogi la croix kale chips four loko poke literally. Blog cred copper mug franzen umami readymade.</p>
+              <img src="{% static 'app/images/wrench.jpg' %}" alt="">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 example example-right">
+              <h3>Update any piece or part from one location</h3>
+              <p>Axe tote bag vexillologist, selfies DIY kogi la croix kale chips four loko poke literally. Blog cred copper mug franzen umami readymade.</p>
+              {# <img src="{% static 'app/images/wrench.jpg' %}" alt="">#}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div class="footer-menu">
+        <ul>
+          <li>home</li>
+          <li>profile</li>
+          <li>log in</li>
+          <li>about</li>
+        </ul>
+      </div>
+      <h6><div class="copyright">  Subasmbly is a Trademark of William John Gardner. &copy; Copyright 2016 -
+        <script language="JavaScript" type="text/javascript">
+        now = new Date
+        theYear=now.getYear()
+        if (theYear < 1900)
+        theYear=theYear+1900
+        document.write(theYear)
+        </script> William John Gardner</div><h6>
+    </footer>
+  </body>
+</html>

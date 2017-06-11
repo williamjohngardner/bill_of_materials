@@ -1,0 +1,262 @@
+/*
+Theme Name: Ashcraft and Gerel
+Theme URI: http://ashcraftandgerel.com
+Author: Davis Ad Agency
+Author URI: https://www.davisadagency.com
+Version: 1.0
+*/
+
+
+
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+1.0 - Reset
+2.0 - Header
+  2.1 - Main Nav
+  2.2 - Top Header Bar
+3.0 - Hero Section
+5.0 - Footer
+
+x.0 - Structure
+  x.1 - Mobile
+  x.2 - Mobile iPhone
+  x.3 - Tablet
+  x.4 - Tablet and Up
+  x.5 - Wide Desktop
+  x.6 - HDPI
+  x.7 - Small height monitor
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+>>> STYLE GUIDE:
+----------------------------------------------------------------
+Source Sans Pro: 200, 300, 400, 700
+
+Coral: #f4645f;
+
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+1.0 - RESET
+--------------------------------------------------------------*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-family:'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  font-size: 2.5em;
+  text-align: center;
+  margin-top: 50px;
+  text-transform: capitalize;
+}
+
+#section-sub-title {
+  font-size: 1.75em;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/*--------------------------------------------------------------
+2.0 - Header
+--------------------------------------------------------------*/
+nav {
+  border: solid #999 1px;
+}
+
+.site-logo img {
+  padding: 20px 40px;
+}
+
+.site-menu {
+  display: inline-block;
+  float: right;
+  padding: 45px;
+}
+
+.site-menu li {
+  font-family:'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  font-size: 1.25em;
+  display: inline-block;
+  margin-right: 50px;
+}
+
+/*--------------------------------------------------------------
+3.0 - Hero Section
+--------------------------------------------------------------*/
+
+
+.hero-image {
+  margin: auto;
+  width: 55%;
+  padding-top: 30px;
+}
+
+/*--------------------------------------------------------------
+4.0 - Product Features Section
+--------------------------------------------------------------*/
+.feature {
+  border: solid #999 1px;
+  padding: 10px;
+  width: 370px;
+  margin: 0 10px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.feature h3 {
+  font-family:'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  font-size: 1.5em;
+  text-align: center;
+  line-height: 1.75em;
+}
+
+.feature p {
+  font-family:'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  font-size: 1.25em;
+  text-align: center;
+  line-height: 1.25em;
+  padding: 10px;
+}
+
+/*--------------------------------------------------------------
+4.0 - Product Examples Section
+--------------------------------------------------------------*/
+.prod-examples {
+  background-color: #999;
+}
+
+.prod-examples > .container {
+  padding-top: 50px;
+  width: 60%;
+}
+
+.example-wrapper {
+  margin-bottom: 60px;
+}
+
+.example {
+  background-color: #fff;
+  border: solid #777 1px;
+  border-radius: 3px;
+  padding: 30px;
+}
+
+.example h3 {
+  font-family:'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  font-size: 1.5em;
+  line-height: 1.75em;
+  color: #f4645f;
+  width: 60%;
+  display: inline-block;
+}
+
+.example p {
+  font-family:'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  font-size: 1.25em;
+  line-height: 1.25em;
+  padding: 10px 0;
+  width: 50%;
+  display: inline-block;
+}
+
+.example-right img {
+  position: absolute;
+  overflow: hidden;
+  right: 0;
+  z-index: 0;
+  width: 180px;
+  height: auto;
+}
+
+.example-left h3 {
+  float: right;
+  text-align: left;
+}
+
+.example-left p {
+  float: right;
+  text-align: left;
+}
+
+.example-left img {
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  z-index: 0;
+  width: 180px;
+  height: auto;
+}
+
+/*--------------------------------------------------------------
+5.0 - Footer
+--------------------------------------------------------------*/
+.footer-menu {
+  margin: auto;
+  width: 29%;
+  margin-top: 30px;
+}
+
+.footer-menu li {
+  font-family:'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  font-size: 1.25em;
+  display: inline-block;
+  margin-right: 50px;
+}
+
+.copyright {
+  text-align: center;
+  font-family:'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  font-size: 1em;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

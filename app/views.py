@@ -33,7 +33,7 @@ def handler500(request):
 
 
 class IndexView(TemplateView):
-    template_name = "index.html"
+    template_name = "home.html"
 
 
 class CreateUserView(CreateView):
