@@ -7,14 +7,14 @@
     <title>{ subasmbly }</title>
     <link rel="stylesheet" href="{% static "app/font-awesome/css/font-awesome.min.css" %}">
     <link rel="stylesheet" href="{% static "app/css/bootstrap.css" %}" media="screen" charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Miriam+Libre:400,700|Source+Sans+Pro:200,300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="{% static "app/css/style.css" %}" media="screen" charset="utf-8">
 
   </head>
   <body>
     <nav>
       <span class="site-logo">
-        <img src="static/app/images/logo.png" alt="{subasmbly}">
+        <img src="{% static 'app/images/logo.png' %}" alt="{subasmbly}">
       </span>
       <span class="site-menu">
         <ul>
@@ -93,8 +93,43 @@
             <div class="col-sm-12 example example-right">
               <h3>Update any piece or part from one location</h3>
               <p>Axe tote bag vexillologist, selfies DIY kogi la croix kale chips four loko poke literally. Blog cred copper mug franzen umami readymade.</p>
-              {# <img src="{% static 'app/images/wrench.jpg' %}" alt="">#}
+              <img src="{% static 'app/images/wrench.jpg' %}" alt="">
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="interface">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1 class="section-title">The Subasmbly Interface</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h1 class="section-title" id="section-sub-title">Change your shop workflow</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 interface-hero">
+            <img id="interface-logo" src="{% static 'app/images/logo.png' %}" alt="{subasmbly}">
+            <p>Completely change your shop workflow with the amazing tools from subasmbly.  Use our CRM tools to track and send orders to your suppliers.  Always work from the lateset revisions, guranteed!</p>
+            <img id="interface-screenshot" src="{% static 'app/images/screenshot.jpg' %}" alt="{subasmbly}">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 interface-feature">
+            <h3>Revision Control</h3>
+            <p>Hot chicken four dollar toast vegan, fingerstache affogato truffaut hella tofu blue </p>
+          </div>
+          <div class="col-sm-4 interface-feature">
+            <h3>Revision Control</h3>
+            <p>Hot chicken four dollar toast vegan, fingerstache affogato truffaut hella tofu blue </p>
+          </div>
+          <div class="col-sm-4 interface-feature">
+            <h3>Revision Control</h3>
+            <p>Hot chicken four dollar toast vegan, fingerstache affogato truffaut hella tofu blue </p>
           </div>
         </div>
       </div>

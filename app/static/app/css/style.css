@@ -1,8 +1,9 @@
 /*
-Theme Name: Ashcraft and Gerel
-Theme URI: http://ashcraftandgerel.com
-Author: Davis Ad Agency
-Author URI: https://www.davisadagency.com
+Project: Subasmbly
+Project URI: http://subasmbly.com
+Author: Bill Gardner
+Author URI: https://www.williamjohngardner.com
+Date: July 2016 - Present
 Version: 1.0
 */
 
@@ -95,7 +96,7 @@ table {
 
 #section-sub-title {
   font-size: 1.75em;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 30px;
 }
 
@@ -117,7 +118,7 @@ nav {
 }
 
 .site-menu li {
-  font-family:'Source Sans Pro', sans-serif;
+  font-family:'Miriam Libre', sans-serif;
   font-weight: 100;
   font-size: 1.25em;
   display: inline-block;
@@ -132,7 +133,7 @@ nav {
 .hero-image {
   margin: auto;
   width: 55%;
-  padding-top: 30px;
+  padding-top: 10px;
 }
 
 /*--------------------------------------------------------------
@@ -168,7 +169,7 @@ nav {
 4.0 - Product Examples Section
 --------------------------------------------------------------*/
 .prod-examples {
-  background-color: #999;
+  background-color: #f0f2f1;
 }
 
 .prod-examples > .container {
@@ -210,7 +211,8 @@ nav {
 .example-right img {
   position: absolute;
   overflow: hidden;
-  right: 0;
+  right: 15px;
+  top: 17px;
   z-index: 0;
   width: 180px;
   height: auto;
@@ -218,21 +220,82 @@ nav {
 
 .example-left h3 {
   float: right;
-  text-align: left;
+  text-align: right;
 }
 
 .example-left p {
   float: right;
-  text-align: left;
+  text-align: right;
 }
 
 .example-left img {
   position: absolute;
   overflow: hidden;
-  left: 0;
+  left: 15px;
+  top: 17px;
   z-index: 0;
   width: 180px;
   height: auto;
+}
+
+/*--------------------------------------------------------------
+4.0 - INTERFACE HERO SECTION
+--------------------------------------------------------------*/
+
+.interface-hero {
+  margin-left: 100px;
+  width: 960px;
+  height: 425px;
+  border: #999 solid 1px;
+  border-radius: 2px;
+  box-shadow: #999 3px 3px 5px;
+}
+
+#interface-logo {
+  padding-left: 30px;
+  padding-top: 30px;
+}
+
+.interface-hero p {
+  width: 300px;
+  padding-top: 30px;
+  padding-left: 30px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 200;
+  line-height: 1.25em;
+}
+
+#interface-screenshot {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  float: right;
+}
+
+.interface-feature {
+  border: solid #999 1px;
+  padding: 10px;
+  width: 30%;
+  margin: 0 10px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.interface-feature h3 {
+  font-family:'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  font-size: 1.5em;
+  text-align: center;
+  line-height: 1.75em;
+}
+
+.interface-feature p {
+  font-family:'Source Sans Pro', sans-serif;
+  font-weight: 100;
+  font-size: 1.25em;
+  text-align: center;
+  line-height: 1.25em;
+  padding: 10px;
 }
 
 /*--------------------------------------------------------------
@@ -240,12 +303,12 @@ nav {
 --------------------------------------------------------------*/
 .footer-menu {
   margin: auto;
-  width: 29%;
+  width: 31%;
   margin-top: 30px;
 }
 
 .footer-menu li {
-  font-family:'Source Sans Pro', sans-serif;
+  font-family:'Miriam Libre', sans-serif;
   font-weight: 100;
   font-size: 1.25em;
   display: inline-block;
