@@ -1,13 +1,13 @@
 # from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 # from django.contrib.auth.models import User
-from extra_views import CreateWithInlinesView, InlineFormSet
+from extra_views import CreateWithInlinesView, InlineFormSetView
 # from extra_views.generic import GenericInlineFormSet
 # from django.db.models import Sum
-from highton import Highton
-from django.shortcuts import render_to_response
+# from highton import Highton
+# from django.shortcuts import render_to_response
 from django.template import RequestContext
 import os
 
@@ -18,18 +18,18 @@ from app.models import (Part, Assembly, SubAssembly, SubAssemblyQuantity,
 from app.forms import CreateCustomer, CreateSupplier
 
 
-def handler404(request):
-    response = render_to_response('404.html', {}, context_instance=RequestContext(request))
-    response.status_code = 404
-    return response
-# Code for 404 and 500 pages from :
-# http://stackoverflow.com/questions/17662928/django-creating-a-custom-500-404-error-page
+# def handler404(request):
+#     response = render_to_response('404.html', {}, context_instance=RequestContext(request))
+#     response.status_code = 404
+#     return response
+# # Code for 404 and 500 pages from :
+# # http://stackoverflow.com/questions/17662928/django-creating-a-custom-500-404-error-page
 
 
-def handler500(request):
-    response = render_to_response('500.html', {}, context_instance=RequestContext(request))
-    response.status_code = 500
-    return response
+# def handler500(request):
+#     response = render_to_response('500.html', {}, context_instance=RequestContext(request))
+#     response.status_code = 500
+#     return response
 
 
 class IndexView(TemplateView):
@@ -123,25 +123,25 @@ class PartDetailView(DetailView):
         return self.model.objects.filter(user=self.request.user)
 
 
-class SubAssemblyPartInline(InlineFormSet):
+class SubAssemblyPartInline(InlineFormSetView):
     model = SubAssemblyQuantity
     fields = ['part', 'quantity']
     extra = 1
 
 
-class PartInLine(InlineFormSet):
+class PartInLine(InlineFormSetView):
     model = AssemblyQuantity
     fields = ['part', 'quantity']
     extra = 1
 
 
-class AssemblyPartInline(InlineFormSet):
+class AssemblyPartInline(InlineFormSetView):
     model = AssemblyQuantity
     fields = ['part', 'subassembly', 'quantity']
     extra = 1
 
 
-class ProjectPartInline(InlineFormSet):
+class ProjectPartInline(InlineFormSetView):
     model = ProjectQuantity
     fields = ['assembly', 'quantity', 'price_per_assembly']
     extra = 1
@@ -181,7 +181,7 @@ class SubAssemblyDetailView(DetailView):
         return self.model.objects.filter(user=self.request.user)
 
 
-class SubAssemblyInline(InlineFormSet):
+class SubAssemblyInline(InlineFormSetView):
     model = SubAssembly
     fields = ['part', 'quantity']
     extra = 1
@@ -247,29 +247,29 @@ class CreateCustomerView(CreateView):
     form_class = CreateCustomer
     success_url = reverse_lazy("customer_list_view")
 
-    def form_valid(self, form):
-        high = Highton(
-            api_key=os.environ['highrise_api_key'],
-            user='williamjohngardner')
-        first_name=form.cleaned_data["first_name"]
-        last_name=form.cleaned_data["last_name"]
-        title=form.cleaned_data["title"]
-        company_name=form.cleaned_data["company_name"]
-        phone_number=form.cleaned_data["phone_number"]
-        email_address=form.cleaned_data["email_address"]
-        twitter_account=form.cleaned_data["twitter_account"]
-        web_address=form.cleaned_data["web_address"]
-        street_address=form.cleaned_data["street_address"]
-        city=form.cleaned_data["city"]
-        state=form.cleaned_data["state"]
-        zip_code=form.cleaned_data["zip_code"]
-        country=form.cleaned_data["country"]
+    # def form_valid(self, form):
+    #     high = Highton(
+    #         api_key=os.environ['highrise_api_key'],
+    #         user='williamjohngardner')
+    #     first_name=form.cleaned_data["first_name"]
+    #     last_name=form.cleaned_data["last_name"]
+    #     title=form.cleaned_data["title"]
+    #     company_name=form.cleaned_data["company_name"]
+    #     phone_number=form.cleaned_data["phone_number"]
+    #     email_address=form.cleaned_data["email_address"]
+    #     twitter_account=form.cleaned_data["twitter_account"]
+    #     web_address=form.cleaned_data["web_address"]
+    #     street_address=form.cleaned_data["street_address"]
+    #     city=form.cleaned_data["city"]
+    #     state=form.cleaned_data["state"]
+    #     zip_code=form.cleaned_data["zip_code"]
+    #     country=form.cleaned_data["country"]
 
-        customer="<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address></address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
-        high.post_person(customer)
-        customer=form.save(commit=False)
-        customer.user=self.request.user
-        return super(CreateCustomerView, self).form_valid(form)
+    #     customer="<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address></address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
+    #     high.post_person(customer)
+    #     customer=form.save(commit=False)
+    #     customer.user=self.request.user
+    #     return super(CreateCustomerView, self).form_valid(form)
 
 
 class CustomerListView(ListView):
@@ -280,12 +280,12 @@ class CustomerListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        high = Highton(
-            api_key = os.environ['highrise_api_key'],
-            user = 'williamjohngardner')
-        context["people"] = high.get_people()
-        for person in context['people']:
-            Customer.objects.update_or_create(first_name=person.first_name, last_name=person.last_name, title=person.title, company_name=person.company_name, email_address=str(person.email_addresses))
+        # high = Highton(
+        #     api_key = os.environ['highrise_api_key'],
+        #     user = 'williamjohngardner')
+        # context["people"] = high.get_people()
+        # for person in context['people']:
+        #     Customer.objects.update_or_create(first_name=person.first_name, last_name=person.last_name, title=person.title, company_name=person.company_name, email_address=str(person.email_addresses))
 
         return context
 
@@ -303,29 +303,29 @@ class CreateSupplierView(CreateView):
     # fields = ['name', 'contact', 'phone', 'email', 'website']
     success_url = reverse_lazy("supplier_list_view")
 
-    def form_valid(self, form):
-        high = Highton(
-            api_key = os.environ['highrise_api_key'],
-            user = 'williamjohngardner')
-        first_name = form.cleaned_data["first_name"]
-        last_name = form.cleaned_data["last_name"]
-        title = form.cleaned_data["title"]
-        company_name = form.cleaned_data["company_name"]
-        phone_number = form.cleaned_data["phone_number"]
-        email_address = form.cleaned_data["email_address"]
-        twitter_account = form.cleaned_data["twitter_account"]
-        web_address = form.cleaned_data["web_address"]
-        street_address = form.cleaned_data["street_address"]
-        city = form.cleaned_data["city"]
-        state = form.cleaned_data["state"]
-        zip_code = form.cleaned_data["zip_code"]
-        country = form.cleaned_data["country"]
+    # def form_valid(self, form):
+    #     high = Highton(
+    #         api_key = os.environ['highrise_api_key'],
+    #         user = 'williamjohngardner')
+    #     first_name = form.cleaned_data["first_name"]
+    #     last_name = form.cleaned_data["last_name"]
+    #     title = form.cleaned_data["title"]
+    #     company_name = form.cleaned_data["company_name"]
+    #     phone_number = form.cleaned_data["phone_number"]
+    #     email_address = form.cleaned_data["email_address"]
+    #     twitter_account = form.cleaned_data["twitter_account"]
+    #     web_address = form.cleaned_data["web_address"]
+    #     street_address = form.cleaned_data["street_address"]
+    #     city = form.cleaned_data["city"]
+    #     state = form.cleaned_data["state"]
+    #     zip_code = form.cleaned_data["zip_code"]
+    #     country = form.cleaned_data["country"]
 
-        supplier = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address>{}</address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
-        high.post_person(supplier)
-        supplier = form.save(commit=False)
-        supplier.user=self.request.user
-        return super(CreateSupplierView, self).form_valid(form)
+    #     supplier = "<person><first-name>{}</first-name><last-name>{}</last-name><title>{}</title><company-name>{}</company-name><contact-data><email-addresses><email-address><address>{}</address></email-address></email-addresses><phone-numbers><phone-number><id>4433405272</id><number>{}</number></phone-number></phone-numbers><twitter-accounts><twitter-account><username>{}</username><url>http://twitter.com/{}</url></twitter-account></twitter-accounts><web-addresses><web-address><id>214243865</id><url>{}</url></web-address></web-addresses><addresses><address><street>{}</street><city>{}</city><state>{}</state><zip>{}</zip><id>129411272</id><country>{}</country></address></addresses></contact-data></person>".format(first_name, last_name, title, company_name, phone_number, email_address, twitter_account, twitter_account, web_address, street_address, city, state, zip_code, country)
+    #     high.post_person(supplier)
+    #     supplier = form.save(commit=False)
+    #     supplier.user=self.request.user
+    #     return super(CreateSupplierView, self).form_valid(form)
 
 
 class SupplierListView(ListView):
@@ -336,12 +336,12 @@ class SupplierListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        high = Highton(
-            api_key=os.environ['highrise_api_key'],
-            user='williamjohngardner')
-        context["people"] = high.get_people()
-        for person in context['people']:
-            Supplier.objects.update_or_create(first_name=person.first_name, last_name=person.last_name, title=person.title, company_name=person.company_name)
+        # high = Highton(
+        #     api_key=os.environ['highrise_api_key'],
+        #     user='williamjohngardner')
+        # context["people"] = high.get_people()
+        # for person in context['people']:
+        #     Supplier.objects.update_or_create(first_name=person.first_name, last_name=person.last_name, title=person.title, company_name=person.company_name)
 
         return context
 

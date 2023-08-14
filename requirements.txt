@@ -1,17 +1,26 @@
-django
-django-bootstrap-form
-django-extra-views
-pillow
-six
-django-mathfilters
-et-xmlfile
-Highton
-jdcal
-lxml
-openpyxl
-requests
-gunicorn
-psycopg2
-dj-database-url
-django-storages
-boto
+# -i https://pypi.org/simple
+asgiref==3.7.2 ; python_version >= '3.7'
+boto==2.49.0
+certifi==2023.7.22 ; python_version >= '3.6'
+charset-normalizer==3.2.0 ; python_full_version >= '3.7.0'
+dj-database-url==2.0.0
+django==4.2.4
+django-bootstrap-form==3.4
+django-extra-views==0.14.0
+django-mathfilters==1.0.0
+django-storages==1.13.2
+et-xmlfile==1.1.0
+gunicorn==21.2.0
+highton==2.3.0
+idna==3.4 ; python_version >= '3.5'
+jdcal==1.4.1
+lxml==4.9.3
+openpyxl==3.1.2
+packaging==23.1 ; python_version >= '3.7'
+pillow==10.0.0
+psycopg==3.1.10
+requests==2.31.0 ; python_version >= '3.7'
+six==1.16.0
+sqlparse==0.4.4 ; python_version >= '3.5'
+typing-extensions==4.7.1 ; python_version >= '3.7'
+urllib3==2.0.4 ; python_version >= '3.7'

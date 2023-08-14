@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 
 
 class Category(models.Model):
-    user = models.ForeignKey("auth.User")
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     category = models.CharField(max_length=30)
 
     def __str__(self):
@@ -12,8 +12,8 @@ class Category(models.Model):
 
 
 class SubCategory(models.Model):
-    user = models.ForeignKey("auth.User")
-    category = models.ForeignKey(Category)
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     subcategory = models.CharField(max_length=30)
 
     def __str__(self):
@@ -21,7 +21,7 @@ class SubCategory(models.Model):
 
 
 class ShippingTerms(models.Model):
-    user = models.ForeignKey("auth.User")
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     shipping_type = models.CharField(max_length=50)
     description = models.TextField(null=True, blank=True)
     preferred_shipper = models.CharField(max_length=50, null=True, blank=True)
@@ -31,17 +31,17 @@ class ShippingTerms(models.Model):
 
 
 class Part(models.Model):
-    user = models.ForeignKey("auth.User")
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     part_name = models.CharField(max_length=50)
     part_number = models.CharField(max_length=50, null=True, blank=True)
     description = models.CharField(max_length=50, null=True, blank=True)
-    category = models.ForeignKey(Category)
-    sub_category = models.ForeignKey(SubCategory)
-    manufacturer = models.ForeignKey('app.Supplier', null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
+    manufacturer = models.ForeignKey('app.Supplier', null=True, blank=True, on_delete=models.CASCADE)
     manufacturer_pn = models.CharField(max_length=50, null=True, blank=True)
     dimensions = models.CharField(max_length=50, null=True, blank=True)
-    finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
-    plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
+    finish = models.ForeignKey('app.FinishTable', null=True, blank=True, on_delete=models.CASCADE)
+    plating = models.ForeignKey('app.PlatingTable', null=True, blank=True, on_delete=models.CASCADE)
     uom = models.CharField(max_length=15, null=True, blank=True)
     unit_cost = models.DecimalField(max_digits=10, decimal_places=2)
     part_url = models.URLField(null=True, blank=True)
@@ -60,9 +60,9 @@ class Part(models.Model):
 
 
 class SubAssemblyQuantity(models.Model):
-    part = models.ForeignKey(Part)
+    part = models.ForeignKey(Part, on_delete=models.CASCADE)
     quantity = models.IntegerField()
-    assembly = models.ForeignKey('app.SubAssembly')
+    assembly = models.ForeignKey('app.SubAssembly', on_delete=models.CASCADE)
 
     @property
     def cost(self):
@@ -74,10 +74,10 @@ class SubAssemblyQuantity(models.Model):
 
 
 class AssemblyQuantity(models.Model):
-    part = models.ForeignKey(Part, null=True, blank=True)
-    subassembly = models.ForeignKey('app.SubAssembly', null=True, blank=True)
+    part = models.ForeignKey(Part, null=True, blank=True, on_delete=models.CASCADE)
+    subassembly = models.ForeignKey('app.SubAssembly', null=True, blank=True, on_delete=models.CASCADE)
     quantity = models.IntegerField()
-    assembly = models.ForeignKey('app.Assembly', null=True, blank=True)
+    assembly = models.ForeignKey('app.Assembly', null=True, blank=True, on_delete=models.CASCADE)
 
     @property
     def sub_cost(self):
@@ -98,16 +98,16 @@ class AssemblyQuantity(models.Model):
 
 
 class SubAssembly(models.Model):
-    user = models.ForeignKey("auth.User")
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     sub_assembly_name = models.CharField(max_length=50)
     sub_assembly_number = models.CharField(max_length=50, null=True, blank=True)
     description = models.CharField(max_length=50, null=True, blank=True)
-    category = models.ForeignKey(Category, null=True, blank=True)
-    sub_category = models.ForeignKey(SubCategory, null=True, blank=True)
-    mfg_supplier = models.ForeignKey('app.Supplier', null=True, blank=True)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
+    sub_category = models.ForeignKey(SubCategory, null=True, blank=True, on_delete=models.CASCADE)
+    mfg_supplier = models.ForeignKey('app.Supplier', null=True, blank=True, on_delete=models.CASCADE)
     mfg_supplier_pn = models.CharField(max_length=50, null=True, blank=True)
-    finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
-    plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
+    finish = models.ForeignKey('app.FinishTable', null=True, blank=True, on_delete=models.CASCADE)
+    plating = models.ForeignKey('app.PlatingTable', null=True, blank=True, on_delete=models.CASCADE)
     subassembly_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(upload_to="cad_files", null=True, blank=True)
@@ -131,16 +131,16 @@ class SubAssembly(models.Model):
 
 
 class Assembly(models.Model):
-    user = models.ForeignKey("auth.User")
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     assembly_name = models.CharField(max_length=50)
     assembly_part_number = models.CharField(max_length=50, null=True, blank=True)
     description = models.CharField(max_length=50, null=True, blank=True)
-    category = models.ForeignKey(Category, null=True, blank=True)
-    sub_category = models.ForeignKey(SubCategory, null=True, blank=True)
-    supplier = models.ForeignKey('app.Supplier', null=True, blank=True)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
+    sub_category = models.ForeignKey(SubCategory, null=True, blank=True, on_delete=models.CASCADE)
+    supplier = models.ForeignKey('app.Supplier', null=True, blank=True, on_delete=models.CASCADE)
     supplier_pn = models.CharField(max_length=50, null=True, blank=True)
-    finish = models.ForeignKey('app.FinishTable', null=True, blank=True)
-    plating = models.ForeignKey('app.PlatingTable', null=True, blank=True)
+    finish = models.ForeignKey('app.FinishTable', null=True, blank=True, on_delete=models.CASCADE)
+    plating = models.ForeignKey('app.PlatingTable', null=True, blank=True, on_delete=models.CASCADE)
     assembly_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     cad_file = models.FileField(upload_to="cad_files", null=True, blank=True)
@@ -167,20 +167,20 @@ class Assembly(models.Model):
 
 
 class ProjectQuantity(models.Model):
-    assembly = models.ForeignKey('app.Assembly', null=True, blank=True)
+    assembly = models.ForeignKey('app.Assembly', null=True, blank=True, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price_per_assembly = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    project = models.ForeignKey('app.Project', null=True, blank=True)
+    project = models.ForeignKey('app.Project', null=True, blank=True, on_delete=models.CASCADE)
 
 
 class Project(models.Model):
-    user = models.ForeignKey("auth.User")
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     project_number = models.AutoField(primary_key=True)
-    client = models.ForeignKey('app.Customer')
+    client = models.ForeignKey('app.Customer', on_delete=models.CASCADE)
     project_name = models.CharField(max_length=50)
     price_per_project = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     shipping_address = models.TextField(null=True, blank=True)
-    shipping_terms = models.ForeignKey(ShippingTerms, null=True, blank=True)
+    shipping_terms = models.ForeignKey(ShippingTerms, null=True, blank=True, on_delete=models.CASCADE)
     expected_delivery = models.DateField(null=True, blank=True)
 
     def __str__(self):
@@ -188,7 +188,7 @@ class Project(models.Model):
 
 
 class Customer(models.Model):
-    user = models.ForeignKey("auth.User", null=True, blank=True)
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE, null=True, blank=True)
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
     title = models.CharField(max_length=30, null=True, blank=True)
@@ -208,7 +208,7 @@ class Customer(models.Model):
 
 
 class Supplier(models.Model):
-    user = models.ForeignKey("auth.User", null=True, blank=True)
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE, null=True, blank=True)
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50, null=True, blank=True)
     title = models.CharField(max_length=30)
@@ -228,10 +228,10 @@ class Supplier(models.Model):
 
 
 class FinishTable(models.Model):
-    user = models.ForeignKey("auth.User")
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     finish = models.CharField(max_length=50)
     description = models.TextField(null=True, blank=True)
-    source = models.ForeignKey(Supplier, null=True, blank=True)
+    source = models.ForeignKey(Supplier, null=True, blank=True, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="image_files", null=True, blank=True, verbose_name="Part Image")
 
     @property
@@ -245,17 +245,17 @@ class FinishTable(models.Model):
 
 
 class PlatingTable(models.Model):
-    user = models.ForeignKey("auth.User")
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     plating = models.CharField(max_length=50)
     description = models.TextField(null=True, blank=True)
-    source = models.ForeignKey(Supplier, null=True, blank=True)
+    source = models.ForeignKey(Supplier, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.plating
 
 
 class UserProfile(models.Model):
-    user = models.ForeignKey("auth.User")
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     user_name = models.CharField(max_length=50)
     first_name = models.CharField(max_length=30, null=True, blank=True)
     last_name = models.CharField(max_length=30, null=True, blank=True)
@@ -276,7 +276,7 @@ def create_user_profile(**kwargs):
         UserProfile.objects.create(user=instance)
 
 
-# @receiver(post_save, sender="auth.User") #every post save will call def User
+# @receiver(post_save, sender="auth.User", on_delete=models.CASCADE) #every post save will call def User
 # def create_token(**kwargs):
 #     created = kwargs.get("created")
 #     instance = kwargs.get("instance")

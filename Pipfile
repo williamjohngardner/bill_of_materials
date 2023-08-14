@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+django-bootstrap-form = "*"
+django-extra-views = "*"
+pillow = "*"
+six = "*"
+django-mathfilters = "*"
+et-xmlfile = "*"
+highton = "*"
+jdcal = "*"
+lxml = "*"
+openpyxl = "*"
+requests = "*"
+gunicorn = "*"
+psycopg = "*"
+dj-database-url = "*"
+django-storages = "*"
+boto = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
